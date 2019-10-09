@@ -20,12 +20,13 @@ public class Controller {
   @FXML
   private TextField txtPasahitza;
 
-  public void setMainApp(Main main) {
+  public void setMainApp(Main mainApp) {
     this.mainApp = mainApp;
   }
 
   @FXML
   public void onClick(ActionEvent actionEvent) {
     System.out.println(txtErabiltzaile.getText() + ":" + txtPasahitza.getText());
+
   }
 }
