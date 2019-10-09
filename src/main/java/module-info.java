@@ -1,6 +1,6 @@
-open module scenebuilder {
+open module DASI {
   requires javafx.controls;
   requires javafx.graphics;
   requires javafx.fxml;
-  exports ehu.isad;
+  exports interfazeak;
 }
