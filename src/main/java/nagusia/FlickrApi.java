@@ -76,7 +76,7 @@ public class FlickrApi {
         AuthInterface authInterface = flickr.getAuthInterface();
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
-        String url = authInterface.getAuthorizationUrl(requestToken, Permission.READ);
+        String url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
         System.out.println("Follow this URL to authorise yourself on Flickr");
         System.out.println(url);
         System.out.println("Paste in the token it gives you:");
