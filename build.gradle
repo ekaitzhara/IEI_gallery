@@ -32,6 +32,7 @@ dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
 
+    compile 'com.flickr4java:flickr4java:3.0.2'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
@@ -39,7 +40,7 @@ dependencies {
 
 
 // Define the main class for the application
-mainClassName = "$moduleName/interfazeak.Main"
+mainClassName = "$moduleName/nagusia.FlickrApi"
 
 
 def newArgs = [ '--add-exports','java.desktop/com.apple.eawt=ALL-UNNAMED',]
