@@ -1,5 +1,6 @@
 package ehu.isad;
 
+import ehu.isad.controller.Kautoketa2Zatia;
 import ehu.isad.controller.KautotuKud;
 import ehu.isad.controller.MainKud;
 import javafx.application.Application;
@@ -14,11 +15,13 @@ public class Main extends Application {
 
   private Parent kautotuUI;
   private Parent mainUI;
+  private Parent kautotu2UI;
 
   private Stage stage;
 
   private KautotuKud kautotuKud;
   private MainKud mainKud;
+  private Kautoketa2Zatia kautotu2zatia;
 
 
   @Override
@@ -43,6 +46,11 @@ public class Main extends Application {
     mainUI = (Parent) loaderMain.load();
     mainKud = loaderMain.getController();
     mainKud.setMainApp(this);
+
+    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"));
+    kautotu2UI = (Parent) loaderKautotu2.load();
+    kautotu2zatia = loaderKautotu2.getController();
+    kautotu2zatia.setMainApp(this);
   }
 
 
@@ -52,6 +60,15 @@ public class Main extends Application {
 
   public void mainErakutsi() {
     stage.setScene(new Scene(mainUI));
+    stage.show();
+  }
+
+  public void kautotuURLGorde(String url) {
+    kautotu2zatia.setUrl(url);
+  }
+
+  public void kautotu2zatiaerakutsi() {
+    stage.setScene(new Scene(kautotu2UI));
     stage.show();
   }
 }
