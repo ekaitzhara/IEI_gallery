@@ -8,21 +8,44 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.KautotuKud">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="530.0" styleClass="background" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.KautotuKud">
    <children>
-      <ComboBox fx:id="comboZerbitzua" layoutX="202.0" layoutY="44.0" prefHeight="27.0" prefWidth="167.0">
-         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <String fx:id="flickr" fx:value="Flickr" />
-               <String fx:id="googlephotos" fx:value="GooglePhotos" />
-            </FXCollections>
-         </items>
-      </ComboBox>      <Label layoutX="115.0" layoutY="91.0" text="Erabiltzailea:" />
-      <TextField fx:id="txtErabiltzaile" layoutX="202.0" layoutY="86.0" />
-      <Label layoutX="130.0" layoutY="137.0" text="Pasahitza:" />
-      <Label layoutX="130.0" layoutY="49.0" text="Zerbitzua:" />
-      <PasswordField fx:id="txtPasahitza" layoutX="202.0" layoutY="133.0" />
-      <Button fx:id="kautotuBotoia" layoutX="227.0" layoutY="194.0" mnemonicParsing="false" onAction="#onClick" text="Kautotu" />
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="370.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label styleClass="label-bright" text="%service" /><Label text=":" />
+                  <ComboBox fx:id="comboZerbitzua" prefHeight="27.0" prefWidth="154.0" styleClass="combo-box">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:id="flickr" fx:value="Flickr" />
+                           <String fx:id="googlephotos" fx:value="GooglePhotos" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>      <Label text="%user" /><Label text=":" />
+                  <TextField fx:id="txtErabiltzaile" prefHeight="27.0" prefWidth="154.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label styleClass="label" text="%password" /><Label text=":" />
+                  <PasswordField fx:id="txtPasahitza" prefHeight="27.0" prefWidth="154.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="kautotuBotoia" alignment="CENTER" layoutX="227.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClick" text="%login">
+         <styleClass>
+            <String fx:value="button" />
+            <String fx:value="success" />
+            <String fx:value="action-btn" />
+         </styleClass></Button>
    </children>
 </AnchorPane>

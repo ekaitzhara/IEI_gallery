@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
@@ -37,12 +39,16 @@ public class Main extends Application {
 
   private void pantailakKargatu() throws IOException {
 
-    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/kautotu.fxml"));
+    Locale locale = new Locale("eu","ES");
+    ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
+
+
+    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/kautotu.fxml"), bundle);
     kautotuUI = (Parent) loaderKautotu.load();
     kautotuKud = loaderKautotu.getController();
     kautotuKud.setMainApp(this);
 
-    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
+    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"), bundle);
     mainUI = (Parent) loaderMain.load();
     mainKud = loaderMain.getController();
     mainKud.setMainApp(this);
