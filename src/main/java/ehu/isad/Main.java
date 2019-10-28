@@ -70,11 +70,9 @@ public class Main extends Application {
     stage.show();
   }
 
-  public void kautotuURLGorde(String url) {
-    kautotu2zatia.setUrl(url);
-  }
 
   public void kautotu2zatiaerakutsi() {
+    /*
     String u = null;
     try {
       u = kautotu2zatia.emanUrl();
@@ -83,6 +81,7 @@ public class Main extends Application {
     }
     kautotuURLGorde(u);
     System.out.println(u);
+     */
     stage.setScene(new Scene(kautotu2UI));
     stage.show();
   }

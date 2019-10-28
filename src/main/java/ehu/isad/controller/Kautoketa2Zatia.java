@@ -9,25 +9,21 @@ import com.flickr4java.flickr.util.AuthStore;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth1Token;
 import ehu.isad.Main;
+import ehu.isad.controller.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
-public class Kautoketa2Zatia {
+public class Kautoketa2Zatia implements Initializable {
 
     private Main mainApp;
-    private FlickrSortu fs;
     private AuthStore authStore;
     private String url;
-
-    @FXML
-    private Label estekaLabel;
 
     @FXML
     private Hyperlink esteka = new Hyperlink();
@@ -39,7 +35,7 @@ public class Kautoketa2Zatia {
     private Label label2;
 
     @FXML
-    private TextField txtKode;
+    private TextField txtKode = new TextField();
 
 
     public void setMainApp(Main main) {
@@ -66,12 +62,10 @@ public class Kautoketa2Zatia {
 
     @FXML
     public void kautotuHartuKodea(ActionEvent actionEvent) throws IOException, FlickrException {
-        fs = new FlickrSortu();
-        this.authStore = fs.getAuthStore();
+        this.authStore = FlickrAPI.getInstantzia().getAuthStore();
 
-        AuthInterface authInterface = fs.getFlickr().getAuthInterface();
+        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
-
 
         //String tokenKey = new Scanner(System.in).nextLine();
 
@@ -85,37 +79,24 @@ public class Kautoketa2Zatia {
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
     }
 
-    public void setUrl(String url) {
-        //esteka.setText(url);
-        estekaLabel.setText(url);
-        this.url = url;
-        esteka = new Hyperlink(url);
-    }
+    public void jarriUrl() throws FlickrException {
+        this.authStore = FlickrAPI.getInstantzia().getAuthStore();
 
-    public String emanUrl() throws FlickrException {
-        fs = new FlickrSortu();
-        this.authStore = fs.getAuthStore();
-
-        AuthInterface authInterface = fs.getFlickr().getAuthInterface();
+        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
-        return authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
+        this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
     }
 
     //This method is called upon fxml load
-    public void initialize(URL location, ResourceBundle resources) throws FlickrException {
-        /*
-        this.fs = new FlickrSortu();
-        this.authStore = fs.getAuthStore();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.authStore = FlickrAPI.getInstantzia().getAuthStore();
 
-        AuthInterface authInterface = fs.getFlickr().getAuthInterface();
+        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
-        String url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
-        System.out.println(url);
+        this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
         esteka.setText(url);
-         */
-
-        esteka.setText("Badoa?");
     }
 }
