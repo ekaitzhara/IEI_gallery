@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.ui.MatxurakKud">
+   <children>
+      <ComboBox fx:id="matxuratutakoa" layoutX="102.0" layoutY="138.0" prefWidth="150.0" />
+      <ComboBox fx:id="ordezkoa" layoutX="102.0" layoutY="265.0" prefWidth="150.0" />
+      <DatePicker fx:id="noiz" layoutX="350.0" layoutY="138.0" />
+      <Button layoutX="350.0" layoutY="265.0" mnemonicParsing="false" onAction="#onClick" text="Aukeratu" />
+      <Label layoutX="102.0" layoutY="113.0" text="Matxuratutakoa" />
+      <Label layoutX="102.0" layoutY="238.0" text="Ordezkoa" />
+      <Label layoutX="350.0" layoutY="113.0" text="Noiz" />
+   </children>
+</AnchorPane>

@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -23,9 +24,13 @@ public class Kautoketa2Zatia {
     private Main mainApp;
     private FlickrSortu fs;
     private AuthStore authStore;
+    private String url;
 
     @FXML
-    private Hyperlink esteka;
+    private Label estekaLabel;
+
+    @FXML
+    private Hyperlink esteka = new Hyperlink();
 
     @FXML
     private Label label1;
@@ -39,6 +44,24 @@ public class Kautoketa2Zatia {
 
     public void setMainApp(Main main) {
         this.mainApp = main;
+    }
+
+    @FXML
+    public void klikatuURL(ActionEvent actionEvent) {
+        // Abrir navegador con la url
+        System.out.println(esteka.getText());
+
+        try {
+            String osName = System.getProperty("os.name");
+            if (osName.contains("Windows"))
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            else if (osName.contains("Linux"))
+                Runtime.getRuntime().exec("xdg-open " + url);
+            else if (osName.contains("Mac OS X"))
+                Runtime.getRuntime().exec("open " + url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -63,7 +86,20 @@ public class Kautoketa2Zatia {
     }
 
     public void setUrl(String url) {
-        esteka.setText(url);
+        //esteka.setText(url);
+        estekaLabel.setText(url);
+        this.url = url;
+        esteka = new Hyperlink(url);
+    }
+
+    public String emanUrl() throws FlickrException {
+        fs = new FlickrSortu();
+        this.authStore = fs.getAuthStore();
+
+        AuthInterface authInterface = fs.getFlickr().getAuthInterface();
+        OAuth1RequestToken requestToken = authInterface.getRequestToken();
+
+        return authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
     }
 
     //This method is called upon fxml load

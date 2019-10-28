@@ -1,5 +1,6 @@
 package ehu.isad;
 
+import com.flickr4java.flickr.FlickrException;
 import ehu.isad.controller.Kautoketa2Zatia;
 import ehu.isad.controller.KautotuKud;
 import ehu.isad.controller.MainKud;
@@ -74,6 +75,14 @@ public class Main extends Application {
   }
 
   public void kautotu2zatiaerakutsi() {
+    String u = null;
+    try {
+      u = kautotu2zatia.emanUrl();
+    } catch (FlickrException e) {
+      e.printStackTrace();
+    }
+    kautotuURLGorde(u);
+    System.out.println(u);
     stage.setScene(new Scene(kautotu2UI));
     stage.show();
   }

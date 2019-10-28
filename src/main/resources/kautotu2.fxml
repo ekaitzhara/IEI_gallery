@@ -12,6 +12,6 @@
       <Label id="label2" layoutX="99.0" layoutY="213.0" text="Orain hartu agertu zaizun kodigoa eta sartu hemen, mesedez" />
       <Button layoutX="260.0" layoutY="310.0" mnemonicParsing="false" onAction="#kautotuHartuKodea" text="Jarraitu" />
       <Label id="label1" layoutX="130.0" layoutY="103.0" text="Jarraitu link hau, kautotu eta baimendu aplikazioa" />
-      <Hyperlink id="esteka" layoutX="264.0" layoutY="153.0" text="estekari eman" />
+      <Hyperlink id="esteka" layoutX="264.0" layoutY="153.0" onAction="#klikatuURL" text="CLICK ME!" />
    </children>
 </AnchorPane>
