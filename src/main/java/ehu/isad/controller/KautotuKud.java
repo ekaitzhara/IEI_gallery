@@ -24,14 +24,6 @@ public class KautotuKud implements Initializable {
   private AuthStore authStore;
 
 
-  @FXML
-  private ComboBox comboZerbitzua;
-
-  @FXML
-  private TextField txtErabiltzaile;
-
-  @FXML
-  private TextField txtPasahitza;
 
   public void setMainApp(Main main) {
     this.mainApp = main;
@@ -39,10 +31,6 @@ public class KautotuKud implements Initializable {
 
   @FXML
   public void onClick(ActionEvent actionEvent) throws IOException, FlickrException {
-    System.out.println(txtErabiltzaile.getText() + ":" + txtPasahitza.getText());
-    System.out.println(comboZerbitzua.getValue());
-
-
     RequestContext rc = RequestContext.getRequestContext();
     FlickrAPI fs = FlickrAPI.getInstantzia();
     this.authStore = fs.getAuthStore();

@@ -9,9 +9,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.Kautoketa2Zatia">
    <children>
       <TextField id="txtKode" layoutX="208.0" layoutY="262.0" />
-      <Label id="label2" layoutX="99.0" layoutY="213.0" text="Orain hartu agertu zaizun kodigoa eta sartu hemen, mesedez" />
-      <Button layoutX="260.0" layoutY="310.0" mnemonicParsing="false" onAction="#kautotuHartuKodea" text="Jarraitu" />
-      <Label id="label1" layoutX="130.0" layoutY="103.0" text="Jarraitu link hau, kautotu eta baimendu aplikazioa" />
-      <Hyperlink id="esteka" layoutX="264.0" layoutY="153.0" onAction="#klikatuURL" text="CLICK ME!" />
+      <Label id="label2" layoutX="110.0" layoutY="211.0" text="%Now copy the code given to you, and paste here, please" />
+      <Button layoutX="249.0" layoutY="310.0" mnemonicParsing="false" onAction="#kautotuHartuKodea" text="%Continue" />
+      <Label id="label1" layoutX="130.0" layoutY="103.0" text="%Follow this link, sign in and authorize the application" />
+      <Hyperlink id="esteka" layoutX="251.0" layoutY="155.0" onAction="#klikatuURL" text="%CLICK ME" />
    </children>
 </AnchorPane>

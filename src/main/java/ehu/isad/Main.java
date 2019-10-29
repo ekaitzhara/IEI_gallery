@@ -54,7 +54,7 @@ public class Main extends Application {
     mainKud = loaderMain.getController();
     mainKud.setMainApp(this);
 
-    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"));
+    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"), bundle);
     kautotu2UI = (Parent) loaderKautotu2.load();
     kautotu2zatia = loaderKautotu2.getController();
     kautotu2zatia.setMainApp(this);
