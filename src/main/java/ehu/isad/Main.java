@@ -40,6 +40,7 @@ public class Main extends Application {
 
   private void pantailakKargatu() throws IOException {
 
+    // Hemen aldatu ahal da hizkuntza
     Locale locale = new Locale("eu","ES");
     ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
 
