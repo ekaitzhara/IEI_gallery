@@ -1,6 +1,5 @@
 package ehu.isad;
 
-import com.flickr4java.flickr.FlickrException;
 import ehu.isad.controller.Kautoketa2Zatia;
 import ehu.isad.controller.KautotuKud;
 import ehu.isad.controller.MainKud;
@@ -44,7 +43,6 @@ public class Main extends Application {
     Locale locale = new Locale("eu","ES");
     ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
 
-
     FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/view/kautotu.fxml"), bundle);
     kautotuUI = (Parent) loaderKautotu.load();
     kautotuKud = loaderKautotu.getController();
@@ -56,6 +54,7 @@ public class Main extends Application {
     mainKud.setMainApp(this);
 
     FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"), bundle);
+
     kautotu2UI = (Parent) loaderKautotu2.load();
     kautotu2zatia = loaderKautotu2.getController();
     kautotu2zatia.setMainApp(this);

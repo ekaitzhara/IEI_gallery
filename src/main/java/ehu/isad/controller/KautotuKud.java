@@ -24,15 +24,16 @@ public class KautotuKud implements Initializable {
   private AuthStore authStore;
 
 
-
   public void setMainApp(Main main) {
     this.mainApp = main;
   }
 
   @FXML
   public void onClick(ActionEvent actionEvent) throws IOException, FlickrException {
+
     RequestContext rc = RequestContext.getRequestContext();
     FlickrAPI fs = FlickrAPI.getInstantzia();
+
     this.authStore = fs.getAuthStore();
 
     if (this.authStore != null) {
@@ -43,6 +44,7 @@ public class KautotuKud implements Initializable {
             rc.setAuth(auth);
           }
     }
+
   }
 
     private void authorize() throws IOException, FlickrException {
@@ -53,4 +55,5 @@ public class KautotuKud implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
   }
+
 }

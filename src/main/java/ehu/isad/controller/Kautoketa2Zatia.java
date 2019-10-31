@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class Kautoketa2Zatia implements Initializable {
 
     private Main mainApp;
@@ -36,7 +37,6 @@ public class Kautoketa2Zatia implements Initializable {
 
     @FXML
     private TextField txtKode = new TextField();
-
 
     public void setMainApp(Main main) {
         this.mainApp = main;
