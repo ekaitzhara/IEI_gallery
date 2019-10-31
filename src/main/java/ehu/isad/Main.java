@@ -73,16 +73,6 @@ public class Main extends Application {
 
 
   public void kautotu2zatiaerakutsi() {
-    /*
-    String u = null;
-    try {
-      u = kautotu2zatia.emanUrl();
-    } catch (FlickrException e) {
-      e.printStackTrace();
-    }
-    kautotuURLGorde(u);
-    System.out.println(u);
-     */
     stage.setScene(new Scene(kautotu2UI));
     stage.show();
   }

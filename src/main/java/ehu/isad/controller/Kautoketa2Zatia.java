@@ -67,10 +67,9 @@ public class Kautoketa2Zatia implements Initializable {
         AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
-        //String tokenKey = new Scanner(System.in).nextLine();
-
         String tokenKey = txtKode.getText();
 
+        System.out.println(tokenKey);
         OAuth1Token accessToken = authInterface.getAccessToken(requestToken, tokenKey);
 
         Auth auth = authInterface.checkToken(accessToken);
@@ -79,14 +78,6 @@ public class Kautoketa2Zatia implements Initializable {
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
     }
 
-    public void jarriUrl() throws FlickrException {
-        this.authStore = FlickrAPI.getInstantzia().getAuthStore();
-
-        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
-        OAuth1RequestToken requestToken = authInterface.getRequestToken();
-
-        this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
-    }
 
     //This method is called upon fxml load
     @Override
@@ -97,6 +88,5 @@ public class Kautoketa2Zatia implements Initializable {
         OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
         this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
-        esteka.setText(url);
     }
 }
