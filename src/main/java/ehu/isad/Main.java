@@ -45,12 +45,12 @@ public class Main extends Application {
     ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
 
 
-    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/kautotu.fxml"), bundle);
+    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/view/kautotu.fxml"), bundle);
     kautotuUI = (Parent) loaderKautotu.load();
     kautotuKud = loaderKautotu.getController();
     kautotuKud.setMainApp(this);
 
-    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"), bundle);
+    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/view/main.fxml"), bundle);
     mainUI = (Parent) loaderMain.load();
     mainKud = loaderMain.getController();
     mainKud.setMainApp(this);

@@ -7,13 +7,25 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="530.0" styleClass="background" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.KautotuKud">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="530.0" styleClass="background" stylesheets="@../css/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.KautotuKud">
    <children>
       <VBox alignment="CENTER" layoutX="117.0" layoutY="43.0" prefHeight="200.0" prefWidth="297.0">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
+<<<<<<< HEAD:src/main/resources/kautotu.fxml
                   <Label alignment="CENTER" text="%WELCOME TO DASI APP" />
+=======
+                  <Label text="%service" /><Label text=":" />
+                  <ComboBox fx:id="comboZerbitzua" prefHeight="27.0" prefWidth="154.0" styleClass="combo-box">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:id="flickr" fx:value="Flickr" />
+                           <String fx:id="googlephotos" fx:value="GooglePhotos" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+>>>>>>> e9c7f429d3f2a4711c083aac144e984879e9d03d:src/main/resources/view/kautotu.fxml
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
