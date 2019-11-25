@@ -70,12 +70,15 @@ public class Kautoketa2Zatia implements Initializable {
         String tokenKey = txtKode.getText();
 
         System.out.println(tokenKey);
+
         OAuth1Token accessToken = authInterface.getAccessToken(requestToken, tokenKey);
 
         Auth auth = authInterface.checkToken(accessToken);
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
+
+        this.mainApp.mainErakutsi();
     }
 
 

@@ -40,7 +40,7 @@ dependencies {
 
 
 // Define the main class for the application
-mainClassName = "$moduleName/nagusia.FlickrApi"
+mainClassName = "$moduleName/ehu.isad.Main"
 
 
 def newArgs = [ '--add-exports','java.desktop/com.apple.eawt=ALL-UNNAMED',]

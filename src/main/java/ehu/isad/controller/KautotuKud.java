@@ -9,8 +9,6 @@ import ehu.isad.controller.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +20,7 @@ public class KautotuKud implements Initializable {
   private Main mainApp;
 
   private AuthStore authStore;
+
 
 
   public void setMainApp(Main main) {
@@ -42,6 +41,7 @@ public class KautotuKud implements Initializable {
             this.authorize(); // throws Exception
         } else {
             rc.setAuth(auth);
+            this.mainApp.mainErakutsi();
           }
     }
 

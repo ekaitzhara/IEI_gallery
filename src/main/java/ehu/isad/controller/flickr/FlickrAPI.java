@@ -16,7 +16,11 @@ import java.util.Properties;
 public class FlickrAPI {
 
     private final Flickr flickr;
+
     private final String nsid;
+    private final String secret;
+    private final String apiKey;
+
     private AuthStore authStore;
 
     // Singleton patroia
@@ -42,6 +46,8 @@ public class FlickrAPI {
         File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
         flickr = new com.flickr4java.flickr.Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
         this.nsid = properties.getProperty("nsid");
+        this.apiKey = properties.getProperty("apiKey");
+        this.secret = properties.getProperty("secret");
 
         if (authsDir != null) {
             try {
@@ -62,5 +68,13 @@ public class FlickrAPI {
 
     public AuthStore getAuthStore() {
         return authStore;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 }

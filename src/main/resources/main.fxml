@@ -16,24 +16,29 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Update" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="Update" />
+              <MenuItem fx:id="itxi" mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
                   <Menu mnemonicParsing="false" text="New...">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="New Photo" />
-                        <MenuItem mnemonicParsing="false" text="New PhotoSet" />
+                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" text="New Photo" />
+                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" text="New PhotoSet" />
                     </items>
                   </Menu>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <Menu mnemonicParsing="false" text="Delete...">
+                    <items>
+                      <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="Delete Photo" />
+                        <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="Delete PhotoSet" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="laguntza" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
