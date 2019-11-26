@@ -25,6 +25,8 @@ public class MainKud implements Initializable {
   // Reference to the main application.
   private Main mainApp;
 
+  private static String erabiltzaileID = null;
+
   public void setMainApp(Main main) {
     this.mainApp = mainApp;
   }
@@ -139,8 +141,11 @@ public class MainKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    
+
 
   }
 
+    public void gordeErabiltzaileID(String id) {
+      erabiltzaileID = id;
+    }
 }

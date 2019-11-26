@@ -5,6 +5,7 @@ import com.flickr4java.flickr.RequestContext;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.AuthInterface;
 import com.flickr4java.flickr.auth.Permission;
+import com.flickr4java.flickr.people.User;
 import com.flickr4java.flickr.util.AuthStore;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth1Token;
@@ -74,6 +75,8 @@ public class Kautoketa2Zatia implements Initializable {
         OAuth1Token accessToken = authInterface.getAccessToken(requestToken, tokenKey);
 
         Auth auth = authInterface.checkToken(accessToken);
+        User erabiltzailea = auth.getUser();
+        this.mainApp.jarriErabiltzaileID(erabiltzailea.getId());
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");

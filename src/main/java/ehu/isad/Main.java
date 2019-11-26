@@ -25,6 +25,9 @@ public class Main extends Application {
   private MainKud mainKud;
   private Kautoketa2Zatia kautotu2zatia;
 
+  private static String hizkuntza = "eu";
+  private static String hizkuntzHerrialdea = "ES";
+
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -40,7 +43,7 @@ public class Main extends Application {
   private void pantailakKargatu() throws IOException {
 
     // Hemen aldatu ahal da hizkuntza
-    Locale locale = new Locale("eu","ES");
+    Locale locale = new Locale(hizkuntza,hizkuntzHerrialdea);
     ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
 
     FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/kautotu.fxml"), bundle);
@@ -76,4 +79,13 @@ public class Main extends Application {
     stage.show();
   }
 
+  public void jarriErabiltzaileID(String id) {
+    mainKud.gordeErabiltzaileID(id);
+  }
+
+  public void hizkuntzaAldatu(String hizkuntzBerria, String herrialdeBerria) throws Exception {
+    hizkuntza = hizkuntzBerria;
+    hizkuntzHerrialdea = herrialdeBerria;
+    this.start(stage);
+  }
 }
