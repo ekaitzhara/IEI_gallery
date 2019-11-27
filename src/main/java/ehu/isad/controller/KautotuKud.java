@@ -69,7 +69,7 @@ public class KautotuKud implements Initializable {
             herrialdea = "ES";
         } else if ("English".equals(hizkuntzAldaketa.getValue())) {
             laburdura = "en";
-            herrialdea = "GB";
+            herrialdea = "UK";
         }
         System.out.println(laburdura);
         this.mainApp.hizkuntzaAldatu(laburdura, herrialdea);
