@@ -9,41 +9,42 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.PantailaNagusiKud">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="%file">
             <items>
-                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="Update" />
-              <MenuItem fx:id="itxi" mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="%update" />
+              <MenuItem fx:id="itxi" mnemonicParsing="false" text="%close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="%edit">
             <items>
-                  <Menu mnemonicParsing="false" text="New...">
+                  <Menu mnemonicParsing="false" text="%new...">
                     <items>
-                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" text="New Photo" />
-                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" text="New PhotoSet" />
+                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" text="%new Photo" />
+                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" text="%new PhotoSet" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Delete...">
+                  <Menu mnemonicParsing="false" text="%delete...">
                     <items>
-                      <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="Delete Photo" />
-                        <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="Delete PhotoSet" />
+                      <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="%delete Photo" />
+                        <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="%delete PhotoSet" />
                     </items>
                   </Menu>
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Account">
+            <Menu mnemonicParsing="false" text="%account">
               <items>
-                <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
+                <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#onClickLogOut" text="%log out" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="%help">
             <items>
-              <MenuItem fx:id="laguntza" mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="laguntza" mnemonicParsing="false" text="%about" />
             </items>
           </Menu>
         </menus>
@@ -57,22 +58,31 @@
          <center>
             <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="155.0" text="Argazkia" />
-                <TableColumn prefWidth="133.0" text="Izena" />
-                  <TableColumn prefWidth="248.0" text="Etiketak" />
-                  <TableColumn prefWidth="121.0" text="Data" />
-                  <TableColumn prefWidth="66.0" text="Views" />
-                  <TableColumn prefWidth="66.0" text="Favs" />
+                <TableColumn prefWidth="155.0" text="%argazkia" />
+                <TableColumn prefWidth="133.0" text="%izena" />
+                  <TableColumn prefWidth="248.0" text="%etiketak" />
+                  <TableColumn prefWidth="121.0" text="%data" />
+                  <TableColumn prefWidth="66.0" text="%views" />
+                  <TableColumn prefWidth="66.0" text="%favs" />
               </columns>
             </TableView>
          </center>
       </BorderPane>
    </bottom>
    <center>
-      <Label fx:id="erabiltzaileIzena" text="Kaixo : {Izena}" BorderPane.alignment="CENTER_RIGHT">
-         <BorderPane.margin>
-            <Insets right="50.0" />
-         </BorderPane.margin>
-      </Label>
+      <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <Label text="%kaixo">
+               <padding>
+                  <Insets left="700.0" />
+               </padding>
+            </Label>
+            <Label fx:id="erabiltzaileIzena" text="erabiltzailea">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </FlowPane>
    </center>
 </BorderPane>

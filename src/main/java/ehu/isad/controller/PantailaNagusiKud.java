@@ -169,7 +169,7 @@ public class PantailaNagusiKud implements Initializable {
         erabiltzaileID = id;
     }
 
-  public void gordeErabiltzaileIzena(String izena) { this.erabiltzaileIzena.setText("Kaixo: " + izena); }
+  public void gordeErabiltzaileIzena(String izena) { this.erabiltzaileIzena.setText(izena); }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

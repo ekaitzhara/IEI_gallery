@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Kautoketa2Zatia implements Initializable {
+public class AccessTokenLortuKud implements Initializable {
 
     private Main mainApp;
     private AuthStore authStore;

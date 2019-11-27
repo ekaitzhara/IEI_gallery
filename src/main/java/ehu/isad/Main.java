@@ -1,6 +1,6 @@
 package ehu.isad;
 
-import ehu.isad.controller.Kautoketa2Zatia;
+import ehu.isad.controller.AccessTokenLortuKud;
 import ehu.isad.controller.KautotuKud;
 import ehu.isad.controller.PantailaNagusiKud;
 import javafx.application.Application;
@@ -15,15 +15,18 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+  private Scene eKautoketa;
+  private Scene eAccessTokenLortu;
+
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
-  private Parent kautotu2UI;
+  private Parent accessTokenLortuUI;
 
   private Stage stage;
 
   private KautotuKud kautotuKud;
   private PantailaNagusiKud pantailaNagusiKud;
-  private Kautoketa2Zatia kautotu2zatia;
+  private AccessTokenLortuKud accessTokenLortuKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -35,8 +38,12 @@ public class Main extends Application {
     stage = primaryStage;
     pantailakKargatu();
 
-    stage.setTitle("Argazki Backup");
-    stage.setScene(new Scene(kautotuUI, 450, 275));
+
+    eKautoketa = new Scene(kautotuUI, 450, 275);
+    eAccessTokenLortu = new Scene(accessTokenLortuUI);
+
+    stage.setTitle("DASI APP Argazki Backup");
+    stage.setScene(eKautoketa);
     stage.show();
   }
 
@@ -57,9 +64,9 @@ public class Main extends Application {
     pantailaNagusiKud.setMainApp(this);
 
     FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"), bundle);
-    kautotu2UI = (Parent) loaderKautotu2.load();
-    kautotu2zatia = loaderKautotu2.getController();
-    kautotu2zatia.setMainApp(this);
+    accessTokenLortuUI = (Parent) loaderKautotu2.load();
+    accessTokenLortuKud = loaderKautotu2.getController();
+    accessTokenLortuKud.setMainApp(this);
   }
 
 
@@ -73,12 +80,12 @@ public class Main extends Application {
   }
 
   public void kautoketaraEraman() {
-    stage.setScene(new Scene(kautotuUI));
+    stage.setScene(eKautoketa);
     stage.show();
   }
 
   public void kautotu2zatiaerakutsi() {
-    stage.setScene(new Scene(kautotu2UI));
+    stage.setScene(eAccessTokenLortu);
     stage.show();
   }
 
