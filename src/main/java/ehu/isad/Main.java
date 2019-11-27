@@ -2,7 +2,7 @@ package ehu.isad;
 
 import ehu.isad.controller.Kautoketa2Zatia;
 import ehu.isad.controller.KautotuKud;
-import ehu.isad.controller.MainKud;
+import ehu.isad.controller.PantailaNagusiKud;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,13 +16,13 @@ import java.util.ResourceBundle;
 public class Main extends Application {
 
   private Parent kautotuUI;
-  private Parent mainUI;
+  private Parent pantailaNagusiUI;
   private Parent kautotu2UI;
 
   private Stage stage;
 
   private KautotuKud kautotuKud;
-  private MainKud mainKud;
+  private PantailaNagusiKud pantailaNagusiKud;
   private Kautoketa2Zatia kautotu2zatia;
 
   private static String hizkuntza = "eu";
@@ -51,13 +51,12 @@ public class Main extends Application {
     kautotuKud = loaderKautotu.getController();
     kautotuKud.setMainApp(this);
 
-    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"), bundle);
-    mainUI = (Parent) loaderMain.load();
-    mainKud = loaderMain.getController();
-    mainKud.setMainApp(this);
+    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/pantailaNagusia.fxml"), bundle);
+    pantailaNagusiUI = (Parent) loaderMain.load();
+    pantailaNagusiKud = loaderMain.getController();
+    pantailaNagusiKud.setMainApp(this);
 
     FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"), bundle);
-
     kautotu2UI = (Parent) loaderKautotu2.load();
     kautotu2zatia = loaderKautotu2.getController();
     kautotu2zatia.setMainApp(this);
@@ -68,11 +67,15 @@ public class Main extends Application {
     launch(args);
   }
 
-  public void mainErakutsi() {
-    stage.setScene(new Scene(mainUI));
+  public void pantailaNagusiaErakutsi() {
+    stage.setScene(new Scene(pantailaNagusiUI));
     stage.show();
   }
 
+  public void kautoketaraEraman() {
+    stage.setScene(new Scene(kautotuUI));
+    stage.show();
+  }
 
   public void kautotu2zatiaerakutsi() {
     stage.setScene(new Scene(kautotu2UI));
@@ -80,7 +83,10 @@ public class Main extends Application {
   }
 
   public void jarriErabiltzaileID(String id) {
-    mainKud.gordeErabiltzaileID(id);
+    pantailaNagusiKud.gordeErabiltzaileID(id);
+  }
+
+  public void jarriErabiltzaileIzena(String izena) { pantailaNagusiKud.gordeErabiltzaileIzena(izena);
   }
 
   public void hizkuntzaAldatu(String hizkuntzBerria, String herrialdeBerria) throws Exception {

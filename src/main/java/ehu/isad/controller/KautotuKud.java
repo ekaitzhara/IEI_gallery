@@ -47,7 +47,7 @@ public class KautotuKud implements Initializable {
             this.authorize(); // throws Exception
         } else {
             rc.setAuth(auth);
-            this.mainApp.mainErakutsi();
+            this.mainApp.pantailaNagusiaErakutsi();
           }
     }
 

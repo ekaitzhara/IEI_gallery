@@ -77,4 +77,8 @@ public class FlickrAPI {
     public String getApiKey() {
         return apiKey;
     }
+
+    public void setAuthStore(AuthStore authStore) {
+        this.authStore = authStore;
+    }
 }

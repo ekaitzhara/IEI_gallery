@@ -26,6 +26,8 @@ public class Kautoketa2Zatia implements Initializable {
     private Main mainApp;
     private AuthStore authStore;
     private String url;
+    private OAuth1RequestToken requestToken;
+    private AuthInterface authInterface;
 
     @FXML
     private Hyperlink esteka = new Hyperlink();
@@ -65,23 +67,26 @@ public class Kautoketa2Zatia implements Initializable {
     public void kautotuHartuKodea(ActionEvent actionEvent) throws IOException, FlickrException {
         this.authStore = FlickrAPI.getInstantzia().getAuthStore();
 
-        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
-        OAuth1RequestToken requestToken = authInterface.getRequestToken();
+        //AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
+        //OAuth1RequestToken requestToken = authInterface.getRequestToken();
 
         String tokenKey = txtKode.getText();
 
         System.out.println(tokenKey);
 
-        OAuth1Token accessToken = authInterface.getAccessToken(requestToken, tokenKey);
+        OAuth1Token accessToken = this.authInterface.getAccessToken(this.requestToken, tokenKey);
 
-        Auth auth = authInterface.checkToken(accessToken);
+        Auth auth = this.authInterface.checkToken(accessToken);
         User erabiltzailea = auth.getUser();
         this.mainApp.jarriErabiltzaileID(erabiltzailea.getId());
+        this.mainApp.jarriErabiltzaileIzena(erabiltzailea.getRealName());
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);
+        FlickrAPI.getInstantzia().setAuthStore(this.authStore);
+
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
 
-        this.mainApp.mainErakutsi();
+        this.mainApp.pantailaNagusiaErakutsi();
     }
 
 
@@ -90,8 +95,8 @@ public class Kautoketa2Zatia implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.authStore = FlickrAPI.getInstantzia().getAuthStore();
 
-        AuthInterface authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
-        OAuth1RequestToken requestToken = authInterface.getRequestToken();
+        this.authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
+        this.requestToken = authInterface.getRequestToken();
 
         this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
     }

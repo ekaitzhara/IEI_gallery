@@ -6,6 +6,7 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
+import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;
 import ehu.isad.controller.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
@@ -20,20 +21,47 @@ import java.net.URL;
 import java.security.spec.PSSParameterSpec;
 import java.util.ResourceBundle;
 
-public class MainKud implements Initializable {
+public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
 
   private static String erabiltzaileID = null;
 
+  @FXML
+  private javafx.scene.control.Label erabiltzaileIzena = new javafx.scene.control.Label();
+
   public void setMainApp(Main main) {
-    this.mainApp = mainApp;
+    this.mainApp = main;
   }
 
   @FXML
   public void onClick(ActionEvent actionEvent) {
 
+  }
+
+  @FXML
+  public void onClickLogOut(ActionEvent actionEvent) {
+
+      File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
+
+      if (authsDir.isDirectory()) {
+          if (authsDir.list().length == 0) {
+              authsDir.delete();
+              System.out.println("El directorio " + authsDir + " ha sido borrado correctamente");
+          } else {
+              for (String temp : authsDir.list()) {
+                  File fileDelete = new File(authsDir, temp);
+                  fileDelete.delete();
+              }
+              if (authsDir.list().length == 0) {
+                  authsDir.delete();
+                  System.out.println("El directorio " + authsDir + " ha sido borrado correctamente");
+              }
+          }
+      }
+
+      this.mainApp.kautoketaraEraman();
   }
 
   // Argazki berria sartzeko botoia ematerakoan
@@ -137,7 +165,11 @@ public class MainKud implements Initializable {
       // Datu basean bilduma berri bat sortu bere izenarekin eta nahi dituen argazkiekin
   }
 
+  public void gordeErabiltzaileID(String id) {
+        erabiltzaileID = id;
+    }
 
+  public void gordeErabiltzaileIzena(String izena) { this.erabiltzaileIzena.setText("Kaixo: " + izena); }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -145,7 +177,5 @@ public class MainKud implements Initializable {
 
   }
 
-    public void gordeErabiltzaileID(String id) {
-      erabiltzaileID = id;
-    }
+
 }
