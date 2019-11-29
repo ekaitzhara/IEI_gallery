@@ -80,13 +80,13 @@ public class KautotuKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-      List<String> autobusak = new ArrayList<>();
-      autobusak.add("Euskara");
-      autobusak.add("Español");
-      autobusak.add("English");
+      List<String> hizkuntzak = new ArrayList<>();
+      hizkuntzak.add("Euskara");
+      hizkuntzak.add("Español");
+      hizkuntzak.add("English");
 
 
-      hizkuntzAldaketa.getItems().addAll(autobusak);
+      hizkuntzAldaketa.getItems().addAll(hizkuntzak);
 
   }
 

@@ -62,106 +62,17 @@ public class PantailaNagusiKud implements Initializable {
       this.mainApp.kautoketaraEraman();
   }
 
-  // Argazki berria sartzeko botoia ematerakoan
-  public void argazkiBerriaSortu() {
-
-  }
-
-
-  // Argazki bat Flickr-era igo
-  public void argazkiaFlickrIgo() {
-      Uploader up = FlickrAPI.getInstantzia().getFlickr().getUploader();
-
-      UploadMetaData umd = new UploadMetaData();
-      // Sartu argazkiaren izena
-      umd.setTitle("Proba igo argazki");
-      // Sartu deskribapena
-      umd.setDescription("Funtzionatzen du?");
-
-      // Sartu argazkia
-      File pathToFile = new File("/home/ekaitzhara/Imágenes/San-Mames.jpg");
-
-      try {
-        Image argazki = ImageIO.read(pathToFile);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-      try {
-        up.upload(pathToFile, umd);
-      } catch (FlickrException e) {
-        e.printStackTrace();
-      }
-  }
-
-
-  // Argazki bat Flickr-etik jaitsi
-  public void argazkiaJaitsi() {
-
-      String argazkiID = null; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
-
-      //PhotosetsInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface(); // lortu bildumak kudeatzeko interfazea
-      PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface(); // lortu argazkiak kudeatzeko interfazea
-
-
-
-      URL url = null;
-      try {
-        Photo p = photoInt.getInfo(argazkiID, FlickrAPI.getInstantzia().getSecret());
-
-        // Argazkia edukita, p.getOriginalUrl() -rekin argazkiaren helbidea lortuko dugu
-
-        // Orain URL-tik argazkia irakurriko dugu
-
-        url = new URL(p.getOriginalUrl());
-
-      } catch (MalformedURLException e) {
-        e.printStackTrace();
-      } catch (FlickrException e) {
-        e.printStackTrace();
-      }
-
-      byte[] response = null;
-      try {
-        InputStream in2 = new BufferedInputStream(url.openStream());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        int n = 0;
-        while (-1 != (n = in2.read(buf))) {
-          out.write(buf, 0, n);
-        }
-        out.close();
-        in2.close();
-        response = out.toByteArray();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-      // Gure ordenagailuan argazki berri bat sortuko dugu
-      //FileOutputStream fos = new FileOutputStream("C:\\Users\\anderdu\\Downloads\\a.jpg");
-      String fileName = "a";
-      String home = System.getProperty("user.home");
-      char slash =  File.separatorChar;
-      FileOutputStream fos = null;
-      try {
-        fos = new FileOutputStream(home + slash + "Downloads" +slash+ fileName + ".jpg");
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-      }
-
-      // eta deskargatu dugun argazkia sartuko dugu bertan
-      try {
-        fos.write(response);
-        fos.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-  }
-
   // Bilduma berri bat sortzeko
   public void bildumaBerriaSortu() {
       // Datu basean bilduma berri bat sortu bere izenarekin eta nahi dituen argazkiekin
+      System.out.println("bilduma sortu");
+      this.mainApp.bildumaSortuErakutsi();
   }
+    // Argazki berria sartzeko botoia ematerakoan
+    public void argazkiBerriaSortu() {
+        this.mainApp.argazkiaIgoErakutsi();
+    }
+
 
   public void gordeErabiltzaileID(String id) {
         erabiltzaileID = id;

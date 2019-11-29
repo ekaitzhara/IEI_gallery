@@ -1,8 +1,6 @@
 package ehu.isad;
 
-import ehu.isad.ui.KautotuFlickrKud;
-import ehu.isad.ui.KautotuKud;
-import ehu.isad.ui.PantailaNagusiKud;
+import ehu.isad.ui.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,12 +20,16 @@ public class Main extends Application {
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
   private Parent kautotuFlickrUI;
+  private Parent argazkiaIgoUI;
+  private Parent bildumaSortuUI;
 
   private Stage stage;
 
   private KautotuKud kautotuKud;
   private PantailaNagusiKud pantailaNagusiKud;
   private KautotuFlickrKud kautotuFlickrKud;
+  private ArgazkiaIgoKud argazkiaIgoKud;
+  private BildumaSortuKud bildumaSortuKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -65,10 +67,21 @@ public class Main extends Application {
     pantailaNagusiKud = loaderMain.getController();
     pantailaNagusiKud.setMainApp(this);
 
-    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/view/kautotuFlickr.fxml"), bundle);
-    kautotuFlickrUI = (Parent) loaderKautotu2.load();
-    kautotuFlickrKud = loaderKautotu2.getController();
+    FXMLLoader loaderKautotuFlickr = new FXMLLoader(getClass().getResource("/view/kautotuFlickr.fxml"), bundle);
+    kautotuFlickrUI = (Parent) loaderKautotuFlickr.load();
+    kautotuFlickrKud = loaderKautotuFlickr.getController();
     kautotuFlickrKud.setMainApp(this);
+
+    FXMLLoader loaderArgazkiaIgo = new FXMLLoader(getClass().getResource("/view/argazkiaIgo.fxml"), bundle);
+    argazkiaIgoUI = (Parent) loaderArgazkiaIgo.load();
+    argazkiaIgoKud = loaderArgazkiaIgo.getController();
+    argazkiaIgoKud.setMainApp(this);
+
+    FXMLLoader loaderBildumaSortu = new FXMLLoader(getClass().getResource("/view/bildumaSortu.fxml"), bundle);
+    bildumaSortuUI = (Parent) loaderBildumaSortu.load();
+    bildumaSortuKud = loaderBildumaSortu.getController();
+    bildumaSortuKud.setMainApp(this);
+
   }
 
 
@@ -90,6 +103,24 @@ public class Main extends Application {
     stage.setScene(eAccessTokenLortu);
     stage.show();
   }
+
+  public void bildumaSortuErakutsi(){
+
+    Stage stageLag = new Stage();
+    stageLag.setTitle("Bilduma sortu");
+    stageLag.setScene(new Scene(bildumaSortuUI, 450, 450));
+    stageLag.show();
+  }
+
+  public void argazkiaIgoErakutsi(){
+    Stage stageLag = new Stage();
+    stageLag.setTitle("Argazkia igo");
+    stageLag.setScene(new Scene(bildumaSortuUI, 450, 450));
+    stageLag.show();
+  }
+
+
+
 
   public void jarriErabiltzaileID(String id) {
     pantailaNagusiKud.gordeErabiltzaileID(id);

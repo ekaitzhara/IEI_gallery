@@ -25,8 +25,8 @@
             <items>
                   <Menu mnemonicParsing="false" text="%new...">
                     <items>
-                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" text="%new Photo" />
-                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" text="%new PhotoSet" />
+                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" onAction="#argazkiBerriaSortu" text="%new Photo" />
+                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" onAction="#bildumaBerriaSortu" text="%new PhotoSet" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%delete...">
