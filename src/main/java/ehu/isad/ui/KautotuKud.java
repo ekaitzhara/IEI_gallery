@@ -22,6 +22,8 @@ public class KautotuKud implements Initializable {
   // Reference to the main application.
   private Main mainApp;
 
+  private boolean logout = false;
+
   @FXML
   private ComboBox hizkuntzAldaketa;
 
@@ -43,7 +45,8 @@ public class KautotuKud implements Initializable {
 
     if (this.authStore != null) {
         Auth auth = this.authStore.retrieve(fs.getNsid());
-        if (auth == null) {
+        if (auth == null || logout == true) {
+            this.logout = false;
             this.authorize(); // throws Exception
         } else {
             rc.setAuth(auth);
@@ -87,4 +90,7 @@ public class KautotuKud implements Initializable {
 
   }
 
+    public void logoutAktibatu() {
+      this.logout = true;
+    }
 }

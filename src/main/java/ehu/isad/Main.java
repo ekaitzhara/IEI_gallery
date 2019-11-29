@@ -17,6 +17,7 @@ public class Main extends Application {
 
   private Scene eKautoketa;
   private Scene eAccessTokenLortu;
+  private Scene pantailaNagusia;
 
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
@@ -39,8 +40,9 @@ public class Main extends Application {
     pantailakKargatu();
 
 
-    eKautoketa = new Scene(kautotuUI, 450, 275);
+    eKautoketa = new Scene(kautotuUI, 500, 300);
     eAccessTokenLortu = new Scene(kautotuFlickrUI);
+    pantailaNagusia = new Scene(pantailaNagusiUI);
 
     stage.setTitle("DASI APP Argazki Backup");
     stage.setScene(eKautoketa);
@@ -75,7 +77,7 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
-    stage.setScene(new Scene(pantailaNagusiUI));
+    stage.setScene(pantailaNagusia);
     stage.show();
   }
 
@@ -100,5 +102,9 @@ public class Main extends Application {
     hizkuntza = hizkuntzBerria;
     hizkuntzHerrialdea = herrialdeBerria;
     this.start(stage);
+  }
+
+  public void logoutAktibatu() {
+    kautotuKud.logoutAktibatu();
   }
 }

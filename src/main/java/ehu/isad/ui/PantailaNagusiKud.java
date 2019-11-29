@@ -40,6 +40,7 @@ public class PantailaNagusiKud implements Initializable {
   @FXML
   public void onClickLogOut(ActionEvent actionEvent) {
 
+      this.mainApp.logoutAktibatu();
       File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
 
       if (authsDir.isDirectory()) {
