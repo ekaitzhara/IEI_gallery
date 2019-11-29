@@ -1,16 +1,6 @@
-package nagusia;
+package ehu.isad.model;
 
-import com.flickr4java.flickr.Flickr;
-import com.flickr4java.flickr.FlickrException;
-import com.flickr4java.flickr.photos.Photo;
-import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.photosets.PhotosetsInterface;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Bilduma {
 

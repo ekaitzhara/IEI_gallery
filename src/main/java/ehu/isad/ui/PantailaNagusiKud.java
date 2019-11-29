@@ -1,14 +1,12 @@
-package ehu.isad.controller;
+package ehu.isad.ui;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
-import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;
-import ehu.isad.controller.flickr.FlickrAPI;
+import ehu.isad.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +16,6 @@ import java.awt.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.spec.PSSParameterSpec;
 import java.util.ResourceBundle;
 
 public class PantailaNagusiKud implements Initializable {

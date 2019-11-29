@@ -1,4 +1,4 @@
-package nagusia;
+package ehu.isad.model;
 
 public class Argazkia {
 

@@ -1,11 +1,11 @@
-package ehu.isad.controller;
+package ehu.isad.ui;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.RequestContext;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;
-import ehu.isad.controller.flickr.FlickrAPI;
+import ehu.isad.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

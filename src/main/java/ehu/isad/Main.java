@@ -1,8 +1,8 @@
 package ehu.isad;
 
-import ehu.isad.controller.AccessTokenLortuKud;
-import ehu.isad.controller.KautotuKud;
-import ehu.isad.controller.PantailaNagusiKud;
+import ehu.isad.ui.KautotuFlickrKud;
+import ehu.isad.ui.KautotuKud;
+import ehu.isad.ui.PantailaNagusiKud;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,13 +20,13 @@ public class Main extends Application {
 
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
-  private Parent accessTokenLortuUI;
+  private Parent kautotuFlickrUI;
 
   private Stage stage;
 
   private KautotuKud kautotuKud;
   private PantailaNagusiKud pantailaNagusiKud;
-  private AccessTokenLortuKud accessTokenLortuKud;
+  private KautotuFlickrKud kautotuFlickrKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -40,7 +40,7 @@ public class Main extends Application {
 
 
     eKautoketa = new Scene(kautotuUI, 450, 275);
-    eAccessTokenLortu = new Scene(accessTokenLortuUI);
+    eAccessTokenLortu = new Scene(kautotuFlickrUI);
 
     stage.setTitle("DASI APP Argazki Backup");
     stage.setScene(eKautoketa);
@@ -53,20 +53,20 @@ public class Main extends Application {
     Locale locale = new Locale(hizkuntza,hizkuntzHerrialdea);
     ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
 
-    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/kautotu.fxml"), bundle);
+    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/view/kautotu.fxml"), bundle);
     kautotuUI = (Parent) loaderKautotu.load();
     kautotuKud = loaderKautotu.getController();
     kautotuKud.setMainApp(this);
 
-    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/pantailaNagusia.fxml"), bundle);
+    FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/view/pantailaNagusia.fxml"), bundle);
     pantailaNagusiUI = (Parent) loaderMain.load();
     pantailaNagusiKud = loaderMain.getController();
     pantailaNagusiKud.setMainApp(this);
 
-    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/kautotu2.fxml"), bundle);
-    accessTokenLortuUI = (Parent) loaderKautotu2.load();
-    accessTokenLortuKud = loaderKautotu2.getController();
-    accessTokenLortuKud.setMainApp(this);
+    FXMLLoader loaderKautotu2 = new FXMLLoader(getClass().getResource("/view/kautotuFlickr.fxml"), bundle);
+    kautotuFlickrUI = (Parent) loaderKautotu2.load();
+    kautotuFlickrKud = loaderKautotu2.getController();
+    kautotuFlickrKud.setMainApp(this);
   }
 
 

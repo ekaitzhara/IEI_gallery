@@ -1,4 +1,4 @@
-package ehu.isad.controller;
+package ehu.isad.flickr;
 
 import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
@@ -6,21 +6,31 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
+import ehu.isad.ui.KautotuKud;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class FlickrSortu {
+public class FlickrAPI {
 
     private final Flickr flickr;
 
     private final String nsid;
+    private final String secret;
+    private final String apiKey;
 
     private AuthStore authStore;
 
-    public FlickrSortu() throws FlickrException {
+    // Singleton patroia
+    private static FlickrAPI instantzia = new FlickrAPI();
+
+    public static FlickrAPI getInstantzia() {
+        return instantzia;
+    }
+
+    private FlickrAPI() {
         Properties properties = null;
         InputStream in = null;
         try {
@@ -34,11 +44,17 @@ public class FlickrSortu {
         }
 
         File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
-        flickr = new Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
+        flickr = new com.flickr4java.flickr.Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
         this.nsid = properties.getProperty("nsid");
+        this.apiKey = properties.getProperty("apiKey");
+        this.secret = properties.getProperty("secret");
 
         if (authsDir != null) {
-            this.authStore = new FileAuthStore(authsDir);
+            try {
+                this.authStore = new FileAuthStore(authsDir);
+            }catch (FlickrException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -52,5 +68,17 @@ public class FlickrSortu {
 
     public AuthStore getAuthStore() {
         return authStore;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setAuthStore(AuthStore authStore) {
+        this.authStore = authStore;
     }
 }

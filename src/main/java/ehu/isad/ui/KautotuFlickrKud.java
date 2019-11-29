@@ -1,4 +1,4 @@
-package ehu.isad.controller;
+package ehu.isad.ui;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.RequestContext;
@@ -10,7 +10,7 @@ import com.flickr4java.flickr.util.AuthStore;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth1Token;
 import ehu.isad.Main;
-import ehu.isad.controller.flickr.FlickrAPI;
+import ehu.isad.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class AccessTokenLortuKud implements Initializable {
+public class KautotuFlickrKud implements Initializable {
 
     private Main mainApp;
     private AuthStore authStore;
