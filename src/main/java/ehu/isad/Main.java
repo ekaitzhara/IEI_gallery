@@ -1,6 +1,7 @@
 package ehu.isad;
 
 import ehu.isad.ui.*;
+import ehu.isad.model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -115,7 +117,7 @@ public class Main extends Application {
   public void argazkiaIgoErakutsi(){
     Stage stageLag = new Stage();
     stageLag.setTitle("Argazkia igo");
-    stageLag.setScene(new Scene(bildumaSortuUI, 450, 450));
+    stageLag.setScene(new Scene(argazkiaIgoUI, 450, 450));
     stageLag.show();
   }
 
