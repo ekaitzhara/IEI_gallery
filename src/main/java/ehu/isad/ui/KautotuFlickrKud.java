@@ -78,6 +78,7 @@ public class KautotuFlickrKud implements Initializable {
 
         Auth auth = this.authInterface.checkToken(accessToken);
         User erabiltzailea = auth.getUser();
+        System.out.println(erabiltzailea.getId());
         this.mainApp.jarriErabiltzaileID(erabiltzailea.getId());
         this.mainApp.jarriErabiltzaileIzena(erabiltzailea.getRealName());
         RequestContext.getRequestContext().setAuth(auth);
