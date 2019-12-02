@@ -121,16 +121,6 @@ public class Main extends Application {
     stageLag.show();
   }
 
-
-
-
-  public void jarriErabiltzaileID(String id) {
-    pantailaNagusiKud.gordeErabiltzaileID(id);
-  }
-
-  public void jarriErabiltzaileIzena(String izena) { pantailaNagusiKud.gordeErabiltzaileIzena(izena);
-  }
-
   public void hizkuntzaAldatu(String hizkuntzBerria, String herrialdeBerria) throws Exception {
     hizkuntza = hizkuntzBerria;
     hizkuntzHerrialdea = herrialdeBerria;

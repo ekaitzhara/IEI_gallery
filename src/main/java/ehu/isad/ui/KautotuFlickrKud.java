@@ -10,6 +10,7 @@ import com.flickr4java.flickr.util.AuthStore;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth1Token;
 import ehu.isad.Main;
+import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,10 +78,12 @@ public class KautotuFlickrKud implements Initializable {
         OAuth1Token accessToken = this.authInterface.getAccessToken(this.requestToken, tokenKey);
 
         Auth auth = this.authInterface.checkToken(accessToken);
-        User erabiltzailea = auth.getUser();
-        System.out.println(erabiltzailea.getId());
-        this.mainApp.jarriErabiltzaileID(erabiltzailea.getId());
-        this.mainApp.jarriErabiltzaileIzena(erabiltzailea.getRealName());
+        User e = auth.getUser();
+
+        System.out.println("id -> " + e.getId());
+        System.out.println("izena -> " + e.getRealName());
+        ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName());
+
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);
         FlickrAPI.getInstantzia().setAuthStore(this.authStore);

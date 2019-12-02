@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +28,14 @@ public class KautotuKud implements Initializable {
   @FXML
   private ComboBox hizkuntzAldaketa;
 
+  @FXML
+  private ComboBox zerbitzua;
+
+  @FXML
+  private Label zerbitzuaEzDago = new Label();
+
+
+
   private AuthStore authStore;
 
 
@@ -43,17 +52,23 @@ public class KautotuKud implements Initializable {
 
     this.authStore = fs.getAuthStore();
 
-    if (this.authStore != null) {
-        Auth auth = this.authStore.retrieve(fs.getNsid());
-        if (auth == null || logout == true) {
-            this.logout = false;
-            this.authorize(); // throws Exception
-        } else {
-            rc.setAuth(auth);
-            this.mainApp.pantailaNagusiaErakutsi();
+    if ("Flickr".equals(zerbitzua.getValue())) {
+          zerbitzuaEzDago.setText("");
+          if (this.authStore != null) {
+              Auth auth = this.authStore.retrieve(fs.getNsid());
+              if (auth == null || logout == true) {
+                  this.logout = false;
+                  this.authorize(); // throws Exception
+              } else {
+                  rc.setAuth(auth);
+                  this.mainApp.pantailaNagusiaErakutsi();
+              }
           }
-    }
-
+      } else {
+          System.out.println("Zerbitzu hau ez dago eskuragarri!!!");
+          zerbitzuaEzDago.setText("Zerbitzu hau ez dago eskuragarri!!!");
+          // EGIN PANTAILA ESATEN DUENA
+      }
   }
 
     private void authorize() throws IOException, FlickrException {
@@ -87,6 +102,15 @@ public class KautotuKud implements Initializable {
 
 
       hizkuntzAldaketa.getItems().addAll(hizkuntzak);
+
+      List<String> zerbitzuak = new ArrayList<>();
+      zerbitzuak.add("Google Fotos");
+      zerbitzuak.add("Flickr");
+      zerbitzuak.add("Instagram");
+
+      zerbitzua.getItems().addAll(zerbitzuak);
+
+
 
   }
 

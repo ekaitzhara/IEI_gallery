@@ -1,98 +1,88 @@
 package ehu.isad.db;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.Properties;
+
 
 public class DBKudeatzaile {
 
-    Connection conn = null;
+	Connection conn = null;
 
-    private void conOpen() throws IOException {
+	private void conOpen() {
+		try {
 
-        Properties properties = null;
-        InputStream in = null;
+			String url = "jdbc:sqlite::resource:dasiapp_db.sqlite";
+			//String path=this.getClass().getResource("/eurobisioa.db").getPath();
+			//String url = "jdbc:sqlite:"+ path;
+			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
-        try {
-            in = this.getClass().getResourceAsStream("/setup.properties");
-            properties = new Properties();
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            in.close();
-        }
+			conn = (Connection) DriverManager.getConnection(url);
+			System.out.println("Database connection established");
+		} catch (Exception e) {
+			System.err.println("Cannot connect to database server");
+		}
+	}
 
-        try {
-            String url = "jdbc:mysql://localhost:3306/";
-            String dbname = "eurobisioa?";
-            String time = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String pk = "&allowPublicKeyRetrieval=true";
-            System.out.println("voy por conexion");
-            Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
-            System.out.println("1");
-            conn = DriverManager.getConnection(url+dbname+time+pk, "dasi2019", "dasi2019");
-            System.out.println("2");
-            conn.setCatalog(properties.getProperty("dbname"));
-            System.out.println("hecho");
 
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private ResultSet query(Statement s, String query) {
+	private void conClose() {
 
-        ResultSet rs = null;
+		if (conn != null)
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-        try {
-            s.executeQuery(query);
-            rs = s.getResultSet();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		System.out.println("Database connection terminated");
 
-        return rs;
-    }
+	}
 
-    // singleton patroia
-    private static DBKudeatzaile instantzia = new DBKudeatzaile();
+	private ResultSet query(Statement s, String query) {
 
-    private DBKudeatzaile() {
-        try {
-            this.conOpen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		ResultSet rs = null;
 
-    public static DBKudeatzaile getInstantzia() {
-        return instantzia;
-    }
+		try {
+			rs = s.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-    public ResultSet execSQL(String query) {
-        int count = 0;
-        Statement s = null;
-        ResultSet rs = null;
-        try {
-            s = (Statement) conn.createStatement();
-            if (query.toLowerCase().indexOf("select") == 0) {
-                // select agindu bat
-                rs = this.query(s, query);
-            } else {
-                // update, delete, create agindu bat
-                count = s.executeUpdate(query);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return rs;
-    }
+		return rs;
+	}
+
+	// singleton patroia
+	private static DBKudeatzaile instantzia = new DBKudeatzaile();
+
+	private DBKudeatzaile() {
+		this.conOpen();
+
+	}
+
+	public static DBKudeatzaile getInstantzia() {
+		return instantzia;
+	}
+
+	public ResultSet execSQL(String query) {
+		int count = 0;
+		Statement s = null;
+		ResultSet rs = null;
+
+		try {
+			s = (Statement) conn.createStatement();
+			if (query.toLowerCase().indexOf("select") == 0) {
+				// select agindu bat
+				rs = this.query(s, query);
+
+			} else {
+				// update, delete, create agindu bat
+				count = s.executeUpdate(query);
+				System.out.println(count + " rows affected");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return rs;
+	}
 }

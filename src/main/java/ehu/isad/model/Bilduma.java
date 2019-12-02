@@ -1,5 +1,6 @@
 package ehu.isad.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Bilduma {
@@ -7,14 +8,23 @@ public class Bilduma {
 
     private String izena;
     private ArrayList<Argazkia> argazkiak = null;
-    private Integer id = 0;
+    private String id;
+    private String deskribapena;
+    private String sortzaileID;
 
-    private static Integer autoinc = 0;
-
-    public Bilduma(String izena) {
+    public Bilduma(String izena, String id, String deskribapena, String sortzaileID) {
         this.izena = izena;
-        this.id = autoinc++;
+        this.id = id;
+        this.deskribapena = deskribapena;
+        this.sortzaileID = sortzaileID;
+        argazkiak = new ArrayList<Argazkia>();
     }
+
+    public void argazkiaGehitu(String izena, String deskribapena, String size, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
+        argazkiak.add(new Argazkia(izena, deskribapena, size, data, idFLickr, gogokoaDa, sortzaileID));
+    }
+
+
 
     public void argazkiaSartu(Argazkia berria) {
         argazkiak.add(berria);
@@ -40,4 +50,8 @@ public class Bilduma {
     }
 
     */
+
+    public String getIzena() {
+        return izena;
+    }
 }

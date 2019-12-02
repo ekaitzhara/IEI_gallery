@@ -87,12 +87,9 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ListaBildumak bildumak = ListaBildumak.getNireBilduma();
-        bildumak.bildumaSartu("bil1");
-        bildumak.bildumaSartu("bil2");
-        bildumak.bildumaSartu("bil3");
 
-        List<Bilduma> bil = bildumak.lortuBildumak();
+        List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
+
         List<String> str = new ArrayList<>();
         str.add("bil1");
         str.add("bil2");

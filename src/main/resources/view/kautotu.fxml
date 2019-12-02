@@ -21,7 +21,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="zerbitzua" prefWidth="150.0" />
+                  <Label fx:id="zerbitzuaEzDago" />
                </children>
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
