@@ -94,11 +94,16 @@ public class KautotuFlickrKud implements Initializable {
     //This method is called upon fxml load
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.authStore = FlickrAPI.getInstantzia().getAuthStore();
+        FlickrAPI api = FlickrAPI.getInstantzia();
+        try {
 
-        this.authInterface = FlickrAPI.getInstantzia().getFlickr().getAuthInterface();
-        this.requestToken = authInterface.getRequestToken();
+            this.authStore = api.getAuthStore();
+            this.authInterface = api.getFlickr().getAuthInterface();
+            this.requestToken = authInterface.getRequestToken();
+            this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
+        } catch (Exception e){
+            api.conectionError();
+        }
 
-        this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
     }
 }

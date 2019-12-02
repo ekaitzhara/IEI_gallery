@@ -6,19 +6,18 @@ public class Bilduma {
 
 
     private String izena;
-    private ArrayList<Argazkia> argazkiak;
-    private Integer id;
+    private ArrayList<Argazkia> argazkiak = null;
+    private Integer id = 0;
 
-    private static Integer autoinc;
+    private static Integer autoinc = 0;
 
-    public Bilduma(String izena, ArrayList<Argazkia> argazkiak) {
+    public Bilduma(String izena) {
         this.izena = izena;
-        this.argazkiak = argazkiak;
         this.id = autoinc++;
     }
 
-    public void argazkiaIgo() {
-
+    public void argazkiaSartu(Argazkia berria) {
+        argazkiak.add(berria);
     }
 
     /*

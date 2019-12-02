@@ -29,6 +29,8 @@ public class FlickrAPI {
     private final String secret;
     private final String apiKey;
 
+    private Boolean conection = true;
+
     private AuthStore authStore;
 
     // Singleton patroia
@@ -95,10 +97,13 @@ public class FlickrAPI {
         return bildumak;
     }
 
+    public Boolean hasConection(){ return conection; }
+    public void conectionError(){conection = false;}
+
     public void BildumaSortu(){
 
     }
-    public void ArgazkiaIgo(){
+    public void ArgazkiaIgo(String path){
         Uploader up = FlickrAPI.getInstantzia().getFlickr().getUploader();
 
         UploadMetaData umd = new UploadMetaData();
@@ -108,7 +113,7 @@ public class FlickrAPI {
         umd.setDescription("Funtzionatzen du?");
 
         // Sartu argazkia
-        File pathToFile = new File("/home/ekaitzhara/Imágenes/San-Mames.jpg");
+        File pathToFile = new File(path);
 
         try {
             Image argazki = ImageIO.read(pathToFile);
@@ -124,15 +129,12 @@ public class FlickrAPI {
 
     }
 
-    public void ArgazkiaDeskargatu(){
+    public void ArgazkiaDeskargatu(String filename){
 
         String argazkiID = null; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
 
         //PhotosetsInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface(); // lortu bildumak kudeatzeko interfazea
         PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface(); // lortu argazkiak kudeatzeko interfazea
-
-
-
         URL url = null;
         try {
             Photo p = photoInt.getInfo(argazkiID, FlickrAPI.getInstantzia().getSecret());
@@ -167,12 +169,11 @@ public class FlickrAPI {
 
         // Gure ordenagailuan argazki berri bat sortuko dugu
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\anderdu\\Downloads\\a.jpg");
-        String fileName = "a";
         String home = System.getProperty("user.home");
         char slash =  File.separatorChar;
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(home + slash + "Downloads" +slash+ fileName + ".jpg");
+            fos = new FileOutputStream(home + slash + "Downloads" +slash+ filename + ".jpg");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
