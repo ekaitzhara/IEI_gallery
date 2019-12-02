@@ -1,20 +1,19 @@
 package ehu.isad.ui;
 
-import com.flickr4java.flickr.FlickrException;
-import com.flickr4java.flickr.RequestContext;
-import com.flickr4java.flickr.auth.Auth;
-import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,10 +25,14 @@ public class ArgazkiaIgoKud implements Initializable {
     // Reference to the main application.
     private Main mainApp;
 
-    private boolean logout = false;
+    @FXML
+    private BorderPane bordes;
 
     @FXML
     private ComboBox comboBox = new ComboBox();
+
+    @FXML
+    private Text texto;
 
     public void setMainApp(Main main) {
         this.mainApp = main;
@@ -77,6 +80,8 @@ public class ArgazkiaIgoKud implements Initializable {
             }
 
         }
+        texto.setText("aaaa");
+        ui1();
     }
 
 
@@ -97,7 +102,18 @@ public class ArgazkiaIgoKud implements Initializable {
 
     }
 
-    public void logoutAktibatu() {
-        this.logout = true;
+    private void ui1(){
+        loadUI("ui1");
     }
+
+    private void loadUI(String ui){
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource( "/view/"+ ui + ".fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bordes.setLeft(root);
+    }
+
 }
