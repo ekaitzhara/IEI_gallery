@@ -72,9 +72,7 @@ public class ListaBildumak {
 
         while (sets.hasNext()) { // bildumak dauden bitartean, zeharkatu
             Photoset set = (Photoset) sets.next(); // bilduma lortu
-
-
-            aux = new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab);
+            lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab));
 
             PhotoList photos = pi.getPhotos(set.getId(), 500, 1);  // bildumaren lehenengo 500 argazki lortu
             allPhotos.put(set.getTitle(), photos);  // txertatu (bilduma --> bere argazkiak)
@@ -96,6 +94,9 @@ public class ListaBildumak {
 
         while (allIter.hasNext()) {
             String setTitle = (String) allIter.next();  // bildumaren hurrengo izena lortu
+
+            aux = this.emanBildumaIzenarekin(setTitle);
+
             System.out.println("Bilduma:" + setTitle);
             Collection currentSet = allPhotos.get(setTitle); // bildumaren argazkiak lortu
             Iterator setIterator = currentSet.iterator(); // bildumaren argazkiak zeharkatzeko iteratzailea lortu
@@ -111,5 +112,21 @@ public class ListaBildumak {
             }
         }
 
+    }
+
+    private Bilduma emanBildumaIzenarekin(String titulua) {
+        for(Bilduma bil:lista){
+            if (bil.getIzena().equals(titulua))
+                return bil;
+        }
+        return null;
+    }
+
+    public boolean listaHutsikDago() {
+        return lista.isEmpty();
+    }
+
+    public ArrayList<Bilduma> getLista() {
+        return lista;
     }
 }

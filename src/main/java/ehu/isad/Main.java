@@ -1,5 +1,6 @@
 package ehu.isad;
 
+import com.flickr4java.flickr.FlickrException;
 import ehu.isad.ui.*;
 import ehu.isad.model.*;
 import javafx.application.Application;
@@ -92,6 +93,11 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
+    try {
+      pantailaNagusiKud.hartuEtaGordeDatuakFlickr();
+    } catch (FlickrException e) {
+      e.printStackTrace();
+    }
     stage.setScene(pantailaNagusia);
     stage.show();
   }
