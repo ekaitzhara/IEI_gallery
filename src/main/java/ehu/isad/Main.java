@@ -93,6 +93,7 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
+    pantailaNagusiKud.jarriErabiltzaileIzena();
     try {
       pantailaNagusiKud.hartuEtaGordeDatuakFlickr();
     } catch (FlickrException e) {
@@ -135,5 +136,10 @@ public class Main extends Application {
 
   public void logoutAktibatu() {
     kautotuKud.logoutAktibatu();
+  }
+
+  public void syncEginLehenAldia() {
+    pantailaNagusiKud.jarriErabiltzaileIzena();
+    pantailaNagusiKud.syncEgin();
   }
 }
