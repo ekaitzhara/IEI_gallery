@@ -82,6 +82,13 @@ public class PantailaNagusiKud implements Initializable {
 
   public void gordeErabiltzaileIzena(String izena) { this.erabiltzaileIzena.setText(erabiltzaileID); }
 
+  public void updateApi(){
+      System.out.println("update click");
+  }
+  public void programaItxi(){
+      System.out.println("itxi click");
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
