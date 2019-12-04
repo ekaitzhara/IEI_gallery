@@ -82,7 +82,8 @@ public class KautotuFlickrKud implements Initializable {
 
         System.out.println("id -> " + e.getId());
         System.out.println("izena -> " + e.getRealName());
-        //ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName());
+        ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName());
+        this.mainApp.syncEginLehenAldia();
 
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);

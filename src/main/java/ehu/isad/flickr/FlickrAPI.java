@@ -37,6 +37,8 @@ public class FlickrAPI {
     private static FlickrAPI instantzia = new FlickrAPI();
 
     public static FlickrAPI getInstantzia() {
+        if (instantzia == null)
+            instantzia = new FlickrAPI();
         return instantzia;
     }
 
@@ -187,5 +189,7 @@ public class FlickrAPI {
         }
     }
 
-
+    public void ezabatuFlickrInstantzia() {
+        instantzia = null;
+    }
 }

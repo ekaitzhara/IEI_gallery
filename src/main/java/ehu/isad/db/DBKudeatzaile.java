@@ -10,7 +10,7 @@ public class DBKudeatzaile {
 	private void conOpen() {
 		try {
 
-			String url = "jdbc:sqlite::resource:dasiapp_db.sqlite";
+			String url = "jdbc:sqlite::resource:dasiapp.db";
 			//String path=this.getClass().getResource("/eurobisioa.db").getPath();
 			//String url = "jdbc:sqlite:"+ path;
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
@@ -19,6 +19,7 @@ public class DBKudeatzaile {
 			System.out.println("Database connection established");
 		} catch (Exception e) {
 			System.err.println("Cannot connect to database server");
+			e.printStackTrace();
 		}
 	}
 

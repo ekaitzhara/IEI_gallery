@@ -45,6 +45,7 @@ public class PantailaNagusiKud implements Initializable {
   @FXML
   public void onClickLogOut(ActionEvent actionEvent) {
 
+      FlickrAPI.getInstantzia().ezabatuFlickrInstantzia();
       this.mainApp.logoutAktibatu();
       File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
 
@@ -80,12 +81,22 @@ public class PantailaNagusiKud implements Initializable {
     }
 
 
-  public void gordeErabiltzaileIzena(String izena) { this.erabiltzaileIzena.setText(erabiltzaileID); }
+  public void jarriErabiltzaileIzena() {
+      String izena = ErabiltzaileDBKud.getInstantzia().emanIzena();
+      this.erabiltzaileIzena.setText(izena); }
 
-  public void updateApi(){
+  @FXML
+  public void updateApi(ActionEvent actionEvent){
+      syncEgin();
       System.out.println("update click");
   }
-  public void programaItxi(){
+
+    public void syncEgin() {
+
+    }
+
+    @FXML
+  public void programaItxi(ActionEvent actionEvent){
       System.out.println("itxi click");
   }
 
