@@ -91,9 +91,33 @@ public class PantailaNagusiKud implements Initializable {
       System.out.println("update click");
   }
 
-    public void syncEgin() {
+  public void syncEgin() {
 
-    }
+      // 1. zatia
+      // /tmp karpetan dagoen igo Flickr-rera eta Flickr-retik hartu sortu duen id-a sartzeko datu basean (idFlickr)
+      // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
+      // amaitzerakoan tmp-en dagoen ezabatzen du
+
+
+
+      // 2. zatia
+      // deletedRegister.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
+      // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
+      // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
+      // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
+
+
+      // 3. zatia
+      // Datubaseko id guztiak sartzen ditugu ArrayList batean
+      // Gero, Flickr-ren argazkiak hartu eta banan banan konparatu id-ak -->
+      //    --> Flickr-eko argazkia datubasean badago, ArrayList-etik ezabatzen du
+      // Azkenean, Flickr-ren ez dauden argazkiak geratuko dira soilik ArrayList-ean
+      // Argazki horiek (sobratzen direnak) datubasetik eta datu egituratik (ListaBildumak) ezabatzen ditugu
+
+
+
+
+  }
 
     @FXML
   public void programaItxi(ActionEvent actionEvent){
