@@ -141,4 +141,5 @@ public class ListaBildumak {
     public ArrayList<Bilduma> getLista() {
         return lista;
     }
+
 }
