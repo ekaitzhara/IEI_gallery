@@ -92,7 +92,7 @@ public class PantailaNagusiKud implements Initializable {
     public void hartuEtaGordeDatuakFlickr() throws FlickrException {
       ArrayList<Bilduma> bildumak = ListaBildumak.getNireBilduma().getLista();
         if(ListaBildumak.getNireBilduma().listaHutsikDago())
-            ListaBildumak.getNireBilduma().listaBete();
+            ListaBildumak.getNireBilduma().listaBete(); // paras descargar las bildumas
         bildumak = ListaBildumak.getNireBilduma().getLista();
         System.out.println("ListaBildumak bete egin da");
         // Hartu datu guztiak singleton-tik eta sartu taulan

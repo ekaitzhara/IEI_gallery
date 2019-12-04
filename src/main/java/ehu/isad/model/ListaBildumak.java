@@ -4,6 +4,7 @@ import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
+import com.flickr4java.flickr.photos.Size;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.db.ErabiltzaileDBKud;
@@ -72,22 +73,23 @@ public class ListaBildumak {
 
         while (sets.hasNext()) { // bildumak dauden bitartean, zeharkatu
             Photoset set = (Photoset) sets.next(); // bilduma lortu
-            lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab));
-
+            lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab)); // aqui sumamos las bildumas exisitentes, pero falta crear la bilduma de fotos sin bilduma
+            // set es la bilduma
             PhotoList photos = pi.getPhotos(set.getId(), 500, 1);  // bildumaren lehenengo 500 argazki lortu
             allPhotos.put(set.getTitle(), photos);  // txertatu (bilduma --> bere argazkiak)
         }
-
+        // Para encontrar lista de fotos sin bilduma
         int notInSetPage = 1;  // argazki batzuk bilduma batean sartu gabe egon daitezke...
         Collection notInASet = new ArrayList(); // horiek ere jaso nahi ditugu
         while (true) { // lortu bildumarik gabeko argazkiak, 50naka
             Collection nis = photoInt.getNotInSet(50, notInSetPage);
-            notInASet.addAll(nis);
+            notInASet.addAll(nis); //va cogiendo de 50 en 50 y hace add a "liburutegi" notInASet
             if (nis.size() < 50) {
                 break;
             }
             notInSetPage++;
         }
+        lista.add(new Bilduma("NotInASet", "0000", "", erab));
         allPhotos.put("NotInASet", notInASet); //  txertatu ( NotInASet --> bildumarik gabeko argazkiak)
 
         Iterator allIter = allPhotos.keySet().iterator(); // datu guztiak ditugu. bildumen izenak zeharkatzeko iteratzailea lortu
@@ -104,8 +106,18 @@ public class ListaBildumak {
             while (setIterator.hasNext()) { // bildumaren argazkiak zeharkatu
 
                 Photo p = (Photo) setIterator.next();
+                String pTitle = p.getTitle();
+                String pDescription = p.getDescription();
+                String pUrl = p.getSmallUrl();
 
-                aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
+
+                Date pDate = p.getDateAdded();
+                String pId = p.getId();
+                Boolean pFavourite = p.isFavorite();
+
+
+                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl);
+                //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
                 String title = p.getTitle();
                 System.out.println("\t"+title);

@@ -20,8 +20,8 @@ public class Bilduma {
         argazkiak = new ArrayList<Argazkia>();
     }
 
-    public void argazkiaGehitu(String izena, String deskribapena, String size, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
-        argazkiak.add(new Argazkia(izena, deskribapena, size, data, idFLickr, gogokoaDa, sortzaileID));
+    public void argazkiaGehitu(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl) {
+        argazkiak.add(new Argazkia(izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl));
     }
 
 
