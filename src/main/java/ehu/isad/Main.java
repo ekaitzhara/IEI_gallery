@@ -116,7 +116,7 @@ public class Main extends Application {
     stage.show();
   }
 
-  public void kautotu2zatiaerakutsi() {
+  public void kautotuFlickrErakutsi() {
     stage.setScene(eAccessTokenLortu);
     stage.show();
   }

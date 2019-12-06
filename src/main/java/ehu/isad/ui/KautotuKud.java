@@ -72,7 +72,7 @@ public class KautotuKud implements Initializable {
   }
 
     private void authorize() throws IOException, FlickrException {
-        mainApp.kautotu2zatiaerakutsi();
+        mainApp.kautotuFlickrErakutsi();
     }
 
     @FXML

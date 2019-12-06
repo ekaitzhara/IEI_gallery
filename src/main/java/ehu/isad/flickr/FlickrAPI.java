@@ -107,7 +107,7 @@ public class FlickrAPI {
     }
 
     public String argazkiaIgo(String path, String titulua){
-        Uploader up = FlickrAPI.getInstantzia().getFlickr().getUploader();
+        Uploader up = flickr.getUploader();
 
         UploadMetaData umd = new UploadMetaData();
         // Sartu argazkiaren izena
@@ -138,8 +138,8 @@ public class FlickrAPI {
 
         String argazkiID = null; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
 
-        //PhotosetsInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface(); // lortu bildumak kudeatzeko interfazea
-        PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface(); // lortu argazkiak kudeatzeko interfazea
+        //PhotosetsInterface pi = flickr.getPhotosetsInterface(); // lortu bildumak kudeatzeko interfazea
+        PhotosInterface photoInt = flickr.getPhotosInterface(); // lortu argazkiak kudeatzeko interfazea
         URL url = null;
         try {
             Photo p = photoInt.getInfo(argazkiID, FlickrAPI.getInstantzia().getSecret());

@@ -3,6 +3,7 @@ package ehu.isad.ui;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotosInterface;
+import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
@@ -95,13 +96,32 @@ public class PantailaNagusiKud implements Initializable {
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
 
-      syncTMPZatia();
+      //syncTMPZatia();
 
       // 2. zatia
       // deletedRegister.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
       // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
       // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
       // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
+      String txtPath = this.getClass().getResource("/data/deletedRegister.txt").getPath();
+      PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+      Scanner sArg = new Scanner(txtPath);
+
+
+      while(sArg.hasNextLine()) {
+          String argazkiarenID = sArg.nextLine();
+          try {
+              // DELETE baimenak jarri behar dira getAuthorizationURL zatian
+              // ezin dira baimenak aldatu, beste auth bat egin behar da??????
+              photoInt.delete(argazkiarenID);
+          } catch (FlickrException e) { e.printStackTrace(); }
+      }
+      sArg.close();
+      File txt = new File(txtPath);
+      txt.delete();
+      txt = new File(txtPath);
+
+
 
 
       // 3. zatia
@@ -152,6 +172,7 @@ public class PantailaNagusiKud implements Initializable {
                                   argazkiIzena = line.split(",")[0];
                                   idArgazkiDB = line.split(",")[1];
                               }
+                              s.close();
                           } catch (FileNotFoundException e) { e.printStackTrace(); }
   //                        System.out.println(a + " argazkiaren datuak");
   //                        System.out.println("Argazkiaren izena => " + argazkiIzena);
