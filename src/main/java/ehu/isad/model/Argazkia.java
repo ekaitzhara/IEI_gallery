@@ -25,4 +25,8 @@ public class Argazkia {
         this.sortzaileID = sortzaileID;
         this.url = pUrl;
     }
+
+    public boolean idFlickrHauDu(String pIdFlickr) {
+        return this.idFLickr.equals(pIdFlickr);
+    }
 }

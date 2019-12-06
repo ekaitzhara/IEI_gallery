@@ -54,4 +54,16 @@ public class Bilduma {
     public String getIzena() {
         return izena;
     }
+
+    public Argazkia bilatuArgazkiaIdFLickrrekin(String idFlickr) {
+        for (Argazkia ar : argazkiak) {
+            if (ar.idFlickrHauDu(idFlickr))
+                return ar;
+        }
+        return null;
+    }
+
+    public void ezabatuArgazkia(Argazkia a) {
+        this.argazkiak.remove(a);
+    }
 }

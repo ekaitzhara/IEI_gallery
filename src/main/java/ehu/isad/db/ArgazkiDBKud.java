@@ -3,6 +3,7 @@ package ehu.isad.db;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ArgazkiDBKud {
 
@@ -50,6 +51,29 @@ public class ArgazkiDBKud {
     public void idFlickrSartu(String idArgazki, String idFLickr) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "UPDATE Argazkia SET idFlickr=" +idFLickr+ " WHERE idArgazkia=" +idArgazki;
+        dbKud.execSQL(query);
+    }
+
+    public ArrayList<String> emanIdFlickrGuztiak() {
+        ArrayList<String> emaitza = new ArrayList<>();
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "SELECT idFlickr FROM Argazkia";
+        ResultSet rs = dbKud.execSQL(query);
+
+        try {
+            while (rs.next()) {
+                Integer idFlickr = rs.getInt("idFlickr");
+                emaitza.add(idFlickr.toString());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emaitza;
+    }
+
+    public void argazkiaEzabatu(String ezabatzekoID) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Argazkia WHERE idFlickr=" +ezabatzekoID;
         dbKud.execSQL(query);
     }
 }

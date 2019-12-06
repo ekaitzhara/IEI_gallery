@@ -142,4 +142,11 @@ public class ListaBildumak {
         return lista;
     }
 
+    public void argazkiaEzabatu(String ezabatzekoID) {
+        for (Bilduma b : lista) {
+            Argazkia a = b.bilatuArgazkiaIdFLickrrekin(ezabatzekoID);
+            if (a != null)
+                b.ezabatuArgazkia(a);
+        }
+    }
 }
