@@ -27,7 +27,7 @@ public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
-  private String deletedRegister = this.getClass().getResource("/data/deletedRegister.txt").getPath();
+  private String deletedRegister = this.getClass().getResource("/data/username/flickr/photosToDelete.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
@@ -104,7 +104,7 @@ public class PantailaNagusiKud implements Initializable {
       syncTMPZatia();
 
       // 2. zatia
-      // deletedRegister.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
+      // photosToDelete.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
       // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
       // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
       // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
@@ -166,7 +166,7 @@ public class PantailaNagusiKud implements Initializable {
 
     private void syncTMPZatia() {
       // tmp-n gordetako argazkiak flickerrera igoko dira
-        String tmpPath = this.getClass().getResource("/tmpFlickr").getPath();
+        String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
 //        System.out.println(tmpPath);
 
         File infoTXT = null;
@@ -181,7 +181,7 @@ public class PantailaNagusiKud implements Initializable {
                 for (String x : txt_rako) {
                     String mota = x.split("\\.")[1];
                     if (mota.equals("txt"))
-                      infoTXT = new File(tmpPath + "infoArgazkiak.txt");
+                      infoTXT = new File(tmpPath + "photosToUpload.txt");
                 }
             }
 

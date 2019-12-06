@@ -3,12 +3,17 @@ package ehu.isad.flickrKud;
 import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.*;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -27,7 +32,8 @@ public class ArgazkiaIgoKud implements Initializable {
     private List<File> igotakoFitxategiak = new ArrayList<>();
 
     @FXML
-    private BorderPane bordes;
+    private TableView igotakoakTabla;
+
 
     @FXML
     private ComboBox comboBox = new ComboBox();
@@ -74,14 +80,29 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @FXML
     private void handleDrop(DragEvent event) throws IOException {
+        System.out.println("se han arrastrado");
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
-        System.out.println(getClass().getResource("tmpFlickr"));
-        //String tempPath = "C:\\Users\\anderdu\\IdeaProjects\\DASIproject\\src\\main\\resources\\temp";
-        String tempPath = "src/main/resources/tmp";
+        String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
         List<File> files = event.getDragboard().getFiles();
         this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
+        System.out.println("archivos subidos");
+        System.out.println(igotakoFitxategiak.toString());
+    /*
+        for(File fitxategi : igotakoFitxategiak){
+            System.out.println(fitxategi.getName());
+            System.out.println(fitxategi.getPath());
+        }
+
+     */
+
+        ObservableList<String> data = FXCollections.observableArrayList();
+        for(File fitxategi : igotakoFitxategiak){
+            data.add(fitxategi.getPath());
+        }
+        //igotakoakTabla.setItems(data);
+        //igotakoakTabla.setItems();
 
 
         //para hacer ventana dinamica
@@ -90,8 +111,15 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("igo iniciado");
+
+
+        //igotakoakTabla.getColumns();
+
 
         List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
 
@@ -127,25 +155,19 @@ public class ArgazkiaIgoKud implements Initializable {
         // argazkien kopia sortu temp fitxategian
         // argazkiak db-ra igo baina id gabe
         // argazkiak datu egituran sartu
+        // igoko beharko den argazki izena eta id txt batean gorde
+
     }
 
     private void uploadPhotosToApi(){
         //this.igotakoFitxategiak
-        argazkiakApiraIgo();
-        aragazkiakApitikDeskargatu();
-    }
-
-    private void argazkiakApiraIgo(){
         //Argazkiak flickr-era igoko dira
-    }
 
-    private void aragazkiakApitikDeskargatu(){
-        //argazkiak flickr-en daudela dakigu
-        //Argazkiak DB-an sartu
     }
 
 
 
+/*
     //por si hace falta, si no se borra
     private void ui1(){
         loadUI("ui1");
@@ -160,5 +182,7 @@ public class ArgazkiaIgoKud implements Initializable {
         }
         bordes.setLeft(root);
     }
+
+ */
 
 }

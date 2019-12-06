@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+
   private Scene eKautoketa;
   private Scene eAccessTokenLortu;
   private Scene pantailaNagusia;
@@ -25,7 +26,6 @@ public class Main extends Application {
   private Parent kautotuFlickrUI;
   private Parent argazkiaIgoUI;
   private Parent bildumaSortuUI;
-  private Parent uploadErrorUI;
 
   private Stage stage;
 
@@ -37,7 +37,6 @@ public class Main extends Application {
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
-
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -86,9 +85,6 @@ public class Main extends Application {
     bildumaSortuKud = loaderBildumaSortu.getController();
     bildumaSortuKud.setMainApp(this);
 
-    //Error dialogs
-    FXMLLoader loaderUploadError = new FXMLLoader(getClass().getResource("/view/error/bildumaSortu.fxml"), bundle);
-    uploadErrorUI = (Parent) loaderUploadError.load();
   }
 
 
@@ -138,9 +134,11 @@ public class Main extends Application {
     stageLag.show();
   }
 
-  public void erroreaBistaratu(String erroreMota){
+  public void erroreaBistaratu(String erroreMota) throws IOException {
     Stage stageLag = new Stage();
     if(erroreMota.equals("UploadError")) {
+      FXMLLoader uploadError = new FXMLLoader(getClass().getResource("/view/bildumaSortu.fxml"));
+      Parent uploadErrorUI = (Parent) uploadError.load();
       stageLag.setTitle("Upload Error");
       stageLag.setScene(new Scene(uploadErrorUI, 450, 450));
     }
