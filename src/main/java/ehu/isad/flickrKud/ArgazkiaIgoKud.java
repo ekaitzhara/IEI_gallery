@@ -1,4 +1,4 @@
-package ehu.isad.ui;
+package ehu.isad.flickrKud;
 
 import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
@@ -59,6 +59,7 @@ public class ArgazkiaIgoKud implements Initializable {
         }catch (Exception e){
             //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
             // errore bat egon dela abisatu erabiltzaileari
+            mainApp.erroreaBistaratu("uploadError");
             uploadPhotosWithoutApi();
         }
 
@@ -76,9 +77,9 @@ public class ArgazkiaIgoKud implements Initializable {
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
-        System.out.println(getClass().getResource("temp"));
+        System.out.println(getClass().getResource("tmpFlickr"));
         //String tempPath = "C:\\Users\\anderdu\\IdeaProjects\\DASIproject\\src\\main\\resources\\temp";
-        String tempPath = "src/main/resources/temp";
+        String tempPath = "src/main/resources/tmp";
         List<File> files = event.getDragboard().getFiles();
         this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
 

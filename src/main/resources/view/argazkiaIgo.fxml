@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bordes" prefHeight="489.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.ui.ArgazkiaIgoKud">
+<BorderPane fx:id="bordes" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="489.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.ArgazkiaIgoKud">
    <center>
       <ImageView fx:id="imageUpload" fitHeight="338.0" fitWidth="377.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>

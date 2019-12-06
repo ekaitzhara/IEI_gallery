@@ -11,10 +11,8 @@ import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
 import ehu.isad.model.*;
-import ehu.isad.ui.KautotuKud;
+import ehu.isad.flickrKud.KautotuKud;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +44,7 @@ public class FlickrAPI {
         Properties properties = null;
         InputStream in = null;
         try {
-            in = KautotuKud.class.getResourceAsStream("/setup.properties");
+            in = KautotuKud.class.getResourceAsStream("/setup.properties.flickr");
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {

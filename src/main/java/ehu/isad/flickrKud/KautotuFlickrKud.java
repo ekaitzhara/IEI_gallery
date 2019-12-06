@@ -1,4 +1,4 @@
-package ehu.isad.ui;
+package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.RequestContext;
@@ -104,7 +104,7 @@ public class KautotuFlickrKud implements Initializable {
             this.authStore = api.getAuthStore();
             this.authInterface = api.getFlickr().getAuthInterface();
             this.requestToken = authInterface.getRequestToken();
-            this.url = authInterface.getAuthorizationUrl(requestToken, Permission.WRITE); // hemen zehaztu baimenak
+            this.url = authInterface.getAuthorizationUrl(requestToken, Permission.DELETE); // hemen zehaztu baimenak
         } catch (Exception e){
             api.conectionError();
         }

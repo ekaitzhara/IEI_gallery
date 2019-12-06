@@ -1,4 +1,4 @@
-package ehu.isad.ui;
+package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;

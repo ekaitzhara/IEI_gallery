@@ -1,4 +1,4 @@
-package ehu.isad.ui;
+package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
@@ -27,6 +27,7 @@ public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
+  private String deletedRegister = this.getClass().getResource("/data/deletedRegister.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
@@ -93,6 +94,7 @@ public class PantailaNagusiKud implements Initializable {
   }
 
   public void syncEgin() {
+      System.out.println("sync empezado");
 
       // 1. zatia
       // /tmp karpetan dagoen igo Flickr-rera eta Flickr-retik hartu sortu duen id-a sartzeko datu basean (idFlickr)
@@ -106,9 +108,9 @@ public class PantailaNagusiKud implements Initializable {
       // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
       // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
       // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
-      String txtPath = this.getClass().getResource("/data/deletedRegister.txt").getPath();
+      System.out.println("llamo a deleted register");
       PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
-      Scanner sArg = new Scanner(txtPath);
+      Scanner sArg = new Scanner(deletedRegister);
 
 
       while(sArg.hasNextLine()) {
@@ -120,9 +122,9 @@ public class PantailaNagusiKud implements Initializable {
           } catch (FlickrException e) { e.printStackTrace(); }
       }
       sArg.close();
-      File txt = new File(txtPath);
+      File txt = new File(deletedRegister);
       txt.delete();
-      txt = new File(txtPath);
+      txt = new File(deletedRegister);
 
 
 
@@ -163,7 +165,8 @@ public class PantailaNagusiKud implements Initializable {
   }
 
     private void syncTMPZatia() {
-        String tmpPath = this.getClass().getResource("/tmp").getPath();
+      // tmp-n gordetako argazkiak flickerrera igoko dira
+        String tmpPath = this.getClass().getResource("/tmpFlickr").getPath();
 //        System.out.println(tmpPath);
 
         File infoTXT = null;

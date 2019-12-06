@@ -6,7 +6,7 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
-import ehu.isad.ui.KautotuKud;
+import ehu.isad.flickrKud.KautotuKud;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class FlickrSortu {
         Properties properties = null;
         InputStream in = null;
         try {
-            in = KautotuKud.class.getResourceAsStream("/setup.properties");
+            in = KautotuKud.class.getResourceAsStream("/setup.properties.flickr");
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {

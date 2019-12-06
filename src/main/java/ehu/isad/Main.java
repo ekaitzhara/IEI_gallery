@@ -1,8 +1,7 @@
 package ehu.isad;
 
 import com.flickr4java.flickr.FlickrException;
-import ehu.isad.ui.*;
-import ehu.isad.model.*;
+import ehu.isad.flickrKud.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -12,7 +11,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -27,6 +25,7 @@ public class Main extends Application {
   private Parent kautotuFlickrUI;
   private Parent argazkiaIgoUI;
   private Parent bildumaSortuUI;
+  private Parent uploadErrorUI;
 
   private Stage stage;
 
@@ -87,6 +86,9 @@ public class Main extends Application {
     bildumaSortuKud = loaderBildumaSortu.getController();
     bildumaSortuKud.setMainApp(this);
 
+    //Error dialogs
+    FXMLLoader loaderUploadError = new FXMLLoader(getClass().getResource("/view/error/bildumaSortu.fxml"), bundle);
+    uploadErrorUI = (Parent) loaderUploadError.load();
   }
 
 
@@ -133,6 +135,15 @@ public class Main extends Application {
     Stage stageLag = new Stage();
     stageLag.setTitle("Argazkia igo");
     stageLag.setScene(new Scene(argazkiaIgoUI, 450, 450));
+    stageLag.show();
+  }
+
+  public void erroreaBistaratu(String erroreMota){
+    Stage stageLag = new Stage();
+    if(erroreMota.equals("UploadError")) {
+      stageLag.setTitle("Upload Error");
+      stageLag.setScene(new Scene(uploadErrorUI, 450, 450));
+    }
     stageLag.show();
   }
 
