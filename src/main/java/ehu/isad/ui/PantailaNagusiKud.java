@@ -3,9 +3,8 @@ package ehu.isad.ui;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.uploader.UploadMetaData;
-import com.flickr4java.flickr.uploader.Uploader;
 import ehu.isad.Main;
+import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.Bilduma;
@@ -14,14 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.*;
-import java.lang.invoke.MethodHandles;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class PantailaNagusiKud implements Initializable {
 
@@ -99,28 +95,7 @@ public class PantailaNagusiKud implements Initializable {
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
 
-      String tmpPath = this.getClass().getResource("/tmp").getPath();
-      System.out.println(tmpPath);
-
-      File tmp = new File(tmpPath);
-      if (tmp.isDirectory()) {
-          String[] argazkiak = tmp.list();
-          if (argazkiak.length != 0) {
-                for (String a : argazkiak) {
-                    String path = tmpPath + a;
-                    String titulua = a.split("\\.")[0];
-//                    System.out.println("Argazki titulua => " + titulua);
-//                    System.out.println("Path => " + path);
-                    FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
-                }
-                System.out.println("Tmp-eko argazki guztiak igo dira");
-          } else
-              System.out.println("Ez dago ezer tmp karpetan");
-      }
-
-      InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(tmpPath);
-
-
+      syncTMPZatia();
 
       // 2. zatia
       // deletedRegister.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
@@ -140,6 +115,76 @@ public class PantailaNagusiKud implements Initializable {
 
 
   }
+
+    private void syncTMPZatia() {
+        String tmpPath = this.getClass().getResource("/tmp").getPath();
+//        System.out.println(tmpPath);
+
+        File infoTXT = null;
+        String argazkiIzena = null;
+        String idArgazkiDB = null;
+
+        File tmp = new File(tmpPath);
+        if (tmp.isDirectory()) {
+            // Lehenik eta behin, argazkien informazio guztia duen File-a hartu behar dugu
+            String[] txt_rako = tmp.list();
+            if (txt_rako.length != 0) {
+                for (String x : txt_rako) {
+                    String mota = x.split("\\.")[1];
+                    if (mota.equals("txt"))
+                      infoTXT = new File(tmpPath + "infoArgazkiak.txt");
+                }
+            }
+
+            // Orain argazkien zatia landuko dugu
+            String[] argazkiak = tmp.list();
+            if (argazkiak.length != 0) {
+                  for (String a : argazkiak) {
+                      String path = tmpPath + a;
+                      String titulua = a.split("\\.")[0];
+                      String artxiboMota = a.split("\\.")[1];
+                      if (!artxiboMota.equals("txt")) {
+                          try {
+                              // txt-an argazki bilatu behar da (ez daudelako ordenaturik)
+                              Scanner s = new Scanner(infoTXT);
+                              while(s.hasNextLine() && !a.equals(argazkiIzena)) {
+                                  String line = s.nextLine();
+                                  argazkiIzena = line.split(",")[0];
+                                  idArgazkiDB = line.split(",")[1];
+                              }
+                          } catch (FileNotFoundException e) { e.printStackTrace(); }
+  //                        System.out.println(a + " argazkiaren datuak");
+  //                        System.out.println("Argazkiaren izena => " + argazkiIzena);
+  //                        System.out.println("Argazkiaren id-a DBrako => " + idArgazkiDB);
+
+  //                      System.out.println("Argazki titulua => " + titulua);
+  //                      System.out.println("Path => " + path);
+
+                          String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
+                          //System.out.println("Flickrren sortu den id-a " + sortuDenFlickrID);
+
+              // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                          //ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
+
+                          PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+                          try {
+                              Photo p = photoInt.getPhoto(sortuDenFlickrID);
+                              //System.out.println(p.getSmallUrl());
+                              FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p.getSmallUrl());
+                          } catch (FlickrException e) { e.printStackTrace(); }
+                      }
+                  }
+                  System.out.println("tmp-eko argazki guztiak igo dira eta resources eta DBn sartu dira");
+                  File[] ezabatzeko = tmp.listFiles();
+                  for (File f : ezabatzeko)
+                      f.delete();
+                  System.out.println("tmp karpetako argazki guztiak ezabatu dira");
+            } else
+                System.out.println("Ez dago ezer tmp karpetan");
+
+
+        }
+    }
 
     @FXML
   public void programaItxi(ActionEvent actionEvent){

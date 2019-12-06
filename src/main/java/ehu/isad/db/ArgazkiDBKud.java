@@ -46,4 +46,10 @@ public class ArgazkiDBKud {
         dbKud.execSQL(query);
 
     }
+
+    public void idFlickrSartu(String idArgazki, String idFLickr) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE Argazkia SET idFlickr=" +idFLickr+ " WHERE idArgazkia=" +idArgazki;
+        dbKud.execSQL(query);
+    }
 }

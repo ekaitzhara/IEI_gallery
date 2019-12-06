@@ -106,7 +106,7 @@ public class FlickrAPI {
 
     }
 
-    public void argazkiaIgo(String path, String titulua){
+    public String argazkiaIgo(String path, String titulua){
         Uploader up = FlickrAPI.getInstantzia().getFlickr().getUploader();
 
         UploadMetaData umd = new UploadMetaData();
@@ -127,11 +127,11 @@ public class FlickrAPI {
          */
 
         try {
-            up.upload(pathToFile, umd);
+            return up.upload(pathToFile, umd);
         } catch (FlickrException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     public void argazkiaDeskargatu(String filename){
@@ -148,13 +148,18 @@ public class FlickrAPI {
 
             // Orain URL-tik argazkia irakurriko dugu
 
-            url = new URL(p.getOriginalUrl());
+            argazkiaJaitsiEtaGorde(filename, p.getOriginalUrl());
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (FlickrException e) {
             e.printStackTrace();
         }
+    }
+
+    public void argazkiaJaitsiEtaGorde(String filename, String argazkiUrl) {
+        URL url = null;
+        try {
+            url = new URL(argazkiUrl);
+        } catch (MalformedURLException e) { e.printStackTrace(); }
 
         byte[] response = null;
         try {
@@ -174,14 +179,12 @@ public class FlickrAPI {
 
         // Gure ordenagailuan argazki berri bat sortuko dugu
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\anderdu\\Downloads\\a.jpg");
-        String home = System.getProperty("user.home");
-        char slash =  File.separatorChar;
+
+        String path = this.getClass().getResource("/data").getPath();
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(home + slash + "Downloads" +slash+ filename + ".jpg");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            fos = new FileOutputStream(path + filename);
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
 
         // eta deskargatu dugun argazkia sartuko dugu bertan
         try {
@@ -190,6 +193,7 @@ public class FlickrAPI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(filename + " argazkia ondo jaitsi eta resources/data karpetan gorde egin da");
     }
 
     public void ezabatuFlickrInstantzia() {
