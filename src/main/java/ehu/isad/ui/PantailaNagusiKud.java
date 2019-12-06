@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*;
+import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -97,6 +98,27 @@ public class PantailaNagusiKud implements Initializable {
       // /tmp karpetan dagoen igo Flickr-rera eta Flickr-retik hartu sortu duen id-a sartzeko datu basean (idFlickr)
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
+
+      String tmpPath = this.getClass().getResource("/tmp").getPath();
+      System.out.println(tmpPath);
+
+      File tmp = new File(tmpPath);
+      if (tmp.isDirectory()) {
+          String[] argazkiak = tmp.list();
+          if (argazkiak.length != 0) {
+                for (String a : argazkiak) {
+                    String path = tmpPath + a;
+                    String titulua = a.split("\\.")[0];
+//                    System.out.println("Argazki titulua => " + titulua);
+//                    System.out.println("Path => " + path);
+                    FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
+                }
+                System.out.println("Tmp-eko argazki guztiak igo dira");
+          } else
+              System.out.println("Ez dago ezer tmp karpetan");
+      }
+
+      InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(tmpPath);
 
 
 

@@ -5,8 +5,10 @@ import ehu.isad.ui.*;
 import ehu.isad.model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -99,8 +101,14 @@ public class Main extends Application {
     } catch (FlickrException e) {
       e.printStackTrace();
     }
+    pantailaNagusiKud.syncEgin();
     stage.setScene(pantailaNagusia);
     stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+
   }
 
   public void kautoketaraEraman() {

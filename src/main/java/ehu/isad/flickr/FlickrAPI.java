@@ -105,23 +105,26 @@ public class FlickrAPI {
     public void BildumaSortu(){
 
     }
-    public void ArgazkiaIgo(String path){
+
+    public void argazkiaIgo(String path, String titulua){
         Uploader up = FlickrAPI.getInstantzia().getFlickr().getUploader();
 
         UploadMetaData umd = new UploadMetaData();
         // Sartu argazkiaren izena
-        umd.setTitle("Proba igo argazki");
+        umd.setTitle(titulua);
         // Sartu deskribapena
-        umd.setDescription("Funtzionatzen du?");
+        umd.setDescription("Tmp-tik igotako argazkia");
 
         // Sartu argazkia
         File pathToFile = new File(path);
 
+        /*
         try {
             Image argazki = ImageIO.read(pathToFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
 
         try {
             up.upload(pathToFile, umd);
@@ -131,7 +134,7 @@ public class FlickrAPI {
 
     }
 
-    public void ArgazkiaDeskargatu(String filename){
+    public void argazkiaDeskargatu(String filename){
 
         String argazkiID = null; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
 
