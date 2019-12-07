@@ -165,11 +165,14 @@ public class PantailaNagusiKud implements Initializable {
   }
 
     private void syncTMPZatia() {
-      // tmp-n gordetako argazkiak flickerrera igoko dira
-        String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
+        // tmp-n gordetako argazkiak flickerrera igoko dira
+
+
+        URL urla = this.getClass().getResource("/data/username/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
+        String tmpPath = urla.getPath();
 //        System.out.println(tmpPath);
 
-        File infoTXT = null;
+        File infoTXT = new File(getClass().getResource("/data/username/flickr/photosToUpload.txt").getPath());
         String argazkiIzena = null;
         String idArgazkiDB = null;
 
