@@ -18,11 +18,11 @@ public class ErabiltzaileDBKud {
         return instantzia;
     }
 
-    public void sartuErabiltzailea(String id, String izen) {
+    public void sartuErabiltzailea(String id, String izen, String zeinAPI) {
         idErab = id;
         izenErab = izen;
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO Erabiltzailea(idErabiltzailea, izena) VALUES('"+ id +"', '"+ izen +"')";
+        String query = "INSERT INTO Erabiltzailea(idErabiltzailea, izena, izenaAPI) VALUES('"+ id +"', '"+ izen +"', '"+zeinAPI+"')";
         dbKud.execSQL(query);
 
         System.out.println(id + " , "  + izen + " sartuta datu basean");

@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class KautotuFlickrKud implements Initializable {
 
+    private static String zerbitzua = null;
+
     private Main mainApp;
     private AuthStore authStore;
     private String url;
@@ -82,7 +84,7 @@ public class KautotuFlickrKud implements Initializable {
 
         System.out.println("id -> " + e.getId());
         System.out.println("izena -> " + e.getRealName());
-        ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName());
+        ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName(), zerbitzua);
         this.mainApp.syncEginLehenAldia();
 
         RequestContext.getRequestContext().setAuth(auth);
@@ -109,5 +111,9 @@ public class KautotuFlickrKud implements Initializable {
             api.conectionError();
         }
 
+    }
+
+    public void gordeZerbitzua(String pZerbitzua) {
+        this.zerbitzua = pZerbitzua;
     }
 }

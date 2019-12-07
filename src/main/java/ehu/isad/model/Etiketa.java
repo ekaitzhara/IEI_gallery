@@ -1,0 +1,22 @@
+package ehu.isad.model;
+
+public class Etiketa {
+
+    private Integer idEtiketa;
+    private String izena;
+
+    private static Integer autoInc = 0;
+
+    public Etiketa(String izena) {
+        this.idEtiketa = autoInc++;
+        this.izena = izena;
+    }
+
+    public Integer getIdEtiketa() {
+        return idEtiketa;
+    }
+
+    public String getIzena() {
+        return izena;
+    }
+}

@@ -20,8 +20,8 @@ public class Bilduma {
         argazkiak = new ArrayList<Argazkia>();
     }
 
-    public void argazkiaGehitu(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl) {
-        argazkiak.add(new Argazkia(izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl));
+    public void argazkiaGehitu(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer favs, Integer comments, ArrayList<Etiketa> etiketaLista) {
+        argazkiak.add(new Argazkia(izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl, favs, comments, etiketaLista));
     }
 
 
@@ -53,6 +53,22 @@ public class Bilduma {
 
     public String getIzena() {
         return izena;
+    }
+
+    public ArrayList<Argazkia> getArgazkiak() {
+        return argazkiak;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDeskribapena() {
+        return deskribapena;
+    }
+
+    public String getSortzaileID() {
+        return sortzaileID;
     }
 
     public Argazkia bilatuArgazkiaIdFLickrrekin(String idFlickr) {

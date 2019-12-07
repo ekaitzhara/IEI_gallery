@@ -33,10 +33,10 @@ public class ArgazkiDBKud {
         return false;
     }
 
-    public void argazkiaSartu(Integer id, String izena, String deskribapena, String size, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
+    public void argazkiaSartu(Integer id, String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO Argazkia(idArgazkia, deskribapena, size, izena, data, sortzaileId, idFlickr, gogokoaDa) " +
-                "VALUES('"+ id +"', '"+ deskribapena +"', '"+size+"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"')";
+        String query = "INSERT INTO Argazkia(idArgazkia, deskribapena, izena, data, sortzaileId, idFlickr, gogokoaDa) " +
+                "VALUES('"+ id +"', '"+ deskribapena +"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"')";
         dbKud.execSQL(query);
     }
 

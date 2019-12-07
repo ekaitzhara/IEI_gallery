@@ -67,12 +67,19 @@ public class KautotuKud implements Initializable {
       } else {
           System.out.println("Zerbitzu hau ez dago eskuragarri!!!");
           zerbitzuaEzDago.setText("Zerbitzu hau ez dago eskuragarri!!!");
-          // EGIN PANTAILA ESATEN DUENA
+          // EGIN PANTAILA ESATEN DUENA RZ DAGOELA ESKURAGARRI
       }
   }
 
     private void authorize() throws IOException, FlickrException {
-        mainApp.kautotuFlickrErakutsi();
+        String zerbitzuIzen = null;
+        if ("Flickr".equals(zerbitzua.getValue()))
+            zerbitzuIzen = "Flickr";
+        else if ("Google Fotos".equals(zerbitzua.getValue()))
+            zerbitzuIzen = "Google Fotos";
+        else if ("Instagram".equals(zerbitzua.getValue()))
+            zerbitzuIzen = "Instagram";
+        mainApp.kautotuFlickrErakutsi(zerbitzuIzen);
     }
 
     @FXML

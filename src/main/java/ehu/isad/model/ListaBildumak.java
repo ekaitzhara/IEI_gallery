@@ -7,7 +7,11 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.Size;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
+import com.flickr4java.flickr.tags.Tag;
+import ehu.isad.db.ArgazkiDBKud;
+import ehu.isad.db.BildumaDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
+import ehu.isad.db.EtiketaDBKud;
 import ehu.isad.flickr.FlickrAPI;
 
 import java.util.*;
@@ -114,9 +118,15 @@ public class ListaBildumak {
                 Date pDate = p.getDateAdded();
                 String pId = p.getId();
                 Boolean pFavourite = p.isFavorite();
+                Integer favs = photoInt.getFavorites(pId, 50,1).size();
+                Integer comments = p.getComments();
+                ArrayList<Etiketa> etiketenLista = new ArrayList<>();
 
+                Collection<Tag> etiketak = p.getTags();
+                for (Tag t : etiketak)
+                    etiketenLista.add(new Etiketa(t.getValue()));
 
-                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl);
+                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
                 String title = p.getTitle();
@@ -147,6 +157,30 @@ public class ListaBildumak {
             Argazkia a = b.bilatuArgazkiaIdFLickrrekin(ezabatzekoID);
             if (a != null)
                 b.ezabatuArgazkia(a);
+        }
+    }
+
+    public List<TaulaDatu> emanTaularakoDatuak() {
+        List<TaulaDatu> emaitza = new ArrayList<>();
+
+
+        return emaitza;
+
+    }
+
+    public void sartuDatuakDBra() {
+        for (Bilduma b : lista) {
+            BildumaDBKud.getInstantzia().bildumaSartu(b.getId(), b.getIzena(), b.getSortzaileID(), b.getDeskribapena());
+            ArrayList<Argazkia> argazkiak = b.getArgazkiak();
+            for (Argazkia a : argazkiak) {
+                ArgazkiDBKud.getInstantzia().argazkiaSartu(a.getId(), a.getIzena(), a.getDeskribapena(), a.getData(), a.getIdFLickr(), a.isGogokoaDa(), a.getSortzaileID());
+                ArgazkiDBKud.getInstantzia().argazkiaBildumanSartu(a.getId(), b.getId());
+                ArrayList<Etiketa> etiketak = a.getEtiketak();
+                for (Etiketa e: etiketak) {
+                    EtiketaDBKud.getInstantzia().etiketaSartu(e.getIdEtiketa(), e.getIzena());
+                    EtiketaDBKud.getInstantzia().etiketaArgazkianSartu(e.getIdEtiketa(), a.getId());
+                }
+            }
         }
     }
 }

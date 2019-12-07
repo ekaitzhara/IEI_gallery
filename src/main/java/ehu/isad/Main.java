@@ -2,6 +2,7 @@ package ehu.isad;
 
 import com.flickr4java.flickr.FlickrException;
 import ehu.isad.flickrKud.*;
+import ehu.isad.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -100,6 +101,7 @@ public class Main extends Application {
       e.printStackTrace();
     }
     pantailaNagusiKud.syncEgin();
+    pantailaNagusiKud.sartuDatuakTaulan();
     stage.setScene(pantailaNagusia);
     stage.show();
 
@@ -114,7 +116,8 @@ public class Main extends Application {
     stage.show();
   }
 
-  public void kautotuFlickrErakutsi() {
+  public void kautotuFlickrErakutsi(String zerbitzua) {
+    kautotuFlickrKud.gordeZerbitzua(zerbitzua);
     stage.setScene(eAccessTokenLortu);
     stage.show();
   }
@@ -157,6 +160,14 @@ public class Main extends Application {
 
   public void syncEginLehenAldia() {
     pantailaNagusiKud.jarriErabiltzaileIzena();
+    try {
+      pantailaNagusiKud.hartuEtaGordeDatuakFlickr();
+    } catch (FlickrException e) {
+      e.printStackTrace();
+    }
+    // ListaBildumako datuak DBra sartu, lehen aldia delako
+    ListaBildumak.getNireBilduma().sartuDatuakDBra();
+    // La primera vez tiene que hacer sync???
     pantailaNagusiKud.syncEgin();
   }
 }

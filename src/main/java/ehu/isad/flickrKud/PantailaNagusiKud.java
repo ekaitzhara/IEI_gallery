@@ -1,27 +1,37 @@
 package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.people.User;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
+import com.flickr4java.flickr.tags.Tag;
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
+import ehu.isad.model.TaulaDatu;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.sql.Date;
+import java.util.*;
 
 public class PantailaNagusiKud implements Initializable {
 
@@ -30,6 +40,34 @@ public class PantailaNagusiKud implements Initializable {
   private String deletedRegister = this.getClass().getResource("/data/username/flickr/photosToDelete.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
+
+  //FXML-ko elementuak
+  @FXML
+  private TableView<TaulaDatu> tbData;
+
+    @FXML
+    private TableColumn<TaulaDatu, Image> argazkia;
+
+    @FXML
+    private TableColumn<TaulaDatu, String> izena;
+
+    @FXML
+    private TableColumn<TaulaDatu, String> etiketak;
+
+    @FXML
+    private TableColumn<TaulaDatu, Date> data;
+
+    @FXML
+    private TableColumn<TaulaDatu, Integer> views;
+
+    @FXML
+    private TableColumn<TaulaDatu, Integer> favs;
+
+    @FXML
+    private TableColumn<TaulaDatu, Integer> comments;
+
+    // add your data here from any source
+    private ObservableList<TaulaDatu> taulaModels;
 
 
   @FXML
@@ -115,11 +153,13 @@ public class PantailaNagusiKud implements Initializable {
 
       while(sArg.hasNextLine()) {
           String argazkiarenID = sArg.nextLine();
-          try {
+          /*try {
               // DELETE baimenak jarri behar dira getAuthorizationURL zatian
               // ezin dira baimenak aldatu, beste auth bat egin behar da??????
               photoInt.delete(argazkiarenID);
           } catch (FlickrException e) { e.printStackTrace(); }
+
+           */
       }
       sArg.close();
       File txt = new File(deletedRegister);
@@ -247,16 +287,66 @@ public class PantailaNagusiKud implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
+      izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
+      etiketak.setCellValueFactory(new PropertyValueFactory<>("etiketak"));
+      data.setCellValueFactory(new PropertyValueFactory<>("data"));
+      views.setCellValueFactory(new PropertyValueFactory<>("views"));
+      favs.setCellValueFactory(new PropertyValueFactory<>("favs"));
+      comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
 
+      argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
+
+      argazkia.setCellFactory(p -> new TableCell<>() {
+          public void updateItem(Image image, boolean empty) {
+              if (image != null && !empty){
+                  final ImageView imageview = new ImageView();
+                  imageview.setFitHeight(25);
+                  imageview.setFitWidth(25);
+                  imageview.setImage(image);
+                  setGraphic(imageview);
+                  setAlignment(Pos.CENTER);
+                  // tbData.refresh();
+              }else{
+                  setGraphic(null);
+                  setText(null);
+              }
+          };
+      });
   }
 
 
     public void hartuEtaGordeDatuakFlickr() throws FlickrException {
-      ArrayList<Bilduma> bildumak = ListaBildumak.getNireBilduma().getLista();
+        /*
+        ArrayList<Bilduma> bildumak = ListaBildumak.getNireBilduma().getLista();
         if(ListaBildumak.getNireBilduma().listaHutsikDago())
             ListaBildumak.getNireBilduma().listaBete(); // paras descargar las bildumas
         bildumak = ListaBildumak.getNireBilduma().getLista();
         System.out.println("ListaBildumak bete egin da");
         // Hartu datu guztiak singleton-tik eta sartu taulan
+         */
+        PhotosInterface p = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+        Photo ph = p.getPhoto("49177576151");
+            Collection<Tag> etiketak = ph.getTags();
+        for (Tag t:etiketak)
+                System.out.println("Etiketa value: " + t.getValue());
+                System.out.println("Komentarioak "+ph.getComments());
+        System.out.println("Media: "+ph.getMedia());
+        System.out.println("GeoData "+ph.getGeoData());
+                    System.out.println("Views " +ph.getViews());
+
+        Collection<User> favs =p.getFavorites("49177576151", 50, 1);
+        for (User u:favs) {
+            System.out.println("Favoritoak " + u.toString());
+        }
+                    System.out.println("Fav count "+favs.size());
+
+
+    }
+
+    public void sartuDatuakTaulan() {
+      this.taulaModels = FXCollections.observableArrayList(
+                ListaBildumak.getNireBilduma().emanTaularakoDatuak()
+      );
+      this.tbData.setItems(taulaModels);
     }
 }

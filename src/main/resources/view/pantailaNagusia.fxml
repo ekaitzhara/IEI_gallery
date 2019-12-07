@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.PantailaNagusiKud">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.PantailaNagusiKud">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="29.0" prefWidth="939.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="%file">
             <items>
@@ -56,14 +56,15 @@
             <ListView prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tbData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="155.0" text="%argazkia" />
-                <TableColumn prefWidth="133.0" text="%izena" />
-                  <TableColumn prefWidth="248.0" text="%etiketak" />
-                  <TableColumn prefWidth="121.0" text="%data" />
-                  <TableColumn prefWidth="66.0" text="%views" />
-                  <TableColumn prefWidth="66.0" text="%favs" />
+                <TableColumn fx:id="argazkia" prefWidth="155.0" text="%argazkia" />
+                <TableColumn fx:id="izena" prefWidth="133.0" text="%izena" />
+                  <TableColumn fx:id="etiketak" prefWidth="248.0" text="%etiketak" />
+                  <TableColumn fx:id="data" prefWidth="103.0" text="%data" />
+                  <TableColumn fx:id="views" prefWidth="61.0" text="%views" />
+                  <TableColumn fx:id="favs" prefWidth="74.0" text="%favs" />
+                  <TableColumn fx:id="comments" prefWidth="104.0" text="\%comments" />
               </columns>
             </TableView>
          </center>
@@ -74,7 +75,7 @@
          <children>
             <Label text="%kaixo">
                <padding>
-                  <Insets left="700.0" />
+                  <Insets left="800.0" />
                </padding>
             </Label>
             <Label fx:id="erabiltzaileIzena" text="erabiltzailea">
