@@ -344,9 +344,13 @@ public class PantailaNagusiKud implements Initializable {
     }
 
     public void sartuDatuakTaulan() {
+      // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
+      String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
       this.taulaModels = FXCollections.observableArrayList(
-                ListaBildumak.getNireBilduma().emanTaularakoDatuak()
+                ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
       );
       this.tbData.setItems(taulaModels);
     }
+
+
 }

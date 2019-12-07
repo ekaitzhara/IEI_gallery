@@ -160,9 +160,9 @@ public class ListaBildumak {
         }
     }
 
-    public List<TaulaDatu> emanTaularakoDatuak() {
+    public List<TaulaDatu> emanTaularakoDatuak(String bilduma) {
         List<TaulaDatu> emaitza = new ArrayList<>();
-
+        // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
 
         return emaitza;
 
