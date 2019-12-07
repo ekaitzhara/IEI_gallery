@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+  public String username;
+  public String usingApi;
 
   private Scene eKautoketa;
   private Scene eAccessTokenLortu;

@@ -12,7 +12,6 @@ import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
 import ehu.isad.model.TaulaDatu;
 import javafx.collections.FXCollections;
@@ -37,7 +36,7 @@ public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
-  private String deletedRegister = this.getClass().getResource("/data/username/flickr/photosToDelete.txt").getPath();
+  private String deletedRegister = this.getClass().getResource("/data/dasi team/flickr/photosToDelete.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
@@ -208,11 +207,11 @@ public class PantailaNagusiKud implements Initializable {
         // tmp-n gordetako argazkiak flickerrera igoko dira
 
 
-        URL urla = this.getClass().getResource("/data/username/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
+        URL urla = this.getClass().getResource("/data/dasi team/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
         String tmpPath = urla.getPath();
 //        System.out.println(tmpPath);
 
-        File infoTXT = new File(getClass().getResource("/data/username/flickr/photosToUpload.txt").getPath());
+        File infoTXT = new File(getClass().getResource("/data/dasi team/flickr/photosToUpload.txt").getPath());
         String argazkiIzena = null;
         String idArgazkiDB = null;
 

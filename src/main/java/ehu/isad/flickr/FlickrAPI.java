@@ -44,7 +44,7 @@ public class FlickrAPI {
         Properties properties = null;
         InputStream in = null;
         try {
-            in = KautotuKud.class.getResourceAsStream("/setup.properties.flickr");
+            in = KautotuKud.class.getResourceAsStream("/data/dasi team/flickr/setup.properties");
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {

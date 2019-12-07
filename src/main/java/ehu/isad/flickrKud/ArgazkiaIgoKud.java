@@ -4,14 +4,11 @@ import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.flickrKud.observables.ObsArgazkiIgo;
 import ehu.isad.model.*;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -19,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 import java.io.*;
@@ -93,13 +89,15 @@ public class ArgazkiaIgoKud implements Initializable {
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
-        URL urla = this.getClass().getResource("/data/username/flickr/tmp");
+        URL urla = this.getClass().getResource("/data/dasi team/flickr/tmp");
         String tmpPath = urla.getPath();
         //String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
         List<File> files = event.getDragboard().getFiles();
         this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
         System.out.println("archivos subidos");
         System.out.println(igotakoFitxategiak.toString());
+
+
     /*
         for(File fitxategi : igotakoFitxategiak){
             System.out.println(fitxategi.getName());
@@ -109,8 +107,12 @@ public class ArgazkiaIgoKud implements Initializable {
      */
 
         ObservableList<ObsArgazkiIgo> data = FXCollections.observableArrayList();
+        String filePath = "";
         for(File fitxategi : igotakoFitxategiak){
-            ObsArgazkiIgo obs = new ObsArgazkiIgo(fitxategi.getPath());
+            filePath = fitxategi.getPath();
+            File newFile = new File(tmpPath+fitxategi.getName());
+            copyFileUsingStream(fitxategi,newFile);
+            ObsArgazkiIgo obs = new ObsArgazkiIgo(filePath);
             data.add(obs);
         }
 
@@ -129,6 +131,8 @@ public class ArgazkiaIgoKud implements Initializable {
         //para hacer ventana dinamica
         //texto.setText("aaaa");
         //ui1();
+
+        //Actualizar texto estado para que diga que ha pasado
     }
 
 

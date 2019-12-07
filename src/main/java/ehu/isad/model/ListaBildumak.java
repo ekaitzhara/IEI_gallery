@@ -17,6 +17,8 @@ import ehu.isad.flickr.FlickrAPI;
 import java.util.*;
 
 public class ListaBildumak {
+    //private
+
     private static ListaBildumak nireBilduma = null;
     private ArrayList<Bilduma> lista = null;
 
