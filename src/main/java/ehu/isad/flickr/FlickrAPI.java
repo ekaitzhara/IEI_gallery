@@ -3,6 +3,7 @@ package ehu.isad.flickr;
 import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
+import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
@@ -115,7 +116,8 @@ public class FlickrAPI {
 
         // Sartu argazkia
         File pathToFile = new File(path);
-
+        String key = getFlickr().getApiKey();
+        Auth auth =  getFlickr().getAuth();
         /*
         try {
             Image argazki = ImageIO.read(pathToFile);
@@ -146,13 +148,14 @@ public class FlickrAPI {
 
             // Orain URL-tik argazkia irakurriko dugu
 
-            argazkiaJaitsiEtaGorde(filename, p.getOriginalUrl());
+            downloadFileWithUrl(filename, p.getOriginalUrl());
 
         } catch (FlickrException e) {
             e.printStackTrace();
         }
     }
 
+    /*
     public void argazkiaJaitsiEtaGorde(String filename, String argazkiUrl) {
         URL url = null;
         try {
@@ -197,24 +200,18 @@ public class FlickrAPI {
         System.out.println(filename + " argazkia ondo jaitsi eta resources/data karpetan gorde egin da");
     }
 
-    public void downloadFileWithUrl(String url,File dest){
-        /*
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            os = new FileOutputStream(dest);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        } finally {
-            is.close();
-            os.close();
-        }
+     */
 
-         */
+    public void downloadFileWithUrl(String url, String dest){
+
+        try (BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
+             FileOutputStream fileOS = new FileOutputStream(dest)) {
+            byte data[] = new byte[1024];
+            int byteContent;
+            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+                fileOS.write(data, 0, byteContent);
+            }
+        } catch (IOException e) { }
     }
 
     public void ezabatuFlickrInstantzia() {

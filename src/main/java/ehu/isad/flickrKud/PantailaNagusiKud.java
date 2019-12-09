@@ -246,12 +246,14 @@ public class PantailaNagusiKud implements Initializable {
                           PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
 
                           try {
-                              Photo p2 = photoInt.getPhoto("49193774041");
-                              String url = p2.getSmallUrl();
-                              FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p2.getSmallUrl());
+                              //Photo p = photoInt.getPhoto(sortuDenFlickrID);
+                              Photo p2 = photoInt.getPhoto("49195028868");
+                              String savePath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak/").getPath()+a;
+                              String eoo = "C:/Users/anderdu/IdeaProjects/DASIproject/build/resources/main/data/dasiteam/flickr/argazkiak/thor-god-of-thunder-4k-a1.jpg";
+                              FlickrAPI.getInstantzia().downloadFileWithUrl(eoo, p2.getSmallUrl());
 
                               //Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                              //FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p.getSmallUrl());
+                              //FlickrAPI.getInstantzia().downloadFileWithUrl(a, p.getSmallUrl());
                           } catch (FlickrException e) { e.printStackTrace(); }
                       }
                   }
