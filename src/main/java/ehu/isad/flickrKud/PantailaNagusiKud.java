@@ -12,6 +12,7 @@ import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
+import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
 import ehu.isad.model.TaulaDatu;
 import javafx.collections.FXCollections;
@@ -321,14 +322,16 @@ public class PantailaNagusiKud implements Initializable {
 
 
     public void hartuEtaGordeDatuakFlickr() throws FlickrException {
-        /*
+
         ArrayList<Bilduma> bildumak = ListaBildumak.getNireBilduma().getLista();
         if(ListaBildumak.getNireBilduma().listaHutsikDago())
             ListaBildumak.getNireBilduma().listaBete(); // paras descargar las bildumas
         bildumak = ListaBildumak.getNireBilduma().getLista();
         System.out.println("ListaBildumak bete egin da");
         // Hartu datu guztiak singleton-tik eta sartu taulan
-         */
+
+
+        /*
         PhotosInterface p = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
         Photo ph = p.getPhoto("49177576151");
             Collection<Tag> etiketak = ph.getTags();
@@ -344,7 +347,7 @@ public class PantailaNagusiKud implements Initializable {
             System.out.println("Favoritoak " + u.toString());
         }
                     System.out.println("Fav count "+favs.size());
-
+         */
 
     }
 
