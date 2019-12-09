@@ -15,11 +15,12 @@ public class Argazkia {
     private String url;
     private Integer favs;
     private Integer komentarioKop;
+    private Integer views;
     private ArrayList<Etiketa> etiketak;
 
     private static Integer autoinc = 0;
 
-    public Argazkia(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista) {
+    public Argazkia(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews) {
         this.izena = izena;
         this.deskribapena = deskribapena;
         this.id = autoinc++;
@@ -30,6 +31,7 @@ public class Argazkia {
         this.url = pUrl;
         this.favs = pFavs;
         this.komentarioKop = pKomentario;
+        this.views = pViews;
         this.etiketak = etiketaLista;
     }
 
@@ -81,7 +83,18 @@ public class Argazkia {
         return etiketak;
     }
 
-    public static Integer getAutoinc() {
-        return autoinc;
+    public Integer getViews() {
+        return views;
+    }
+
+    public String emanStringEtiketak() {
+        String emaitza = "";
+        int n = 0;
+        for (int i = 0; i < etiketak.size() - 1; i++) {
+            emaitza += etiketak.get(i).getIzena() + ", ";
+            n = i;
+        }
+        emaitza += etiketak.get(n).getIzena();
+        return emaitza;
     }
 }

@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,9 +41,9 @@ public class PantailaNagusiKud implements Initializable {
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
-  //FXML-ko elementuak
-  @FXML
-  private TableView<TaulaDatu> tbData;
+    //FXML-ko elementuak
+    @FXML
+    private TableView<TaulaDatu> tbData;
 
     @FXML
     private TableColumn<TaulaDatu, Image> argazkia;
@@ -65,8 +66,12 @@ public class PantailaNagusiKud implements Initializable {
     @FXML
     private TableColumn<TaulaDatu, Integer> comments;
 
+    @FXML
+    private ListView bildumenLista = new ListView();
+
     // add your data here from any source
     private ObservableList<TaulaDatu> taulaModels;
+    private ObservableList bildumaModel;
 
 
   @FXML
@@ -126,11 +131,12 @@ public class PantailaNagusiKud implements Initializable {
 
   @FXML
   public void updateApi(ActionEvent actionEvent){
-      syncEgin();
+      //syncEgin();
       System.out.println("update click");
   }
 
-  public void syncEgin() {
+  @FXML
+  public void syncEgin(ActionEvent actionEvent) {
       System.out.println("sync empezado");
 
       // 1. zatia
@@ -342,13 +348,26 @@ public class PantailaNagusiKud implements Initializable {
 
     }
 
+    public void sartuBildumakListan() {
+
+      List<String> bildumenIzenak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
+      this.bildumenLista.getItems().addAll(bildumenIzenak);
+
+    }
+
     public void sartuDatuakTaulan() {
       // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
-      String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
+
+      String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
+      //String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
       this.taulaModels = FXCollections.observableArrayList(
                 ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
       );
       this.tbData.setItems(taulaModels);
+    }
+
+    public void taulaRefreshEgin() {
+      tbData.refresh();
     }
 
 

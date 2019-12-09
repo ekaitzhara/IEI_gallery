@@ -97,12 +97,9 @@ public class Main extends Application {
 
   public void pantailaNagusiaErakutsi() {
     pantailaNagusiKud.jarriErabiltzaileIzena();
-    try {
-      pantailaNagusiKud.hartuEtaGordeDatuakFlickr();
-    } catch (FlickrException e) {
-      e.printStackTrace();
-    }
-    pantailaNagusiKud.syncEgin();
+    ListaBildumak.getNireBilduma().listaBeteDBrekin();
+    //pantailaNagusiKud.syncEgin();
+    pantailaNagusiKud.sartuBildumakListan();
     pantailaNagusiKud.sartuDatuakTaulan();
     stage.setScene(pantailaNagusia);
     stage.show();
@@ -169,7 +166,5 @@ public class Main extends Application {
     }
     // ListaBildumako datuak DBra sartu, lehen aldia delako
     ListaBildumak.getNireBilduma().sartuDatuakDBra();
-    // La primera vez tiene que hacer sync???
-    pantailaNagusiKud.syncEgin();
   }
 }

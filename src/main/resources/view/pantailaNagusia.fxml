@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -53,7 +54,7 @@
    <bottom>
       <BorderPane prefHeight="504.0" prefWidth="908.0" BorderPane.alignment="CENTER">
          <left>
-            <ListView prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="bildumenLIsta" prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
             <TableView fx:id="tbData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -73,9 +74,10 @@
    <center>
       <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
+            <Button fx:id="syncBotoia" mnemonicParsing="false" onAction="#syncEgin" text="Sync" />
             <Label text="%kaixo">
                <padding>
-                  <Insets left="800.0" />
+                  <Insets left="700.0" />
                </padding>
             </Label>
             <Label fx:id="erabiltzaileIzena" text="erabiltzailea">

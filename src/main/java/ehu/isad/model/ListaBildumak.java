@@ -122,13 +122,14 @@ public class ListaBildumak {
                 Boolean pFavourite = p.isFavorite();
                 Integer favs = photoInt.getFavorites(pId, 50,1).size();
                 Integer comments = p.getComments();
+                Integer views = p.getViews();
                 ArrayList<Etiketa> etiketenLista = new ArrayList<>();
 
                 Collection<Tag> etiketak = p.getTags();
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
-                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista);
+                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
                 String title = p.getTitle();
@@ -165,9 +166,23 @@ public class ListaBildumak {
     public List<TaulaDatu> emanTaularakoDatuak(String bilduma) {
         List<TaulaDatu> emaitza = new ArrayList<>();
         // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
-
+        ArrayList<Argazkia> argazkiak = emanArgazkiakBildumaIzenarekin(bilduma);
+        for (Argazkia a : argazkiak) {
+            String argazkiPath = this.getClass().getResource("/data/dasi team/flickr/argazkiak").getPath() + a.getIzena();
+            String etiketak = a.emanStringEtiketak();
+            TaulaDatu t = new TaulaDatu(argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
+            emaitza.add(t);
+        }
         return emaitza;
 
+    }
+
+    private ArrayList<Argazkia> emanArgazkiakBildumaIzenarekin(String bilduma) {
+        for (Bilduma b : this.lista) {
+            if (b.getIzena().equals(bilduma))
+                return b.getArgazkiak();
+        }
+        return null;
     }
 
     public void sartuDatuakDBra() {
@@ -184,5 +199,9 @@ public class ListaBildumak {
                 }
             }
         }
+    }
+
+    public void listaBeteDBrekin() {
+        // ListaBildumak betetzen du DBko datu guztiekin
     }
 }

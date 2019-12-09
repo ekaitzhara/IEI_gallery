@@ -15,8 +15,8 @@ public class TaulaDatu {
     private Integer favs;
     private Integer comments;
 
-    public TaulaDatu(Image argazkia, String izena, String etiketak, Date data, Integer views, Integer favs, Integer comments) {
-        this.argazkia = argazkia;
+    public TaulaDatu(String argazkiapath, String izena, String etiketak, Date data, Integer views, Integer favs, Integer comments) {
+        this.argazkia = new Image(argazkiapath);
         this.izena = izena;
         this.etiketak = etiketak;
         this.data = data;
