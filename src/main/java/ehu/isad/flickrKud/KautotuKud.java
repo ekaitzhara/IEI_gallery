@@ -67,7 +67,7 @@ public class KautotuKud implements Initializable {
       } else {
           System.out.println("Zerbitzu hau ez dago eskuragarri!!!");
           zerbitzuaEzDago.setText("Zerbitzu hau ez dago eskuragarri!!!");
-          // EGIN PANTAILA ESATEN DUENA RZ DAGOELA ESKURAGARRI
+          // EGIN PANTAILA ESATEN DUENA EZ DAGOELA ESKURAGARRI
       }
   }
 

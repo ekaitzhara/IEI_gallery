@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="%file">
             <items>
-                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" onAction="#updateApi" text="%update" />
+                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="%update" />
               <MenuItem fx:id="itxi" mnemonicParsing="false" onAction="#programaItxi" text="%close" />
             </items>
           </Menu>

@@ -87,7 +87,7 @@ public class ArgazkiaIgoKud implements Initializable {
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
-        URL urla = this.getClass().getResource("/data/dasi team/flickr/tmp");
+        URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp");
         String tmpPath = urla.getPath();
         //String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
         List<File> files = event.getDragboard().getFiles();

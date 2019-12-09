@@ -157,6 +157,7 @@ public class Main extends Application {
     kautotuKud.logoutAktibatu();
   }
 
+
   public void syncEginLehenAldia() {
     pantailaNagusiKud.jarriErabiltzaileIzena();
     try {
@@ -166,5 +167,16 @@ public class Main extends Application {
     }
     // ListaBildumako datuak DBra sartu, lehen aldia delako
     ListaBildumak.getNireBilduma().sartuDatuakDBra();
+    pantailaNagusiKud.sartuBildumakListan();
+    pantailaNagusiKud.sartuDatuakTaulan();
+
+    stage.setScene(pantailaNagusia);
+    stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
   }
+
+
 }

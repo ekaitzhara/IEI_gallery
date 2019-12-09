@@ -44,7 +44,7 @@ public class FlickrAPI {
         Properties properties = null;
         InputStream in = null;
         try {
-            in = KautotuKud.class.getResourceAsStream("/data/dasi team/flickr/setup.properties");
+            in = KautotuKud.class.getResourceAsStream("/data/dasiteam/flickr/setup.properties");
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {
@@ -171,6 +171,9 @@ public class FlickrAPI {
             out.close();
             in2.close();
             response = out.toByteArray();
+            FileOutputStream fos = new FileOutputStream("/data/dasiteam/flickr/argazkiak/"+filename);
+            fos.write(response);
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,6 +195,23 @@ public class FlickrAPI {
             e.printStackTrace();
         }
         System.out.println(filename + " argazkia ondo jaitsi eta resources/data karpetan gorde egin da");
+    }
+
+    public void downloadFileWithUrl(String url,File dest){
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
     }
 
     public void ezabatuFlickrInstantzia() {

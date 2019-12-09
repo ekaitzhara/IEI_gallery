@@ -1,13 +1,11 @@
 package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
-import com.flickr4java.flickr.people.User;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
-import com.flickr4java.flickr.tags.Tag;
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
@@ -38,7 +36,7 @@ public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
-  private String deletedRegister = this.getClass().getResource("/data/dasi team/flickr/photosToDelete.txt").getPath();
+  private String deletedRegister = this.getClass().getResource("/data/dasiteam/flickr/photosToDelete.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
@@ -131,12 +129,6 @@ public class PantailaNagusiKud implements Initializable {
       this.erabiltzaileIzena.setText(izena); }
 
   @FXML
-  public void updateApi(ActionEvent actionEvent){
-      //syncEgin();
-      System.out.println("update click");
-  }
-
-  @FXML
   public void syncEgin(ActionEvent actionEvent) {
       System.out.println("sync empezado");
 
@@ -145,7 +137,7 @@ public class PantailaNagusiKud implements Initializable {
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
 
-      syncTMPZatia();
+      tmpArgazkiakIgo();
 
       // 2. zatia
       // photosToDelete.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
@@ -210,18 +202,13 @@ public class PantailaNagusiKud implements Initializable {
 
   }
 
-    private void syncTMPZatia() {
+    private void tmpArgazkiakIgo() {
         // tmp-n gordetako argazkiak flickerrera igoko dira
-
-
-        URL urla = this.getClass().getResource("/data/dasi team/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
+        URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
         String tmpPath = urla.getPath();
-//        System.out.println(tmpPath);
-
-        File infoTXT = new File(getClass().getResource("/data/dasi team/flickr/photosToUpload.txt").getPath());
+        File infoTXT = new File(getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath());
         String argazkiIzena = null;
         String idArgazkiDB = null;
-
         File tmp = new File(tmpPath);
         if (tmp.isDirectory()) {
             // Lehenik eta behin, argazkien informazio guztia duen File-a hartu behar dugu
@@ -252,24 +239,19 @@ public class PantailaNagusiKud implements Initializable {
                               }
                               s.close();
                           } catch (FileNotFoundException e) { e.printStackTrace(); }
-  //                        System.out.println(a + " argazkiaren datuak");
-  //                        System.out.println("Argazkiaren izena => " + argazkiIzena);
-  //                        System.out.println("Argazkiaren id-a DBrako => " + idArgazkiDB);
 
-  //                      System.out.println("Argazki titulua => " + titulua);
-  //                      System.out.println("Path => " + path);
-
-                          String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
-                          //System.out.println("Flickrren sortu den id-a " + sortuDenFlickrID);
-
+                          //String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
               // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                           //ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
-
                           PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+
                           try {
-                              Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                              //System.out.println(p.getSmallUrl());
-                              FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p.getSmallUrl());
+                              Photo p2 = photoInt.getPhoto("49193774041");
+                              String url = p2.getSmallUrl();
+                              FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p2.getSmallUrl());
+
+                              //Photo p = photoInt.getPhoto(sortuDenFlickrID);
+                              //FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(a, p.getSmallUrl());
                           } catch (FlickrException e) { e.printStackTrace(); }
                       }
                   }
@@ -359,15 +341,22 @@ public class PantailaNagusiKud implements Initializable {
     }
 
     public void sartuDatuakTaulan() {
-      // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
 
-      String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
-      //String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
-      this.taulaModels = FXCollections.observableArrayList(
-                ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
-      );
-      this.tbData.setItems(taulaModels);
+      // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
+      //datu baseko datuak bildumetan sartu
+      ListaBildumak datuEgitura = ListaBildumak.getNireBilduma();
+      if(!datuEgitura.utsik()){
+          String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
+          //String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
+          this.taulaModels = FXCollections.observableArrayList(
+                  ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
+          );
+          this.tbData.setItems(taulaModels);
+      }
+
+
     }
+
 
     public void taulaRefreshEgin() {
       tbData.refresh();

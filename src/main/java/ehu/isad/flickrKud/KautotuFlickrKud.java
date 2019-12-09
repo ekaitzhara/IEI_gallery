@@ -81,19 +81,14 @@ public class KautotuFlickrKud implements Initializable {
 
         Auth auth = this.authInterface.checkToken(accessToken);
         User e = auth.getUser();
-
-        System.out.println("id -> " + e.getId());
-        System.out.println("izena -> " + e.getRealName());
         ErabiltzaileDBKud.getInstantzia().sartuErabiltzailea(e.getId(), e.getRealName(), zerbitzua);
-        this.mainApp.syncEginLehenAldia();
 
         RequestContext.getRequestContext().setAuth(auth);
         this.authStore.store(auth);
         FlickrAPI.getInstantzia().setAuthStore(this.authStore);
-
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
-
-        this.mainApp.pantailaNagusiaErakutsi();
+        //this.mainApp.syncEginLehenAldia();
+        //this.mainApp.pantailaNagusiaErakutsi();
     }
 
 

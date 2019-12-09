@@ -4,7 +4,6 @@ import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.photos.Size;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.tags.Tag;
@@ -168,7 +167,7 @@ public class ListaBildumak {
         // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
         ArrayList<Argazkia> argazkiak = emanArgazkiakBildumaIzenarekin(bilduma);
         for (Argazkia a : argazkiak) {
-            String argazkiPath = this.getClass().getResource("/data/dasi team/flickr/argazkiak").getPath() + a.getIzena();
+            String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath() + a.getIzena();
             String etiketak = a.emanStringEtiketak();
             TaulaDatu t = new TaulaDatu(argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
             emaitza.add(t);
@@ -203,5 +202,13 @@ public class ListaBildumak {
 
     public void listaBeteDBrekin() {
         // ListaBildumak betetzen du DBko datu guztiekin
+    }
+
+    public boolean utsik(){
+        if(getLista().size()==0){
+            return true;
+        }else
+            return false;
+
     }
 }
