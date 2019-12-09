@@ -35,6 +35,18 @@ public class Argazkia {
         this.etiketak = etiketaLista;
     }
 
+    public Argazkia(String izena, String deskribapena, Integer id, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, Integer favs, Integer komentarioKop) {
+        this.izena = izena;
+        this.deskribapena = deskribapena;
+        this.id = id;
+        this.data = data;
+        this.idFLickr = idFLickr;
+        this.gogokoaDa = gogokoaDa;
+        this.sortzaileID = sortzaileID;
+        this.favs = favs;
+        this.komentarioKop = komentarioKop;
+    }
+
     public boolean idFlickrHauDu(String pIdFlickr) {
         return this.idFLickr.equals(pIdFlickr);
     }
@@ -96,5 +108,9 @@ public class Argazkia {
         }
         emaitza += etiketak.get(n).getIzena();
         return emaitza;
+    }
+
+    public void etiketenListaSartu(ArrayList<Etiketa> etiketenLista) {
+        etiketak = etiketenLista;
     }
 }

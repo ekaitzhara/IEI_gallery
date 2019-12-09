@@ -42,24 +42,20 @@ public class BildumaDBKud {
         dbKud.execSQL(query);
     }
 
-    public ArrayList<Bilduma> emanListaBildumarentzakoDatuGuztiak() {
+    public ArrayList<Bilduma> emanListaBildumak() {
         ArrayList<Bilduma> emaitza = new ArrayList<>();
 
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
-        String query = "SELECT b.idBilduma, b.izena AS bildumaIzen, b.deskribapena AS bildumaDesk, b.sortzaileId," +
-                " a.idArgazkia, a.izena AS argazkiIzen, a.deskribapena AS argazkiDesk, a.size, a.data, a.favs, a.komentarioKop, a.idFlickr, a.gogokoaDa" +
-                " FROM Bilduma b, Argazkia a, BildumaArgazki ba WHERE ba.idBilduma=b.idBilduma AND a.idArgazkia=ba.idArgazkia" +
-                " GROUP BY ba.idBilduma";
+        String query = "SELECT b.idBilduma, b.izena, b.deskribapena, b.sortzaileId FROM Bilduma b";
         rs = dbKud.execSQL(query);
 
-        String bildumaAux = null;
-        Bilduma b = null;
+
         try {
             while (rs.next()) {
                 String idBilduma = rs.getString("idBilduma");
-                String bildumaIzen = rs.getString("bildumaIzen");
-                String bildumaDesk = rs.getString("bildumaDesk");
+                String izena = rs.getString("izena");
+                String deskribapena = rs.getString("deskribapena");
                 String sortzaileId = rs.getString("sortzaileId");
 
                 Integer idArgazkia = rs.getInt("idArgazkia");
@@ -73,15 +69,8 @@ public class BildumaDBKud {
                 String s_gogokoaDa = rs.getString("gogokoaDa");
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
-                if (!idBilduma.equals(bildumaAux)) {
-                    if (b != null)
-                        emaitza.add(b);
-                    b = new Bilduma(bildumaIzen, idBilduma, bildumaDesk, sortzaileId);
-                    bildumaAux = idBilduma;
+                emaitza.add(new Bilduma(izena, idBilduma, deskribapena, sortzaileId));
                 }
-
-                //b.argazkiaGehitu(new Argazkia(argazkiIzen, argazkiDesk, data, idFlickr, gogokoaDa, sortzaileId, null, favs, komentarioKop, ETIKETAK));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,6 +78,20 @@ public class BildumaDBKud {
         return emaitza;
     }
 
+    public boolean bildumaHutsaDago() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT idBilduma FROM BildumaArgazki WHERE idBilduma=0";
+        rs = dbKud.execSQL(query);
+
+
+        try {
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
 }

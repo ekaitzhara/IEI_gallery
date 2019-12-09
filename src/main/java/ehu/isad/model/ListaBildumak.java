@@ -202,7 +202,15 @@ public class ListaBildumak {
 
     public void listaBeteDBrekin() {
         // ListaBildumak betetzen du DBko datu guztiekin
-        this.lista = BildumaDBKud.getInstantzia().emanListaBildumarentzakoDatuGuztiak();
+        this.lista =  BildumaDBKud.getInstantzia().emanListaBildumak();
+        if (BildumaDBKud.getInstantzia().bildumaHutsaDago())
+            this.lista.add(new Bilduma("NotInASet", "0000", "", FlickrAPI.getInstantzia().getNsid()));
+        for (Bilduma b : lista) {
+            b.argazkiListaSartu(ArgazkiDBKud.getInstantzia().emanArgazkiakBildumarekin(b.getId()));
+            for (Argazkia a : b.getArgazkiak()) {
+                a.etiketenListaSartu(EtiketaDBKud.getInstantzia().etiketakEman(a.getId()));
+            }
+        }
     }
 
     public boolean utsik(){

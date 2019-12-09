@@ -20,6 +20,10 @@ public class Bilduma {
         argazkiak = new ArrayList<Argazkia>();
     }
 
+    public void argazkiListaSartu(ArrayList<Argazkia> argazkiLista) {
+        this.argazkiak = argazkiLista;
+    }
+
     public void argazkiaGehitu(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer favs, Integer comments, ArrayList<Etiketa> etiketaLista, Integer views) {
         argazkiak.add(new Argazkia(izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl, favs, comments, etiketaLista, views));
     }

@@ -1,5 +1,8 @@
 package ehu.isad.db;
 
+import ehu.isad.model.Argazkia;
+import ehu.isad.model.Bilduma;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,5 +78,41 @@ public class ArgazkiDBKud {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "DELETE FROM Argazkia WHERE idFlickr=" +ezabatzekoID;
         dbKud.execSQL(query);
+    }
+
+    public ArrayList<Argazkia> emanArgazkiakBildumarekin(String idBilduma) {
+        ArrayList<Argazkia> emaitza = new ArrayList<>();
+
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT a.idArgazkia, a.izena, a.deskribapena, a.size, a.data, a.favs, a.komentarioKop, a.idFLickr, a.sortzaileId, a.gogokoaDa" +
+                " FROM BildumaArgazki ba, Argazki a" +
+                " WHERE ba.idArgazkia=a.idArgazkia AND ba.idBilduma='"+idBilduma+"'";
+        rs = dbKud.execSQL(query);
+
+
+        try {
+            while (rs.next()) {
+
+                Integer idArgazkia = rs.getInt("idArgazkia");
+                String izena = rs.getString("izena");
+                String deskribapena = rs.getString("deskribapena");
+                String sortzaileId = rs.getString("sortzaileId");
+                String size = rs.getString("size");
+                Date data = rs.getDate("data");
+                Integer idFlickr = rs.getInt("idFlickr");
+                Integer favs = rs.getInt("favs");
+                Integer komentarioKop = rs.getInt("komentarioKop");
+                String s_gogokoaDa = rs.getString("gogokoaDa");
+                Boolean gogokoaDa = s_gogokoaDa.equals("bai");
+
+                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return emaitza;
+
     }
 }

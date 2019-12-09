@@ -12,6 +12,11 @@ public class Etiketa {
         this.izena = izena;
     }
 
+    public Etiketa(Integer idEtiketa, String izena) {
+        this.idEtiketa = idEtiketa;
+        this.izena = izena;
+    }
+
     public Integer getIdEtiketa() {
         return idEtiketa;
     }
