@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -19,7 +20,7 @@ public class BildumaSortuKud implements Initializable {
     private Main mainApp;
 
     @FXML
-    private Text bildumaIzena;
+    private TextField bildumaIzena;
     @FXML
     private Pane nagusia;
 

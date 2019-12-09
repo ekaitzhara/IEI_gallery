@@ -2,17 +2,14 @@ package ehu.isad.flickrKud;
 
 import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.flickrKud.observables.ObsArgazkiIgo;
+import ehu.isad.model.ObsArgazkiIgo;
 import ehu.isad.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -29,22 +26,24 @@ public class ArgazkiaIgoKud implements Initializable {
     // Reference to the main application.
     private Main mainApp;
     private List<File> igotakoFitxategiak = new ArrayList<>();
+    private ArrayList<ObsArgazkiIgo> obsDatuak = new ArrayList<>();
+    private ObservableList<ObsArgazkiIgo> igoModel = FXCollections.observableArrayList();
 
     @FXML
-    private TableView igotakoakTabla;
+    private TableView<ObsArgazkiIgo> igotakoakTabla;
 
     @FXML
-    private TableColumn igotakoakIzena;
+    private TableColumn<ObsArgazkiIgo, String> izena;
 
     @FXML
-    private TableColumn igotakoakBotoia;
+    private TableColumn<ObsArgazkiIgo, Button> botoia;
 
 
     @FXML
-    private ComboBox comboBox = new ComboBox();
+    private ComboBox bildumak = new ComboBox();
 
     @FXML
-    private Text textoEstado; //dice si los artxibos se han subido a flickr o que solo se han subido a la app
+    private Label textoEstado; //dice si los artxibos se han subido a flickr o que solo se han subido a la app
     private Text uploadedFiles; //TODO texto de archivos que se van a subir a flickr
 
     public void setMainApp(Main main) {
@@ -85,7 +84,6 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @FXML
     private void handleDrop(DragEvent event) throws IOException {
-        System.out.println("se han arrastrado");
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
@@ -93,9 +91,8 @@ public class ArgazkiaIgoKud implements Initializable {
         String tmpPath = urla.getPath();
         //String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
         List<File> files = event.getDragboard().getFiles();
-        this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
-        System.out.println("archivos subidos");
-        System.out.println(igotakoFitxategiak.toString());
+        //this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
+        //System.out.println(igotakoFitxategiak.toString());
 
 
     /*
@@ -106,7 +103,15 @@ public class ArgazkiaIgoKud implements Initializable {
 
      */
 
-        ObservableList<ObsArgazkiIgo> data = FXCollections.observableArrayList();
+        for(File fitxategi : files){
+            obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(),fitxategi));
+        }
+        igoModel = FXCollections.observableArrayList(obsDatuak);
+        igotakoakTabla.setItems(igoModel);
+        igotakoakTabla.refresh();
+
+        //para onclik
+        /*
         String filePath = "";
         for(File fitxategi : igotakoFitxategiak){
             filePath = fitxategi.getPath();
@@ -114,14 +119,13 @@ public class ArgazkiaIgoKud implements Initializable {
             copyFileUsingStream(fitxategi,newFile);
             ObsArgazkiIgo obs = new ObsArgazkiIgo(filePath);
             data.add(obs);
+
+
         }
 
+         */
 
-        igotakoakIzena.setCellValueFactory(new PropertyValueFactory<String,Button>("igotakoakIzena"));
-        igotakoakBotoia.setCellValueFactory(new PropertyValueFactory<String,Button>("igotakoakBotoia"));
 
-        igotakoakTabla.setItems(data);
-        igotakoakTabla.refresh();
 
 
         //igotakoakTabla.setItems(data);
@@ -135,27 +139,6 @@ public class ArgazkiaIgoKud implements Initializable {
         //Actualizar texto estado para que diga que ha pasado
     }
 
-
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("igo iniciado");
-
-
-        //igotakoakTabla.getColumns();
-
-
-        List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
-
-        List<String> str = new ArrayList<>();
-        str.add("bil1");
-        str.add("bil2");
-
-        this.comboBox.getItems().addAll(str);
-        System.out.println("str añadidos");
-
-    }
 
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
@@ -209,5 +192,27 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
  */
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
+        botoia.setCellValueFactory(new PropertyValueFactory<>("botoia"));
+
+        System.out.println("igo iniciado");
+
+
+        //igotakoakTabla.getColumns();
+
+
+        List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
+
+        List<String> str = new ArrayList<>();
+        str.add("bil1");
+        str.add("bil2");
+
+        this.bildumak.getItems().addAll(str);
+        System.out.println("str añadidos");
+
+    }
 
 }
