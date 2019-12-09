@@ -87,7 +87,7 @@ public class KautotuFlickrKud implements Initializable {
         this.authStore.store(auth);
         FlickrAPI.getInstantzia().setAuthStore(this.authStore);
         System.out.println("Thanks.  You probably will not have to do this every time.  Now starting backup.");
-        //this.mainApp.syncEginLehenAldia();
+        this.mainApp.syncEginLehenAldia();
         //this.mainApp.pantailaNagusiaErakutsi();
     }
 

@@ -202,6 +202,7 @@ public class ListaBildumak {
 
     public void listaBeteDBrekin() {
         // ListaBildumak betetzen du DBko datu guztiekin
+        this.lista = BildumaDBKud.getInstantzia().emanListaBildumarentzakoDatuGuztiak();
     }
 
     public boolean utsik(){

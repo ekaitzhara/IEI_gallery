@@ -198,6 +198,7 @@ public class FlickrAPI {
     }
 
     public void downloadFileWithUrl(String url,File dest){
+        /*
         InputStream is = null;
         OutputStream os = null;
         try {
@@ -212,6 +213,8 @@ public class FlickrAPI {
             is.close();
             os.close();
         }
+
+         */
     }
 
     public void ezabatuFlickrInstantzia() {
