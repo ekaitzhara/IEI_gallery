@@ -129,7 +129,7 @@ public class PantailaNagusiKud implements Initializable {
       this.erabiltzaileIzena.setText(izena); }
 
   @FXML
-  public void syncEgin(ActionEvent actionEvent) {
+  public void syncEgin(ActionEvent actionEvent) throws FileNotFoundException {
       System.out.println("sync empezado");
 
       // 1. zatia
