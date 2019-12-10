@@ -169,7 +169,7 @@ public class ListaBildumak {
         for (Argazkia a : argazkiak) {
             String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath() + a.getIzena();
             String etiketak = a.emanStringEtiketak();
-            TaulaDatu t = new TaulaDatu(argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
+            TaulaDatu t = new TaulaDatu(a.getId(), argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
             emaitza.add(t);
         }
         return emaitza;
