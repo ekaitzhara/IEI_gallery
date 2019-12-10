@@ -69,8 +69,8 @@ public class PantailaNagusiKud implements Initializable {
     private ListView bildumenLista = new ListView();
 
     // add your data here from any source
-    private ObservableList<TaulaDatu> taulaModels;
-    private ObservableList bildumaModel;
+    private ObservableList<TaulaDatu> taulaModels = FXCollections.observableArrayList();
+    private ObservableList bildumaModel = FXCollections.observableArrayList();
 
 
   @FXML
@@ -206,7 +206,7 @@ public class PantailaNagusiKud implements Initializable {
 
   }
 
-    private void tmpArgazkiakIgo() throws FileNotFoundException {
+  private void tmpArgazkiakIgo() throws FileNotFoundException {
         // tmp-n gordetako argazkiak flickerrera igoko dira
         URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
         String tmpPath = urla.getPath();
@@ -313,6 +313,7 @@ public class PantailaNagusiKud implements Initializable {
               }
           };
       });
+
   }
 
 

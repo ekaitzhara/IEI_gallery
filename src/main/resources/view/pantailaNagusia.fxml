@@ -54,7 +54,7 @@
    <bottom>
       <BorderPane prefHeight="504.0" prefWidth="908.0" BorderPane.alignment="CENTER">
          <left>
-            <ListView fx:id="bildumenLIsta" prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="bildumenLista" prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
             <TableView fx:id="tbData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
