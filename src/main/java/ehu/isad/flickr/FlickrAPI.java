@@ -155,7 +155,7 @@ public class FlickrAPI {
         }
     }
 
-    /*
+
     public void argazkiaJaitsiEtaGorde(String filename, String argazkiUrl) {
         URL url = null;
         try {
@@ -184,7 +184,7 @@ public class FlickrAPI {
         // Gure ordenagailuan argazki berri bat sortuko dugu
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\anderdu\\Downloads\\a.jpg");
 
-        String path = this.getClass().getResource("/data").getPath();
+        String path = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath();
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(path + filename);
@@ -200,7 +200,7 @@ public class FlickrAPI {
         System.out.println(filename + " argazkia ondo jaitsi eta resources/data karpetan gorde egin da");
     }
 
-     */
+
 
     public void downloadFileWithUrl(String url, String dest){
         try (

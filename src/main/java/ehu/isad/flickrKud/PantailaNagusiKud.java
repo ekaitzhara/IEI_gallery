@@ -137,7 +137,11 @@ public class PantailaNagusiKud implements Initializable {
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
 
-      tmpArgazkiakIgo();
+      try {
+          tmpArgazkiakIgo();
+      } catch (FileNotFoundException e) {
+          e.printStackTrace();
+      }
 
       // 2. zatia
       // photosToDelete.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
