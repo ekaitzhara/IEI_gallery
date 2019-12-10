@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -301,8 +302,8 @@ public class PantailaNagusiKud implements Initializable {
           public void updateItem(Image image, boolean empty) {
               if (image != null && !empty){
                   final ImageView imageview = new ImageView();
-                  imageview.setFitHeight(25);
-                  imageview.setFitWidth(25);
+                  imageview.setFitHeight(100);
+                  imageview.setFitWidth(100);
                   imageview.setImage(image);
                   setGraphic(imageview);
                   setAlignment(Pos.CENTER);
@@ -356,6 +357,11 @@ public class PantailaNagusiKud implements Initializable {
 
     }
 
+    @FXML
+    public void bildumanKlikatu(MouseEvent mouseEvent) {
+      sartuDatuakTaulan();
+    }
+
     public void sartuDatuakTaulan() {
 
       // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
@@ -386,6 +392,5 @@ public class PantailaNagusiKud implements Initializable {
     public void taulaRefreshEgin() {
       tbData.refresh();
     }
-
 
 }
