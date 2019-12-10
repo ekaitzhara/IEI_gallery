@@ -200,6 +200,7 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println(this.getClass().getResource("/data/dasiteam/flickr/tmp/thumb-1920-707960.png"));
 
 
         izena.setCellValueFactory(new PropertyValueFactory<>("izena"));

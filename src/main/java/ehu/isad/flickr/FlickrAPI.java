@@ -203,15 +203,17 @@ public class FlickrAPI {
      */
 
     public void downloadFileWithUrl(String url, String dest){
-
-        try (BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
-             FileOutputStream fileOS = new FileOutputStream(dest)) {
+        try (
+                BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
+                FileOutputStream fileOS = new FileOutputStream(dest)) {
             byte data[] = new byte[1024];
             int byteContent;
             while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
                 fileOS.write(data, 0, byteContent);
             }
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            // handles IO exceptions
+        }
     }
 
     public void ezabatuFlickrInstantzia() {
