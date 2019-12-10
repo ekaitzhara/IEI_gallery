@@ -86,7 +86,7 @@ public class ArgazkiDBKud {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
         String query = "SELECT a.idArgazkia, a.izena, a.deskribapena, a.size, a.data, a.favs, a.komentarioKop, a.idFLickr, a.sortzaileId, a.gogokoaDa" +
-                " FROM BildumaArgazki ba, Argazki a" +
+                " FROM BildumaArgazki ba, Argazkia a" +
                 " WHERE ba.idArgazkia=a.idArgazkia AND ba.idBilduma='"+idBilduma+"'";
         rs = dbKud.execSQL(query);
 
@@ -99,14 +99,16 @@ public class ArgazkiDBKud {
                 String deskribapena = rs.getString("deskribapena");
                 String sortzaileId = rs.getString("sortzaileId");
                 String size = rs.getString("size");
-                Date data = rs.getDate("data");
+                //Date data = rs.getDate("data");
                 Integer idFlickr = rs.getInt("idFlickr");
                 Integer favs = rs.getInt("favs");
                 Integer komentarioKop = rs.getInt("komentarioKop");
                 String s_gogokoaDa = rs.getString("gogokoaDa");
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
-                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+                //emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

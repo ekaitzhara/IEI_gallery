@@ -340,6 +340,7 @@ public class PantailaNagusiKud implements Initializable {
       List<String> bildumenIzenak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
       bildumaModel = FXCollections.observableArrayList(bildumenIzenak);
       this.bildumenLista.setItems(bildumaModel);
+      this.bildumenLista.getSelectionModel().selectFirst();
 
     }
 

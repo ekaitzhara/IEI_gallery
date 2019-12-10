@@ -58,17 +58,6 @@ public class BildumaDBKud {
                 String deskribapena = rs.getString("deskribapena");
                 String sortzaileId = rs.getString("sortzaileId");
 
-                Integer idArgazkia = rs.getInt("idArgazkia");
-                String argazkiIzen = rs.getString("argazkiIzen");
-                String argazkiDesk = rs.getString("argazkiDesk");
-                String size = rs.getString("size");
-                Date data = rs.getDate("data");
-                Integer idFlickr = rs.getInt("idFlickr");
-                Integer favs = rs.getInt("favs");
-                Integer komentarioKop = rs.getInt("komentarioKop");
-                String s_gogokoaDa = rs.getString("gogokoaDa");
-                Boolean gogokoaDa = s_gogokoaDa.equals("bai");
-
                 emaitza.add(new Bilduma(izena, idBilduma, deskribapena, sortzaileId));
                 }
         } catch (SQLException e) {
