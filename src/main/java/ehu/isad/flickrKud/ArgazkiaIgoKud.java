@@ -1,6 +1,7 @@
 package ehu.isad.flickrKud;
 
 import ehu.isad.Main;
+import ehu.isad.db.ArgazkiDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.ObsArgazkiIgo;
 import ehu.isad.model.*;
@@ -17,6 +18,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,7 +27,6 @@ public class ArgazkiaIgoKud implements Initializable {
 
     // Reference to the main application.
     private Main mainApp;
-    private List<File> igotakoFitxategiak = new ArrayList<>();
     private List<ObsArgazkiIgo> obsDatuak = new ArrayList<>();
     private ObservableList<ObsArgazkiIgo> igoModel = FXCollections.observableArrayList();
 
@@ -53,18 +54,24 @@ public class ArgazkiaIgoKud implements Initializable {
     @FXML
     private void cleanList(ActionEvent actionEvent) throws Exception {
         System.out.println("cleanList");
-        this.igotakoFitxategiak.clear();
+        this.obsDatuak.clear();
     }
 
     @FXML
     private void uploadFiles(ActionEvent actionEvent) throws Exception {
         System.out.println("uploadFiles");
         FlickrAPI api = FlickrAPI.getInstantzia();
+        ArrayList<String> photoPaths = new ArrayList<>();
+        for(ObsArgazkiIgo data:obsDatuak){
+            photoPaths.add(data.getPath());
+        }
         try {
             if (api.hasConection()) { //aplikazioa apiarekin konekzioa badu ikusiko dugu
-                uploadPhotosToApi();
+                uploadPhotosToApi(photoPaths);
+                this.obsDatuak.clear();
             } else {
-                uploadPhotosWithoutApi();
+                uploadPhotosWithoutApi(photoPaths);
+                this.obsDatuak.clear();
             }
         }catch (Exception e){
             //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
@@ -87,21 +94,7 @@ public class ArgazkiaIgoKud implements Initializable {
         // este metodo es para descargar la imagen a una carpeta de dentro del programa llamada temp
         // Pero hay muchas formas de hacerlo, por ejemplo subir la imagen a flickr directamente y descargarla a la direccion de las imagenes( asi quedaria tal cual la queremos almacenar)
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
-        URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp");
-        String tmpPath = urla.getPath();
-        //String tmpPath = this.getClass().getClassLoader().getResource("/data/username/flickr/tmp").getPath();
         List<File> files = event.getDragboard().getFiles();
-        //this.igotakoFitxategiak.addAll(files); //fitxategiak igotako fitxategien registrora igoko da
-        //System.out.println(igotakoFitxategiak.toString());
-
-
-    /*
-        for(File fitxategi : igotakoFitxategiak){
-            System.out.println(fitxategi.getName());
-            System.out.println(fitxategi.getPath());
-        }
-
-     */
 
         for(File fitxategi : files){
             obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(),fitxategi));
@@ -125,33 +118,76 @@ public class ArgazkiaIgoKud implements Initializable {
 
          */
 
-
-
-
         //igotakoakTabla.setItems(data);
         //igotakoakTabla.setItems();
-
 
         //para hacer ventana dinamica
         //texto.setText("aaaa");
         //ui1();
-
         //Actualizar texto estado para que diga que ha pasado
     }
 
-    private void uploadPhotosWithoutApi(){
+    private void uploadPhotosWithoutApi(ArrayList<String> photoPaths) throws IOException {
         // 1. argazkiak datu basera, id izan gabe
         // argazkien kopia sortu temp fitxategian
         // argazkiak db-ra igo baina id gabe
         // argazkiak datu egituran sartu
         // igoko beharko den argazki izena eta id txt batean gorde
+        String dest = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
+        for(String path:photoPaths){
+            Laguntzaile.copyFileUsingStream(path,dest);//copy file to temp
+
+
+            // Argazkia datu basean sartu
+            Integer idDB = 0;
+            String pIzena = Laguntzaile.getFileName(path);
+            String deskribapena = null;
+            Date data = null; //TODO poner fecha de creacion de imagen extraida de metadatos
+            String idFLickr = null;
+
+            boolean gogokoaDa = false;
+            String sortzaileID = null;
+            String pUrl = null;
+            Integer pFavs = null;
+            Integer pKomentario = null;
+            ArrayList<Etiketa> etiketaLista = null;
+            Integer pViews = null;
+            ArgazkiDBKud.getInstantzia().argazkiaSartu();
+            public void argazkiaSartu(Integer idDB, String pIzena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
+
+                //Argazkia zein bilduman dagoen adierazi
+            String bilIzena = bildumak.getValue().toString();
+
+            // Argazkia datu egituran sartu
+            Argazkia foto = new Argazkia(pIzena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
+
+            //Argazkia Bilduman sartu
+
+                    // crear foto en datu egitura, hacer nuevo eraikitzaile
+            // subir esa foto a la base de datos
+
+            // mirar si la bilduma esta en la DB
+                // si esta pillar su id
+                // else crearla
+            //cuando sube la foto a la base de datos, pillo la id de la DB y
+            // editar el txt
+        }
+    }
+
+    private void uploadPhotosToApi(ArrayList<String> photoPaths) throws IOException {
+        //this.igotakoFitxategiak
+        //Argazkiak flickr-era igoko dira
+        for(String path:photoPaths) {
+            String bilIzena = bildumak.getValue().toString(); //meter en la DB la bilduma a la que subimos la foto
+            String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(path, bilIzena);
+            //izena, deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews
+        }
 
     }
 
-    private void uploadPhotosToApi(){
-        //this.igotakoFitxategiak
-        //Argazkiak flickr-era igoko dira
+    private void insertPhotoDB(Integer id, String izena, String deskribapena, Date data, String idFLickr, String sortzaileID){
 
+        ArgazkiDBKud.getInstantzia().argazkiaSartu(id, izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID);
     }
 
 

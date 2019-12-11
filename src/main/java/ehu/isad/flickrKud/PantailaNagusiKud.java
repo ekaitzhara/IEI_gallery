@@ -188,7 +188,6 @@ public class PantailaNagusiKud implements Initializable {
                 argazkiarenBildumak = BildumaDBKud.getInstantzia().argazkiarenBildumak(idArgazkiDB);
                 for(String bilIzena:argazkiarenBildumak){
                     String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,bilIzena); //flick-era argazkia igo
-                    // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
                     PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
                     try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da

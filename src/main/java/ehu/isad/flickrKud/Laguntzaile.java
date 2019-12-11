@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Laguntzaile {
 
 
-    private static void copyFileUsingStream(String pSource, String pDest) throws IOException {
+    public static void copyFileUsingStream(String pSource, String pDest) throws IOException {
         File source= new File(pSource);
         File dest= new File(pDest);
 

@@ -120,16 +120,15 @@ public class FlickrAPI {
         File pathToFile = new File(photoPath);
         String key = getFlickr().getApiKey();
         Auth auth =  getFlickr().getAuth();
-        /*
-        try {
-            Image argazki = ImageIO.read(pathToFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
 
         try {
-            return up.upload(pathToFile, umd);
+            if(albumName.equals("NotInASet")){
+                return up.upload(pathToFile, umd);
+            }else{
+                String id = up.upload(pathToFile, umd);
+                flickr.getPhotosetsInterface().create(albumName,"",id);  //albun berria sortzen
+                return id;
+            }
         } catch (FlickrException e) {
             e.printStackTrace();
         }
@@ -201,6 +200,8 @@ public class FlickrAPI {
         }
         System.out.println(filename + " argazkia ondo jaitsi eta resources/data/dasiteam/flickr/argazkiak karpetan gorde egin da");
     }
+
+
 
 
 
