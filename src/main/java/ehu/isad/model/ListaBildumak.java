@@ -71,7 +71,7 @@ public class ListaBildumak {
 
         Map<String, Collection> allPhotos = new HashMap<String, Collection>(); // sortu datu-egitura bat bildumak gordetzeko
 
-        Iterator sets = pi.getList(FlickrAPI.getInstantzia().getNsid()).getPhotosets().iterator(); // nsid erabiltzailearen bildumak zeharkatzeko iteratzailea lortu
+        Iterator sets = pi.getList(FlickrAPI.getInstantzia().getNsid(), "description, views, date_upload, tags").getPhotosets().iterator(); // nsid erabiltzailearen bildumak zeharkatzeko iteratzailea lortu
 
         Bilduma aux = null;
         String erab = ErabiltzaileDBKud.getIdErab();
@@ -80,7 +80,9 @@ public class ListaBildumak {
             Photoset set = (Photoset) sets.next(); // bilduma lortu
             lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab)); // aqui sumamos las bildumas exisitentes, pero falta crear la bilduma de fotos sin bilduma
             // set es la bilduma
-            PhotoList photos = pi.getPhotos(set.getId(), 500, 1);  // bildumaren lehenengo 500 argazki lortu
+            Set<String> extras = new HashSet<>(Arrays.asList("description", "views", "date_upload", "tags"));
+
+            PhotoList photos = pi.getPhotos(set.getId(), extras, 0, 500, 1);  // bildumaren lehenengo 500 argazki lortu
             allPhotos.put(set.getTitle(), photos);  // txertatu (bilduma --> bere argazkiak)
         }
         // Para encontrar lista de fotos sin bilduma
@@ -125,17 +127,17 @@ public class ListaBildumak {
                 ArrayList<Etiketa> etiketenLista = new ArrayList<>();
 
                 pTitle = pTitle.replace(" ","_");
-                String fitxategiIzena= pTitle + "." + p.getOriginalFormat();
+                //String fitxategiIzena= pTitle + "." + p.getOriginalFormat();
 
                 Collection<Tag> etiketak = p.getTags();
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
-                aux.argazkiaGehitu(fitxategiIzena, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
+                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
 
-                FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(fitxategiIzena, p.getSmallUrl());
+                FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(pId, p.getSmallUrl());
 
                 String title = p.getTitle();
                 System.out.println("\t"+title);
