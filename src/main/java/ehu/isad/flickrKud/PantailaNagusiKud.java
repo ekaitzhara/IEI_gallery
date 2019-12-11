@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -69,8 +70,8 @@ public class PantailaNagusiKud implements Initializable {
     private ListView bildumenLista = new ListView();
 
     // add your data here from any source
-    private ObservableList<TaulaDatu> taulaModels;
-    private ObservableList bildumaModel;
+    private ObservableList<TaulaDatu> taulaModels = FXCollections.observableArrayList();
+    private ObservableList bildumaModel = FXCollections.observableArrayList();
 
 
   @FXML
@@ -137,7 +138,11 @@ public class PantailaNagusiKud implements Initializable {
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
 
-      tmpArgazkiakIgo();
+      try {
+          tmpArgazkiakIgo();
+      } catch (FileNotFoundException e) {
+          e.printStackTrace();
+      }
 
       // 2. zatia
       // photosToDelete.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
@@ -202,7 +207,7 @@ public class PantailaNagusiKud implements Initializable {
 
   }
 
-    private void tmpArgazkiakIgo() throws FileNotFoundException {
+  private void tmpArgazkiakIgo() throws FileNotFoundException {
         // tmp-n gordetako argazkiak flickerrera igoko dira
         String tmpPath = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
         String photosToUploadTxt = getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath();
@@ -265,8 +270,8 @@ public class PantailaNagusiKud implements Initializable {
           public void updateItem(Image image, boolean empty) {
               if (image != null && !empty){
                   final ImageView imageview = new ImageView();
-                  imageview.setFitHeight(25);
-                  imageview.setFitWidth(25);
+                  imageview.setFitHeight(100);
+                  imageview.setFitWidth(100);
                   imageview.setImage(image);
                   setGraphic(imageview);
                   setAlignment(Pos.CENTER);
@@ -277,6 +282,7 @@ public class PantailaNagusiKud implements Initializable {
               }
           };
       });
+
   }
 
 
@@ -318,6 +324,12 @@ public class PantailaNagusiKud implements Initializable {
       this.bildumenLista.getSelectionModel().selectFirst();
 
     }
+
+    @FXML
+    public void bildumanKlikatu(MouseEvent mouseEvent) {
+      sartuDatuakTaulan();
+    }
+
     public void sartuDatuakTaulan() {
 
       // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
@@ -337,6 +349,5 @@ public class PantailaNagusiKud implements Initializable {
     public void taulaRefreshEgin() {
       tbData.refresh();
     }
-
 
 }

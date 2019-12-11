@@ -124,12 +124,18 @@ public class ListaBildumak {
                 Integer views = p.getViews();
                 ArrayList<Etiketa> etiketenLista = new ArrayList<>();
 
+                pTitle = pTitle.replace(" ","_");
+                String fitxategiIzena= pTitle + "." + p.getOriginalFormat();
+
                 Collection<Tag> etiketak = p.getTags();
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
-                aux.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
+                aux.argazkiaGehitu(fitxategiIzena, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
+
+
+                FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(fitxategiIzena, p.getSmallUrl());
 
                 String title = p.getTitle();
                 System.out.println("\t"+title);
@@ -167,7 +173,7 @@ public class ListaBildumak {
         // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
         ArrayList<Argazkia> argazkiak = emanArgazkiakBildumaIzenarekin(bilduma);
         for (Argazkia a : argazkiak) {
-            String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath() + a.getIzena();
+            String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").toString() + a.getIzena();
             String etiketak = a.emanStringEtiketak();
             TaulaDatu t = new TaulaDatu(a.getId(), argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
             emaitza.add(t);

@@ -66,7 +66,7 @@ public class Laguntzaile {
         return p.getName().split("\\.")[0];
     }
 
-
+    /*
     Scanner s = new Scanner(photosToUploadFile);
                     while(s.hasNextLine() && !a.equals(argazkiIzena)) {
         String line = s.nextLine();
@@ -74,6 +74,8 @@ public class Laguntzaile {
         idArgazkiDB = line.split(",")[1];
     }
                     s.close();
+
+     */
 
 
 
