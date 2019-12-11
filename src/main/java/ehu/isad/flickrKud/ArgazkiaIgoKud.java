@@ -144,25 +144,6 @@ public class ArgazkiaIgoKud implements Initializable {
         //Actualizar texto estado para que diga que ha pasado
     }
 
-
-
-    private static void copyFileUsingStream(File source, File dest) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            os = new FileOutputStream(dest);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        } finally {
-            is.close();
-            os.close();
-        }
-    }
-
     private void uploadPhotosWithoutApi(){
         // 1. argazkiak datu basera, id izan gabe
         // argazkien kopia sortu temp fitxategian

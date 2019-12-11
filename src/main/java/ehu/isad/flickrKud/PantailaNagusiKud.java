@@ -204,76 +204,44 @@ public class PantailaNagusiKud implements Initializable {
 
     private void tmpArgazkiakIgo() throws FileNotFoundException {
         // tmp-n gordetako argazkiak flickerrera igoko dira
-        URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp");// jetbrains://idea/navigate/reference?project=dasi&fqn=data.username.flickr.tmp
-        String tmpPath = urla.getPath();
-        File infoTXT = new File(getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath());
+        String tmpPath = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
+        String photosToUploadTxt = getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath();
+        File tmp = new File(tmpPath);
+        File photosToUploadFile = new File(photosToUploadTxt);
+
         String argazkiIzena = null;
         String idArgazkiDB = null;
-        File tmp = new File(tmpPath);
+
         if (tmp.isDirectory()) {
-            // Lehenik eta behin, argazkien informazio guztia duen File-a hartu behar dugu
-            String[] txt_rako = tmp.list();
-            if (txt_rako.length != 0) {
-                for (String x : txt_rako) {
-                    String mota = x.split("\\.")[1];
-                    if (mota.equals("txt"))
-                      infoTXT = new File(tmpPath + "photosToUpload.txt");
-                }
-            }
-
-            // Orain argazkien zatia landuko dugu
             String[] argazkiak = tmp.list();
-            if (argazkiak.length != 0) {
-                //del archivo photos ToUpload ha conseguido una lista de fotos
-                  for (String a : argazkiak) {
-                      String path = tmpPath + a;
-                      String titulua = a.split("\\.")[0];
-                      String artxiboMota = a.split("\\.")[1];
-                      if (!artxiboMota.equals("txt")) {
-                          try {
-                              // txt-an argazki bilatu behar da (ez daudelako ordenaturik)
-                              // Fitxategia aurkitzean bere db-ko id-a izango dugu
-                              Scanner s = new Scanner(infoTXT);
-                              while(s.hasNextLine() && !a.equals(argazkiIzena)) {
-                                  String line = s.nextLine();
-                                  argazkiIzena = line.split(",")[0];
-                                  idArgazkiDB = line.split(",")[1];
-                              }
-                              s.close();
-                          } catch (FileNotFoundException e) { e.printStackTrace(); }
+            //del archivo photos ToUpload ha conseguido una lista de fotos
+            for (String a : argazkiak) {
+                String titulua = Laguntzaile.getFileName(a); //TODO probar si funciona
+                try {
+                    // txt-an argazki bilatu behar da (ez daudelako ordenaturik)
+                    // Fitxategia aurkitzean bere db-ko id-a izango dugu
+                    Scanner s = new Scanner(photosToUploadFile);
+                    while(s.hasNextLine() && !a.equals(argazkiIzena)) {
+                        String line = s.nextLine();
+                        argazkiIzena = line.split(",")[0];
+                        idArgazkiDB = line.split(",")[1];
+                    }
+                    s.close();
+                } catch (FileNotFoundException e) { e.printStackTrace(); }
 
-                          //String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(path, titulua);
-                          // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                          //ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
-                          PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
-
-                          try {
-                              // Argazkia flick-er era igoko da eta small-size-a deskargatuko du
-                              //Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                              Photo p2 = photoInt.getPhoto("49195028868");
-                              String savePath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak/").getPath()+"prueba.jpg";
-                              FlickrAPI.getInstantzia().downloadFileWithUrl(savePath, p2.getSmallUrl());
-                              //Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                              //FlickrAPI.getInstantzia().downloadFileWithUrl(a, p.getSmallUrl());
-                          } catch (FlickrException e) { e.printStackTrace(); }
-                          try {
-                              // photos to upload-ko datuan ezabatuko ditugu
-                              System.out.println("photos to upload cleaned");
-                              PrintWriter writer = new PrintWriter(infoTXT);
-                              writer.print("");
-                              writer.close();
-                          } catch (Exception e){}
-                      }
-                  }
-                  System.out.println("tmp-eko argazki guztiak igo dira eta resources eta DBn sartu dira");
-                  File[] ezabatzeko = tmp.listFiles();
-                  for (File f : ezabatzeko)
-                      f.delete();
-                  System.out.println("tmp karpetako argazki guztiak ezabatu dira");
-                clearFile(infoTXT.getPath());
+                String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(a);
+                // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
+                PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+                try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da
+                    Photo p = photoInt.getPhoto(sortuDenFlickrID);
+                    Laguntzaile.downloadFileWithUrl(a, p.getSmallUrl());
+                } catch (FlickrException e) { e.printStackTrace(); }
+            }
+                Laguntzaile.deleteAllFilesFromDir(tmpPath);
+                Laguntzaile.clearFile(photosToUploadTxt);
             } else
-                System.out.println("Ez dago ezer tmp karpetan");
-        }
+                System.out.println("Errorea tmp karpeta irakurtzean");
     }
 
     @FXML
@@ -350,7 +318,6 @@ public class PantailaNagusiKud implements Initializable {
       this.bildumenLista.getSelectionModel().selectFirst();
 
     }
-
     public void sartuDatuakTaulan() {
 
       // Hasierako aldirako, jarri lehenengo bilduma aukeratu bezala
@@ -364,17 +331,6 @@ public class PantailaNagusiKud implements Initializable {
           );
           this.tbData.setItems(taulaModels);
       }
-
-
-    }
-
-    public void clearFile(String file) throws FileNotFoundException {
-        Formatter f = new Formatter(file);
-        Scanner s = new Scanner(file);
-        //go through and do this every time in order to delete previous crap
-        while(s.hasNext()){
-            f.format(" ");
-        }
     }
 
 

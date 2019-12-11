@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Formatter;
 import java.util.Scanner;
 
-public class laguntzaile {
+public class Laguntzaile {
 
 
     private static void copyFileUsingStream(String pSource, String pDest) throws IOException {
@@ -60,6 +60,21 @@ public class laguntzaile {
         for (File f : ezabatzeko)
             f.delete();
     }
+
+    public static String getFileName(String path){
+        File p = new File(path);
+        return p.getName().split("\\.")[0];
+    }
+
+
+    Scanner s = new Scanner(photosToUploadFile);
+                    while(s.hasNextLine() && !a.equals(argazkiIzena)) {
+        String line = s.nextLine();
+        argazkiIzena = line.split(",")[0];
+        idArgazkiDB = line.split(",")[1];
+    }
+                    s.close();
+
 
 
 }

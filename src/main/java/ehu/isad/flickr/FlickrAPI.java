@@ -11,6 +11,7 @@ import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
+import ehu.isad.flickrKud.Laguntzaile;
 import ehu.isad.model.*;
 import ehu.isad.flickrKud.KautotuKud;
 
@@ -105,7 +106,8 @@ public class FlickrAPI {
 
     }
 
-    public String argazkiaIgo(String path, String titulua){
+    public String argazkiaIgo(String path){
+        String titulua = Laguntzaile.getFileName(path);
         Uploader up = flickr.getUploader();
 
         UploadMetaData umd = new UploadMetaData();
@@ -148,7 +150,7 @@ public class FlickrAPI {
 
             // Orain URL-tik argazkia irakurriko dugu
 
-            downloadFileWithUrl(filename, p.getOriginalUrl());
+            Laguntzaile.downloadFileWithUrl(filename, p.getOriginalUrl());
 
         } catch (FlickrException e) {
             e.printStackTrace();
@@ -201,20 +203,6 @@ public class FlickrAPI {
     }
 
      */
-
-    public void downloadFileWithUrl(String url, String dest){
-        try (
-                BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
-                FileOutputStream fileOS = new FileOutputStream(dest)) {
-            byte data[] = new byte[1024];
-            int byteContent;
-            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
-                fileOS.write(data, 0, byteContent);
-            }
-        } catch (IOException e) {
-            // handles IO exceptions
-        }
-    }
 
     public void ezabatuFlickrInstantzia() {
         instantzia = null;
