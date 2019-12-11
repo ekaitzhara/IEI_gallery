@@ -73,7 +73,7 @@ public class ListaBildumak {
 
         Iterator sets = pi.getList(FlickrAPI.getInstantzia().getNsid()).getPhotosets().iterator(); // nsid erabiltzailearen bildumak zeharkatzeko iteratzailea lortu
 
-        Bilduma aux = null;
+        Bilduma bildumaIzenarekin = null;
         String erab = ErabiltzaileDBKud.getIdErab();
 
         while (sets.hasNext()) { // bildumak dauden bitartean, zeharkatu
@@ -102,7 +102,7 @@ public class ListaBildumak {
         while (allIter.hasNext()) {
             String setTitle = (String) allIter.next();  // bildumaren hurrengo izena lortu
 
-            aux = this.emanBildumaIzenarekin(setTitle);
+            bildumaIzenarekin = this.emanBildumaIzenarekin(setTitle);
 
             System.out.println("Bilduma:" + setTitle);
             Collection currentSet = allPhotos.get(setTitle); // bildumaren argazkiak lortu
@@ -131,11 +131,11 @@ public class ListaBildumak {
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
-                aux.argazkiaGehitu(fitxategiIzena, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
+                bildumaIzenarekin.argazkiaGehitu(fitxategiIzena, pDescription , (java.sql.Date) pDate,pId , pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
 
-                FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(fitxategiIzena, p.getSmallUrl());
+                FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(p.getId(), p.getSmallUrl());
 
                 String title = p.getTitle();
                 System.out.println("\t"+title);
