@@ -52,11 +52,6 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @FXML
     private void cleanList(ActionEvent actionEvent) throws Exception {
-        URL urla = this.getClass().getResource("/data/dasiteam/flickr/tmp/thumb-1920-707960.png");
-        String path = urla.getPath();
-        String name = "99999";
-        FlickrAPI.getInstantzia().argazkiaIgo("C:/Users/anderdu/Desktop/dasi/fotos/arcoiris.jpg","arcoiris");
-
         System.out.println("cleanList");
         this.igotakoFitxategiak.clear();
     }

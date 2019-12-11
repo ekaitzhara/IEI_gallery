@@ -106,8 +106,8 @@ public class FlickrAPI {
 
     }
 
-    public String argazkiaIgo(String path){
-        String titulua = Laguntzaile.getFileName(path);
+    public String argazkiaIgo(String photoPath,String albumName){
+        String titulua = Laguntzaile.getFileName(photoPath);
         Uploader up = flickr.getUploader();
 
         UploadMetaData umd = new UploadMetaData();
@@ -117,7 +117,7 @@ public class FlickrAPI {
         umd.setDescription("Tmp-tik igotako argazkia");
 
         // Sartu argazkia
-        File pathToFile = new File(path);
+        File pathToFile = new File(photoPath);
         String key = getFlickr().getApiKey();
         Auth auth =  getFlickr().getAuth();
         /*

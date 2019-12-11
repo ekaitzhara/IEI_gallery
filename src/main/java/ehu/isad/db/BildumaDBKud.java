@@ -82,5 +82,19 @@ public class BildumaDBKud {
         return false;
     }
 
+    public ArrayList<String> argazkiarenBildumak(int id){
+        ArrayList<String> emaitza = new ArrayList<>();
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query =      "SELECT bil.izena " +
+                            "FROM Bilduma bil, BildumaArgazki " +
+                            "Where BildumaArgazki.idArgazkia="+id+" and bil.idBilduma=BildumaArgazki.idBilduma";
+
+        rs = dbKud.execSQL(query);
+
+
+        return emaitza;
+    }
+
 
 }

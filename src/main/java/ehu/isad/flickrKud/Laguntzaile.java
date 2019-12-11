@@ -3,6 +3,7 @@ package ehu.isad.flickrKud;
 import java.io.*;
 import java.net.URL;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Laguntzaile {
@@ -45,6 +46,7 @@ public class Laguntzaile {
     }
 
     public static void clearFile(String filePath) throws FileNotFoundException {
+        // fitxategia hutsik
         // txt baten barruko informazioa garbizteko
         Formatter f = new Formatter(filePath);
         Scanner s = new Scanner(filePath);
@@ -66,16 +68,22 @@ public class Laguntzaile {
         return p.getName().split("\\.")[0];
     }
 
-    /*
-    Scanner s = new Scanner(photosToUploadFile);
-                    while(s.hasNextLine() && !a.equals(argazkiIzena)) {
-        String line = s.nextLine();
-        argazkiIzena = line.split(",")[0];
-        idArgazkiDB = line.split(",")[1];
+    public static HashMap getHashTableFromTxt(String path) throws FileNotFoundException {
+        HashMap mapa = new HashMap<String,String>();
+        File file = new File(path);
+        Scanner s = new Scanner(file);
+        while(s.hasNextLine()) {
+            String line = s.nextLine();
+            String argazkiIzena = line.split(",")[0];
+            String idArgazkiDB = line.split(",")[1];
+            mapa.put(argazkiIzena,idArgazkiDB);
+        }
+        s.close();
+        return mapa;
     }
-                    s.close();
 
-     */
+
+
 
 
 

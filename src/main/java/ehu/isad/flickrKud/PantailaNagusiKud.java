@@ -8,6 +8,7 @@ import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
+import ehu.isad.db.DBKudeatzaile;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.Bilduma;
@@ -37,7 +38,6 @@ public class PantailaNagusiKud implements Initializable {
 
   // Reference to the main application.
   private Main mainApp;
-  private String deletedRegister = this.getClass().getResource("/data/dasiteam/flickr/photosToDelete.txt").getPath();
 
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
@@ -137,72 +137,31 @@ public class PantailaNagusiKud implements Initializable {
       // /tmp karpetan dagoen igo Flickr-rera eta Flickr-retik hartu sortu duen id-a sartzeko datu basean (idFlickr)
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
-
       try {
           tmpArgazkiakIgo();
       } catch (FileNotFoundException e) {
           e.printStackTrace();
       }
-
       // 2. zatia
       // photosToDelete.txt fitxategian gure datubasean ezabatu ditugun, baina Flikcer-rera aldaketa igo ezin izan ditugun argazkiak daude
       // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
       // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
       // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
-      System.out.println("llamo a deleted register");
-      PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
-      Scanner sArg = new Scanner(deletedRegister);
-
-
-      while(sArg.hasNextLine()) {
-          String argazkiarenID = sArg.nextLine();
-          /*try {
-              // DELETE baimenak jarri behar dira getAuthorizationURL zatian
-              // ezin dira baimenak aldatu, beste auth bat egin behar da??????
-              photoInt.delete(argazkiarenID);
-          } catch (FlickrException e) { e.printStackTrace(); }
-
-           */
+      try {
+          ezabatuakKenduFlickerren();
+      } catch (FileNotFoundException e) {
+          e.printStackTrace();
       }
-      sArg.close();
-      File txt = new File(deletedRegister);
-      txt.delete();
-      txt = new File(deletedRegister);
-
-
-
-
       // 3. zatia
       // Datubaseko id guztiak sartzen ditugu ArrayList batean
       // Gero, Flickr-ren argazkiak hartu eta banan banan konparatu id-ak -->
       //    --> Flickr-eko argazkia datubasean badago, ArrayList-etik ezabatzen du
       // Azkenean, Flickr-ren ez dauden argazkiak geratuko dira soilik ArrayList-ean
       // Argazki horiek (sobratzen direnak) datubasetik eta datu egituratik (ListaBildumak) ezabatzen ditugu
-
-      ArrayList<String> flickrIdDB = ArgazkiDBKud.getInstantzia().emanIdFlickrGuztiak();
-      PhotosetsInterface bildumaInt = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface();
-
       try {
-          Iterator bildumak = bildumaInt.getList(FlickrAPI.getInstantzia().getNsid()).getPhotosets().iterator();
-          while (bildumak.hasNext()) { // bildumak dauden bitartean, zeharkatu
-              Photoset set = (Photoset) bildumak.next(); // bilduma lortu
-              // set es la bilduma
-              PhotoList photos = bildumaInt.getPhotos(set.getId(), 500, 1);  // bildumaren lehenengo 500 argazki lortu
-              Iterator it = photos.iterator();
-              while (it.hasNext()) {
-                  Photo argazki = (Photo) it.next();
-                  if (flickrIdDB.contains(argazki.getId()))
-                      flickrIdDB.remove(argazki.getId());
-              }
-          }
-      } catch (FlickrException e) { e.printStackTrace(); }
-
-      // Puntu honetan DBan bai eta Flickerren ez dauden argazkiak daude
-      for (String ezabatzekoID: flickrIdDB) {
-          // DBtik ezabatu
-          ArgazkiDBKud.getInstantzia().argazkiaEzabatu(ezabatzekoID);
-          // ListaBildumatik ezabatu
-          ListaBildumak.getNireBilduma().argazkiaEzabatu(ezabatzekoID);
+          ezabatuakKenduPrograman();
+      } catch (Exception e) {
+          e.printStackTrace();
       }
 
   }
@@ -213,30 +172,22 @@ public class PantailaNagusiKud implements Initializable {
         String photosToUploadTxt = getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath();
         File tmp = new File(tmpPath);
         File photosToUploadFile = new File(photosToUploadTxt);
+        HashMap<String,String> mapUpload = Laguntzaile.getHashTableFromTxt(photosToUploadTxt);
 
-        String argazkiIzena = null;
+        String albumName = null;
         String idArgazkiDB = null;
 
         if (tmp.isDirectory()) {
-            String[] argazkiak = tmp.list();
-            //del archivo photos ToUpload ha conseguido una lista de fotos
+            String[] argazkiak = tmp.list(); //del archivo photos ToUpload ha conseguido una lista de fotos
+            //TODO probar si funciona
             for (String a : argazkiak) {
-                String titulua = Laguntzaile.getFileName(a); //TODO probar si funciona
-                try {
-                    // txt-an argazki bilatu behar da (ez daudelako ordenaturik)
-                    // Fitxategia aurkitzean bere db-ko id-a izango dugu
-                    Scanner s = new Scanner(photosToUploadFile);
-                    while(s.hasNextLine() && !a.equals(argazkiIzena)) {
-                        String line = s.nextLine();
-                        argazkiIzena = line.split(",")[0];
-                        idArgazkiDB = line.split(",")[1];
-                    }
-                    s.close();
-                } catch (FileNotFoundException e) { e.printStackTrace(); }
+                String titulua = Laguntzaile.getFileName(a); //fitxategiaren izena lortu
+                idArgazkiDB = mapUpload.get(a); //fitxategiaren datu baseko id-a lortu
+                DBKudeatzaile.getInstantzia().
 
-                String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(a);
+                String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,); //flick-era argazkia igo
                 // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
+                ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
                 PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
                 try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da
                     Photo p = photoInt.getPhoto(sortuDenFlickrID);
@@ -247,6 +198,49 @@ public class PantailaNagusiKud implements Initializable {
                 Laguntzaile.clearFile(photosToUploadTxt);
             } else
                 System.out.println("Errorea tmp karpeta irakurtzean");
+    }
+
+    private void ezabatuakKenduFlickerren() throws FileNotFoundException {
+        String deletedRegister = this.getClass().getResource("/data/dasiteam/flickr/photosToDelete.txt").getPath();
+        System.out.println("llamo a deleted register");
+        PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+        Scanner sArg = new Scanner(deletedRegister);
+        while(sArg.hasNextLine()) {
+            String argazkiarenID = sArg.nextLine();
+            try {
+                photoInt.delete(argazkiarenID);
+            }
+            catch (FlickrException e) { e.printStackTrace(); }
+        }
+        sArg.close();
+        Laguntzaile.clearFile(deletedRegister);
+    }
+
+    private void ezabatuakKenduPrograman(){
+        ArrayList<String> flickrIdDB = ArgazkiDBKud.getInstantzia().emanIdFlickrGuztiak();
+        PhotosetsInterface bildumaInt = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface();
+        try {
+            Iterator bildumak = bildumaInt.getList(FlickrAPI.getInstantzia().getNsid()).getPhotosets().iterator();
+            while (bildumak.hasNext()) { // bildumak dauden bitartean, zeharkatu
+                Photoset set = (Photoset) bildumak.next(); // bilduma lortu
+                // set es la bilduma
+                PhotoList photos = bildumaInt.getPhotos(set.getId(), 500, 1);  // bildumaren lehenengo 500 argazki lortu
+                Iterator it = photos.iterator();
+                while (it.hasNext()) {
+                    Photo argazki = (Photo) it.next();
+                    if (flickrIdDB.contains(argazki.getId()))
+                        flickrIdDB.remove(argazki.getId());
+                }
+            }
+        } catch (FlickrException e) { e.printStackTrace(); }
+
+        // Puntu honetan DBan bai eta Flickerren ez dauden argazkiak daude
+        for (String ezabatzekoID: flickrIdDB) {
+            // DBtik ezabatu
+            ArgazkiDBKud.getInstantzia().argazkiaEzabatu(ezabatzekoID);
+            // ListaBildumatik ezabatu
+            ListaBildumak.getNireBilduma().argazkiaEzabatu(ezabatzekoID);
+        }
     }
 
     @FXML
