@@ -78,7 +78,7 @@ public class ArgazkiaIgoKud implements Initializable {
             //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
             // errore bat egon dela abisatu erabiltzaileari
             mainApp.erroreaBistaratu("uploadError");
-            uploadPhotosWithoutApi();
+//            uploadPhotosWithoutApi();
         }
 
     }
@@ -143,11 +143,11 @@ public class ArgazkiaIgoKud implements Initializable {
             // DATU EGITURA: Argazkia sortu eta bilduman sartu
             int photoId = aDEgituranSartu(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
             // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
-            aDBaseanSartu();
+//            aDBaseanSartu();
             //copy file to temp
             Laguntzaile.copyFileUsingStream(photo,dest);
             //photos to upload txt fitxategian argazkia sartu
-            Laguntzaile.addDataToFile();
+//            Laguntzaile.addDataToFile();
         }
     }
 
@@ -169,7 +169,7 @@ public class ArgazkiaIgoKud implements Initializable {
         // metodo hau argazkiak eta bildumak datu basean sortzeko balio du
         // konexio gabe eta konezioarekin lan egingo du, baina era ezberdinetan
 
-        ArgazkiDBKud.getInstantzia().argazkiaSartu(idDB, photoIzena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pFavs, pKomentario);
+//        ArgazkiDBKud.getInstantzia().argazkiaSartu(idDB, photoIzena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pFavs, pKomentario);
 
         //Argazkia zein bilduman dagoen adierazi
         String bilIzena = bildumak.getValue().toString();
@@ -177,11 +177,11 @@ public class ArgazkiaIgoKud implements Initializable {
         List<String> bildumak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
         if(bildumak.contains(bilIzena)){
             // Bilduma hori jada sortuta dago, beraz zuzenean editatu BildumaArgazkia
-            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
+//            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
         }else{
             // Bilduma berria sortu eta argazkia sartu
-            BildumaDBKud.getInstantzia().bildumaSartu(bilIzena,mainApp.username,"");
-            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
+//            BildumaDBKud.getInstantzia().bildumaSartu(bilIzena,mainApp.username,"");
+ //           BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
         }
     }
 
