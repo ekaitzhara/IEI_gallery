@@ -85,7 +85,7 @@ public class ArgazkiDBKud {
 
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
-        String query = "SELECT a.idArgazkia, a.izena, a.deskribapena, a.size, a.data, a.favs, a.komentarioKop, a.idFLickr, a.sortzaileId, a.gogokoaDa" +
+        String query = "SELECT a.idArgazkia, a.izena, a.deskribapena, a.size, a.data, a.favs, a.komentarioKop, a.idFlickr as idFlickr, a.sortzaileId, a.gogokoaDa" +
                 " FROM BildumaArgazki ba, Argazkia a" +
                 " WHERE ba.idArgazkia=a.idArgazkia AND ba.idBilduma='"+idBilduma+"'";
         rs = dbKud.execSQL(query);
@@ -107,6 +107,9 @@ public class ArgazkiDBKud {
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
                 //emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+                String idf = idFlickr.toString();
+                System.out.println("IdFlickr  string => " + idf);
+                System.out.println("IdFlickr integer => " + idFlickr);
                 emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
 
             }

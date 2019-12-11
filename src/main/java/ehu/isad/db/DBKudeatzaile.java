@@ -1,6 +1,10 @@
 package ehu.isad.db;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.Statement;
 
-import java.sql.*;
 
 
 public class DBKudeatzaile {
@@ -9,17 +13,14 @@ public class DBKudeatzaile {
 
 	private void conOpen() {
 		try {
-
 			String url = "jdbc:sqlite::resource:dasiapp.db";
-			//String path=this.getClass().getResource("/eurobisioa.db").getPath();
-			//String url = "jdbc:sqlite:"+ path;
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
 			conn = (Connection) DriverManager.getConnection(url);
+			conn.setAutoCommit(false);
 			System.out.println("Database connection established");
 		} catch (Exception e) {
-			System.err.println("Cannot connect to database server");
-			e.printStackTrace();
+			System.err.println("Cannot connect to database server " + e);
 		}
 	}
 
@@ -45,6 +46,7 @@ public class DBKudeatzaile {
 
 		try {
 			rs = s.executeQuery(query);
+			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -78,6 +80,7 @@ public class DBKudeatzaile {
 			} else {
 				// update, delete, create agindu bat
 				count = s.executeUpdate(query);
+				conn.commit();
 				System.out.println(count + " rows affected");
 			}
 		} catch (SQLException e) {

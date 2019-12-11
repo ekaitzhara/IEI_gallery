@@ -176,7 +176,7 @@ public class FlickrAPI {
             out.close();
             in2.close();
             response = out.toByteArray();
-            FileOutputStream fos = new FileOutputStream("/data/dasiteam/flickr/argazkiak/"+filename);
+            FileOutputStream fos = new FileOutputStream("/data/dasiteam/flickr/argazkiak/"+filename+ ".jpg");
             fos.write(response);
             fos.close();
         } catch (IOException e) {
@@ -199,7 +199,7 @@ public class FlickrAPI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(filename + " argazkia ondo jaitsi eta resources/data karpetan gorde egin da");
+        System.out.println(filename + " argazkia ondo jaitsi eta resources/data/dasiteam/flickr/argazkiak karpetan gorde egin da");
     }
 
 
