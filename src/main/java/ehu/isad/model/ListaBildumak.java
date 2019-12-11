@@ -182,7 +182,7 @@ public class ListaBildumak {
         for (Argazkia a : argazkiak) {
             String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").toString() + a.getIdFLickr() + ".jpg";
             String etiketak = a.emanStringEtiketak();
-            TaulaDatu t = new TaulaDatu(a.getId(), argazkiPath, a.getIzena(), etiketak, a.getData(), a.getViews(), a.getFavs(), a.getKomentarioKop());
+            TaulaDatu t = new TaulaDatu(a.getId(), argazkiPath, a.getIzena(), etiketak, a.getData(), a.getDeskribapena(), a.getFavs(), a.getKomentarioKop());
             emaitza.add(t);
         }
         return emaitza;
@@ -202,7 +202,7 @@ public class ListaBildumak {
             BildumaDBKud.getInstantzia().bildumaSartu(b.getId(), b.getIzena(), b.getSortzaileID(), b.getDeskribapena());
             ArrayList<Argazkia> argazkiak = b.getArgazkiak();
             for (Argazkia a : argazkiak) {
-                ArgazkiDBKud.getInstantzia().argazkiaSartu(a.getId(), a.getIzena(), a.getDeskribapena(), a.getData(), a.getIdFLickr(), a.isGogokoaDa(), a.getSortzaileID());
+                ArgazkiDBKud.getInstantzia().argazkiaSartu(a.getId(), a.getIzena(), a.getDeskribapena(), a.getData(), a.getIdFLickr(), a.isGogokoaDa(), a.getSortzaileID(), a.getFavs(), a.getKomentarioKop());
                 ArgazkiDBKud.getInstantzia().argazkiaBildumanSartu(a.getId(), b.getId());
                 ArrayList<Etiketa> etiketak = a.getEtiketak();
                 for (Etiketa e: etiketak) {
