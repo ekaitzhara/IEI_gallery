@@ -14,6 +14,9 @@ public class DBKudeatzaile {
 	private void conOpen() {
 		try {
 			String url = "jdbc:sqlite::resource:dasiapp.db";
+			String url1 = this.getClass().getResource("main").getPath();
+			System.out.println(url);
+			//url.replace("resources/main/", "dasiapp.db");
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
 			conn = (Connection) DriverManager.getConnection(url);

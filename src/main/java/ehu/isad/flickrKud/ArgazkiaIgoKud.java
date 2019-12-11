@@ -26,7 +26,7 @@ public class ArgazkiaIgoKud implements Initializable {
     // Reference to the main application.
     private Main mainApp;
     private List<File> igotakoFitxategiak = new ArrayList<>();
-    private ArrayList<ObsArgazkiIgo> obsDatuak = new ArrayList<>();
+    private List<ObsArgazkiIgo> obsDatuak = new ArrayList<>();
     private ObservableList<ObsArgazkiIgo> igoModel = FXCollections.observableArrayList();
 
     @FXML
@@ -178,25 +178,18 @@ public class ArgazkiaIgoKud implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(this.getClass().getResource("/data/dasiteam/flickr/tmp/thumb-1920-707960.png"));
 
-
         izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
         botoia.setCellValueFactory(new PropertyValueFactory<>("botoia"));
-
         System.out.println("igo iniciado");
-
-
         //igotakoakTabla.getColumns();
 
-
         List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
-
         List<String> str = new ArrayList<>();
         str.add("bil1");
         str.add("bil2");
 
-        this.bildumak.getItems().addAll(str);
+        this.bildumak.getItems().addAll(bil);
         System.out.println("str añadidos");
-
     }
 
 }
