@@ -36,9 +36,9 @@ public class BildumaDBKud {
         return false;
     }
 
-    public void bildumaSartu(String idBilduma, String izen, String erabiltzaile, String desk) {
+    public void bildumaSartu(String izen, String idFlicr,  String erabiltzaile, String desk) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO Bilduma(idBilduma, izena, sortzaileId, deskribapena) VALUES('"+ idBilduma +"', '"+ izen +"', '"+erabiltzaile+"', '"+desk+"')";
+        String query = "INSERT INTO Bilduma(izena, idFlicr, sortzaileId, deskribapena) VALUES('"+ izen +"', '"+ idFlicr +"', '"+erabiltzaile+"', '"+desk+"')";
         dbKud.execSQL(query);
     }
 
@@ -83,6 +83,7 @@ public class BildumaDBKud {
     }
 
     public ArrayList<String> argazkiarenBildumak(String id){
+        // id bat emanez argazkiaren bilduma lortzen du
         ArrayList<String> emaitza = new ArrayList<>();
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
@@ -101,6 +102,12 @@ public class BildumaDBKud {
         }
 
         return emaitza;
+    }
+
+    public void argazkiaBildumanSartu(String bildumaIzena,String idArgazkia){
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "INSERT INTO BildumaArgazki(idBilduma, idArgazkia) VALUES('"+ bildumaIzena +"', '"+ idArgazkia +")";
+        dbKud.execSQL(query);
     }
 
 

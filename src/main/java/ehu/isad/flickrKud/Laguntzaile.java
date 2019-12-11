@@ -82,6 +82,10 @@ public class Laguntzaile {
         return mapa;
     }
 
+    public static void addDataToFile(String filePath){
+
+    }
+
 
 
 

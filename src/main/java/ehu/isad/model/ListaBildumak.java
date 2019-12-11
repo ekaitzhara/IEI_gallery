@@ -37,10 +37,11 @@ public class ListaBildumak {
         lista.remove(zein);
     }
 
-    public void bildumaSartu(String bildumaIzena){
+    public Bilduma bildumaSartu(String bildumaIzena){
 
         //Bilduma berria = new Bilduma(bildumaIzena);
         //lista.add(berria);
+        return null;
     }
 
     public void argazkiakSartu(ArrayList<Argazkia> argazkiLista, Bilduma non){
@@ -151,7 +152,7 @@ public class ListaBildumak {
 
     }
 
-    private Bilduma emanBildumaIzenarekin(String titulua) {
+    public Bilduma emanBildumaIzenarekin(String titulua) {
         for(Bilduma bil:lista){
             if (bil.getIzena().equals(titulua))
                 return bil;

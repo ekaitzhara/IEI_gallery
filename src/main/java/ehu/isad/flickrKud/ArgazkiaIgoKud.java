@@ -2,6 +2,7 @@ package ehu.isad.flickrKud;
 
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
+import ehu.isad.db.BildumaDBKud;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.ObsArgazkiIgo;
 import ehu.isad.model.*;
@@ -102,76 +103,6 @@ public class ArgazkiaIgoKud implements Initializable {
         igoModel = FXCollections.observableArrayList(obsDatuak);
         igotakoakTabla.setItems(igoModel);
         igotakoakTabla.refresh();
-
-        //para onclik
-        /*
-        String filePath = "";
-        for(File fitxategi : igotakoFitxategiak){
-            filePath = fitxategi.getPath();
-            File newFile = new File(tmpPath+fitxategi.getName());
-            copyFileUsingStream(fitxategi,newFile);
-            ObsArgazkiIgo obs = new ObsArgazkiIgo(filePath);
-            data.add(obs);
-
-
-        }
-
-         */
-
-        //igotakoakTabla.setItems(data);
-        //igotakoakTabla.setItems();
-
-        //para hacer ventana dinamica
-        //texto.setText("aaaa");
-        //ui1();
-        //Actualizar texto estado para que diga que ha pasado
-    }
-
-    private void uploadPhotosWithoutApi(ArrayList<String> photoPaths) throws IOException {
-        // 1. argazkiak datu basera, id izan gabe
-        // argazkien kopia sortu temp fitxategian
-        // argazkiak db-ra igo baina id gabe
-        // argazkiak datu egituran sartu
-        // igoko beharko den argazki izena eta id txt batean gorde
-        String dest = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
-        for(String path:photoPaths){
-            Laguntzaile.copyFileUsingStream(path,dest);//copy file to temp
-
-
-            // Argazkia datu basean sartu
-            Integer idDB = 0;
-            String pIzena = Laguntzaile.getFileName(path);
-            String deskribapena = null;
-            Date data = null; //TODO poner fecha de creacion de imagen extraida de metadatos
-            String idFLickr = null;
-
-            boolean gogokoaDa = false;
-            String sortzaileID = null;
-            String pUrl = null;
-            Integer pFavs = null;
-            Integer pKomentario = null;
-            ArrayList<Etiketa> etiketaLista = null;
-            Integer pViews = null;
-            ArgazkiDBKud.getInstantzia().argazkiaSartu();
-            public void argazkiaSartu(Integer idDB, String pIzena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
-
-                //Argazkia zein bilduman dagoen adierazi
-            String bilIzena = bildumak.getValue().toString();
-
-            // Argazkia datu egituran sartu
-            Argazkia foto = new Argazkia(pIzena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
-
-            //Argazkia Bilduman sartu
-
-                    // crear foto en datu egitura, hacer nuevo eraikitzaile
-            // subir esa foto a la base de datos
-
-            // mirar si la bilduma esta en la DB
-                // si esta pillar su id
-                // else crearla
-            //cuando sube la foto a la base de datos, pillo la id de la DB y
-            // editar el txt
-        }
     }
 
     private void uploadPhotosToApi(ArrayList<String> photoPaths) throws IOException {
@@ -185,30 +116,74 @@ public class ArgazkiaIgoKud implements Initializable {
 
     }
 
-    private void insertPhotoDB(Integer id, String izena, String deskribapena, Date data, String idFLickr, String sortzaileID){
+    private void uploadPhotosWithoutApi(ArrayList<String> photoPaths) throws IOException {
+        // Argazkiak programara igotzeko baina flickerreko konexioa ondo ez doanean
+        String dest = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
+        for(String photo:photoPaths){  // foto == argazkiaren path
+            // ARGAZKIEN ATRIBUTUAK
+            // Atributos que no usamos
+                String deskribapena = null; //de primeras se suben sin descripcion
+                Date date = null; //TODO poner fecha de creacion de imagen extraida de metadatos
+                boolean gogokoaDa = false; //de primeras siempre false
+                String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
+            // Atributos not null: Son obligatorios de pasar a la DB
+                Integer idDB; //id con autoincrement para DB
+                String pIzena = Laguntzaile.getFileName(photo); //el nombre viene del mismo archivo
+            // Atributos que varian por conexion
+                String idFLickr = null;
+            // Atributos que no estan en la base de datos: para futuros usos, pero que actualmente no utilizamos
+                String size = null;
+                Integer pFavs = null;
+                Integer pKomentario = null;
+                String pUrl = null;
+            ArrayList<Etiketa> etiketaLista = null;
+            Integer pViews = null;
 
-        ArgazkiDBKud.getInstantzia().argazkiaSartu(id, izena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID);
-    }
 
-
-
-/*
-    //por si hace falta, si no se borra
-    private void ui1(){
-        loadUI("ui1");
-    }
-
-    private void loadUI(String ui){
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource( "/view/"+ ui + ".fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            // DATU EGITURA: Argazkia sortu eta bilduman sartu
+            int photoId = aDEgituranSartu(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
+            // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
+            aDBaseanSartu();
+            //copy file to temp
+            Laguntzaile.copyFileUsingStream(photo,dest);
+            //photos to upload txt fitxategian argazkia sartu
+            Laguntzaile.addDataToFile();
         }
-        bordes.setLeft(root);
     }
 
- */
+    private Integer aDEgituranSartu(String pIzena, String deskribapena, Date date, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews){
+        Argazkia foto = new Argazkia(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
+        String albumName = bildumak.getValue().toString();
+        Bilduma uploadAlbum = ListaBildumak.getNireBilduma().emanBildumaIzenarekin(albumName);
+        if(uploadAlbum==null){
+            uploadAlbum.argazkiaGehitu(foto);
+        }else{
+            Bilduma newAlbum = ListaBildumak.getNireBilduma().bildumaSartu(albumName);
+            newAlbum.argazkiaGehitu(foto);
+        }
+        return foto.getId();
+    }
+
+
+    private void aDBaseanSartu(Integer idDB, String photoIzena, String idFLickr, String albumName) {
+        // metodo hau argazkiak eta bildumak datu basean sortzeko balio du
+        // konexio gabe eta konezioarekin lan egingo du, baina era ezberdinetan
+
+        ArgazkiDBKud.getInstantzia().argazkiaSartu(idDB, photoIzena, deskribapena, data, idFLickr, gogokoaDa, sortzaileID, pFavs, pKomentario);
+
+        //Argazkia zein bilduman dagoen adierazi
+        String bilIzena = bildumak.getValue().toString();
+
+        List<String> bildumak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
+        if(bildumak.contains(bilIzena)){
+            // Bilduma hori jada sortuta dago, beraz zuzenean editatu BildumaArgazkia
+            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
+        }else{
+            // Bilduma berria sortu eta argazkia sartu
+            BildumaDBKud.getInstantzia().bildumaSartu(bilIzena,mainApp.username,"");
+            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
