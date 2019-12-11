@@ -82,7 +82,7 @@ public class BildumaDBKud {
         return false;
     }
 
-    public ArrayList<String> argazkiarenBildumak(int id){
+    public ArrayList<String> argazkiarenBildumak(String id){
         ArrayList<String> emaitza = new ArrayList<>();
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
@@ -91,7 +91,14 @@ public class BildumaDBKud {
                             "Where BildumaArgazki.idArgazkia="+id+" and bil.idBilduma=BildumaArgazki.idBilduma";
 
         rs = dbKud.execSQL(query);
-
+        try {
+            while (rs.next()) {
+                String izena = rs.getString("izena");
+                emaitza.add(izena);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return emaitza;
     }

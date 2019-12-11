@@ -8,6 +8,7 @@ import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.ArgazkiDBKud;
+import ehu.isad.db.BildumaDBKud;
 import ehu.isad.db.DBKudeatzaile;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.flickr.FlickrAPI;
@@ -176,6 +177,7 @@ public class PantailaNagusiKud implements Initializable {
 
         String albumName = null;
         String idArgazkiDB = null;
+        ArrayList<String> argazkiarenBildumak;
 
         if (tmp.isDirectory()) {
             String[] argazkiak = tmp.list(); //del archivo photos ToUpload ha conseguido una lista de fotos
@@ -183,16 +185,18 @@ public class PantailaNagusiKud implements Initializable {
             for (String a : argazkiak) {
                 String titulua = Laguntzaile.getFileName(a); //fitxategiaren izena lortu
                 idArgazkiDB = mapUpload.get(a); //fitxategiaren datu baseko id-a lortu
-                DBKudeatzaile.getInstantzia().
+                argazkiarenBildumak = BildumaDBKud.getInstantzia().argazkiarenBildumak(idArgazkiDB);
+                for(String bilIzena:argazkiarenBildumak){
+                    String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,bilIzena); //flick-era argazkia igo
+                    // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
+                    PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+                    try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da
+                        Photo p = photoInt.getPhoto(sortuDenFlickrID);
+                        Laguntzaile.downloadFileWithUrl(a, p.getSmallUrl());
+                    } catch (FlickrException e) { e.printStackTrace(); }
+                }
 
-                String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,); //flick-era argazkia igo
-                // DATU BASEAN DAGOENEAN DESKOMENTATU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
-                PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
-                try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da
-                    Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                    Laguntzaile.downloadFileWithUrl(a, p.getSmallUrl());
-                } catch (FlickrException e) { e.printStackTrace(); }
             }
                 Laguntzaile.deleteAllFilesFromDir(tmpPath);
                 Laguntzaile.clearFile(photosToUploadTxt);
