@@ -36,10 +36,10 @@ public class ArgazkiDBKud {
         return false;
     }
 
-    public void argazkiaSartu(Integer id, String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID) {
+    public void argazkiaSartu(Integer id, String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, Integer favs, Integer komentarioak) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO Argazkia(idArgazkia, deskribapena, izena, data, sortzaileId, idFlickr, gogokoaDa) " +
-                "VALUES('"+ id +"', '"+ deskribapena +"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"')";
+        String query = "INSERT INTO Argazkia(idArgazkia, deskribapena, izena, data, sortzaileId, idFlickr, gogokoaDa, favs, komentarioKop) " +
+                "VALUES('"+ id +"', '"+ deskribapena +"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"', '"+favs+"', '"+komentarioak+"')";
         dbKud.execSQL(query);
     }
 
@@ -100,17 +100,14 @@ public class ArgazkiDBKud {
                 String sortzaileId = rs.getString("sortzaileId");
                 String size = rs.getString("size");
                 //Date data = rs.getDate("data");
-                Integer idFlickr = rs.getInt("idFlickr");
+                String idFlickr = rs.getString("idFlickr");
                 Integer favs = rs.getInt("favs");
                 Integer komentarioKop = rs.getInt("komentarioKop");
                 String s_gogokoaDa = rs.getString("gogokoaDa");
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
                 //emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
-                String idf = idFlickr.toString();
-                System.out.println("IdFlickr  string => " + idf);
-                System.out.println("IdFlickr integer => " + idFlickr);
-                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
+                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr, gogokoaDa, sortzaileId, favs, komentarioKop));
 
             }
         } catch (SQLException e) {
@@ -119,5 +116,22 @@ public class ArgazkiDBKud {
 
         return emaitza;
 
+    }
+
+    public String emanIdFlickr(Integer idArgazkiDB) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT idFlickr FROM Argazkia" +
+                " WHERE idArgazkia='"+idArgazkiDB+"'";
+        rs = dbKud.execSQL(query);
+        try {
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

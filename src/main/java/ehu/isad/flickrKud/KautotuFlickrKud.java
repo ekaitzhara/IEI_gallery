@@ -64,6 +64,7 @@ public class KautotuFlickrKud implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        txtKode.requestFocus();
     }
 
     @FXML
@@ -95,6 +96,8 @@ public class KautotuFlickrKud implements Initializable {
     //This method is called upon fxml load
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtKode.requestFocus();
+
         FlickrAPI api = FlickrAPI.getInstantzia();
         try {
 

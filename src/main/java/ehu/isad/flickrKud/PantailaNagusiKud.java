@@ -59,7 +59,7 @@ public class PantailaNagusiKud implements Initializable {
     private TableColumn<TaulaDatu, Date> data;
 
     @FXML
-    private TableColumn<TaulaDatu, Integer> views;
+    private TableColumn<TaulaDatu, String> deskribapena;
 
     @FXML
     private TableColumn<TaulaDatu, Integer> favs;
@@ -258,7 +258,7 @@ public class PantailaNagusiKud implements Initializable {
       izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
       etiketak.setCellValueFactory(new PropertyValueFactory<>("etiketak"));
       data.setCellValueFactory(new PropertyValueFactory<>("data"));
-      views.setCellValueFactory(new PropertyValueFactory<>("views"));
+      deskribapena.setCellValueFactory(new PropertyValueFactory<>("deskribapena"));
       favs.setCellValueFactory(new PropertyValueFactory<>("favs"));
       comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
 
