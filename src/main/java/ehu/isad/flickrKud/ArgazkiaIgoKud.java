@@ -123,7 +123,7 @@ public class ArgazkiaIgoKud implements Initializable {
             String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
             // Atributos not null: Son obligatorios de pasar a la DB
             Integer idDB; //id con autoincrement para DB
-            String pIzena = Laguntzaile.getFileName(photo); //el nombre viene del mismo archivo
+            String pIzena = Laguntzaile.getFileName(path); //el nombre viene del mismo archivo
             // Atributos que varian por conexion
             String idFLickr = null;
             // Atributos que no estan en la base de datos: para futuros usos, pero que actualmente no utilizamos
@@ -135,15 +135,10 @@ public class ArgazkiaIgoKud implements Initializable {
             Integer pViews = null;
 
 
-
-
             // DATU EGITURA: Argazkia sortu eta bilduman sartu
             AbstractMap.SimpleEntry<Argazkia, Bilduma> argazkiEtaBilduma = aDEgituranSartu(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
             // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
             aDBaseanSartu(argazkiEtaBilduma.getKey(),argazkiEtaBilduma.getValue());
-            //copy file to temp
-            Laguntzaile.copyFileUsingStream(photo,dest);
-
         }
 
     }

@@ -6,6 +6,7 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotosInterface;
+import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.AuthStore;
@@ -21,6 +22,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class FlickrAPI {
@@ -118,7 +120,6 @@ public class FlickrAPI {
     public String argazkiaIgo(String photoPath,String albumName){
         String titulua = Laguntzaile.getFileName(photoPath);
         Uploader up = flickr.getUploader();
-
         UploadMetaData umd = new UploadMetaData();
         // Sartu argazkiaren izena
         umd.setTitle(titulua);
@@ -129,19 +130,21 @@ public class FlickrAPI {
         File pathToFile = new File(photoPath);
         String key = getFlickr().getApiKey();
         Auth auth =  getFlickr().getAuth();
+        List<String> bildumaIzenak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
 
         try {
-            if(albumName.equals("NotInASet")){
-                return up.upload(pathToFile, umd);
-            }else{
-                //todo jada exititzen den batera igo
-                //String photosetId, String photoId
-                flickr.getPhotosetsInterface().addPhoto();
-                //albun berria sortzen
-                String id = up.upload(pathToFile, umd);
-                flickr.getPhotosetsInterface().create(albumName,"",id);
-                return id;
+            String igotakoaId = up.upload(pathToFile, umd);
+            if(bildumaIzenak.contains(albumName)){ //bilduma dago
+                if(!albumName.equals("NotInASet")){
+                    String idBilduma = ListaBildumak.getNireBilduma().emanBildumaIzenarekin(albumName).getId();
+                    flickr.getPhotosetsInterface().addPhoto(idBilduma,igotakoaId);
+                }
+            } else{ //bilduma berria da
+                Photoset bildumaBerriaFLickr = flickr.getPhotosetsInterface().create(albumName,"",igotakoaId);
+                String idBildumaBerria = bildumaBerriaFLickr.getId();
+                flickr.getPhotosetsInterface().addPhoto(idBildumaBerria,igotakoaId);
             }
+            return igotakoaId;
         } catch (FlickrException e) {
             e.printStackTrace();
         }
