@@ -59,4 +59,10 @@ public class EtiketaDBKud {
 
         return emaitza;
     }
+
+    public void etiketaGuztiakEzabatu() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Etiketa";
+        dbKud.execSQL(query);
+    }
 }

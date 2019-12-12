@@ -6,6 +6,7 @@ import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.util.AuthStore;
 import ehu.isad.Main;
 import ehu.isad.flickr.FlickrAPI;
+import ehu.isad.flickr.FlickrSortu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -102,6 +103,7 @@ public class KautotuKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
       List<String> hizkuntzak = new ArrayList<>();
       hizkuntzak.add("Euskara");
       hizkuntzak.add("Español");

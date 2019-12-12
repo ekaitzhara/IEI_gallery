@@ -34,8 +34,7 @@ public class Argazkia {
         this.views = pViews;
         this.etiketak = etiketaLista;
     }
-    /*
-    ESTO LO COMENTO PORQUE CREO QUE NO VALE PARA NADA
+
     public Argazkia(String izena, String deskribapena, Integer id, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, Integer favs, Integer komentarioKop) {
         this.izena = izena;
         this.deskribapena = deskribapena;
@@ -48,7 +47,6 @@ public class Argazkia {
         this.komentarioKop = komentarioKop;
     }
 
-     */
 
     public boolean idFlickrHauDu(String pIdFlickr) {
         return this.idFLickr.equals(pIdFlickr);

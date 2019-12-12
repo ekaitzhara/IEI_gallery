@@ -48,4 +48,10 @@ public class ErabiltzaileDBKud {
         }
         return null;
     }
+
+    public void ezabatuErabiltzailea() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Erabiltzailea";
+        dbKud.execSQL(query);
+    }
 }

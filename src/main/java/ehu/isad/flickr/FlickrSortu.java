@@ -6,6 +6,7 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
+import ehu.isad.Main;
 import ehu.isad.flickrKud.KautotuKud;
 
 import java.io.File;
@@ -30,6 +31,8 @@ public class FlickrSortu {
             properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
+
+
         } finally {
             IOUtilities.close(in);
         }
@@ -54,4 +57,5 @@ public class FlickrSortu {
     public AuthStore getAuthStore() {
         return authStore;
     }
+
 }

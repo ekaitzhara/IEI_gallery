@@ -7,10 +7,7 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
-import ehu.isad.db.ArgazkiDBKud;
-import ehu.isad.db.BildumaDBKud;
-import ehu.isad.db.DBKudeatzaile;
-import ehu.isad.db.ErabiltzaileDBKud;
+import ehu.isad.db.*;
 import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
@@ -109,6 +106,14 @@ public class PantailaNagusiKud implements Initializable {
               }
           }
       }
+
+      ListaBildumak.getNireBilduma().listaHustu();
+      BildumaDBKud.getInstantzia().bildumaGuztiakEzabatu();
+      BildumaDBKud.getInstantzia().bildumaArgazkiLoturakEzabatu();
+      ArgazkiDBKud.getInstantzia().argazkiGuztiakEzabatu();
+      ArgazkiDBKud.getInstantzia().argazkiEtiketaLoturakEzabatu();
+      EtiketaDBKud.getInstantzia().etiketaGuztiakEzabatu();
+      ErabiltzaileDBKud.getInstantzia().ezabatuErabiltzailea();
 
       this.mainApp.kautoketaraEraman();
   }
@@ -248,6 +253,7 @@ public class PantailaNagusiKud implements Initializable {
 
     @FXML
   public void programaItxi(ActionEvent actionEvent){
+      this.mainApp.itxi();
       System.out.println("itxi click");
   }
 

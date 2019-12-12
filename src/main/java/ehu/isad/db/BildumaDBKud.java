@@ -36,9 +36,9 @@ public class BildumaDBKud {
         return false;
     }
 
-    public void bildumaSartu(String izen, String idFlicr,  String erabiltzaile, String desk) {
+    public void bildumaSartu(String izen, String idFlickr,  String erabiltzaile, String desk) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO Bilduma(izena, idFlicr, sortzaileId, deskribapena) VALUES('"+ izen +"', '"+ idFlicr +"', '"+erabiltzaile+"', '"+desk+"')";
+        String query = "INSERT INTO Bilduma(izena, idBilduma, sortzaileId, deskribapena) VALUES('"+ izen +"', '"+ idFlickr +"', '"+erabiltzaile+"', '"+desk+"')";
         dbKud.execSQL(query);
     }
 
@@ -67,20 +67,6 @@ public class BildumaDBKud {
         return emaitza;
     }
 
-    public boolean bildumaHutsaDago() {
-        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        ResultSet rs=null;
-        String query = "SELECT idBilduma FROM BildumaArgazki WHERE idBilduma=0";
-        rs = dbKud.execSQL(query);
-
-
-        try {
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     public ArrayList<String> argazkiarenBildumak(String id){
         // id bat emanez argazkiaren bilduma lortzen du
@@ -111,4 +97,15 @@ public class BildumaDBKud {
     }
 
 
+    public void bildumaGuztiakEzabatu() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Bilduma";
+        dbKud.execSQL(query);
+    }
+
+    public void bildumaArgazkiLoturakEzabatu() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM BildumaArgazki";
+        dbKud.execSQL(query);
+    }
 }
