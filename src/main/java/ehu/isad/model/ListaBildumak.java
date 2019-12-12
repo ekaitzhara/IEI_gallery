@@ -201,11 +201,11 @@ public class ListaBildumak {
 
     public void sartuDatuakDBra() {
         for (Bilduma b : lista) {
-            BildumaDBKud.getInstantzia().bildumaSartu(b.getId(), b.getIzena(), b.getSortzaileID(), b.getDeskribapena());
+            BildumaDBKud.getInstantzia().bildumaSartu(b.getIzena(), b.getId(), b.getSortzaileID(), b.getDeskribapena());
             ArrayList<Argazkia> argazkiak = b.getArgazkiak();
             for (Argazkia a : argazkiak) {
                 ArgazkiDBKud.getInstantzia().argazkiaSartu(a.getId(), a.getIzena(), a.getDeskribapena(), a.getData(), a.getIdFLickr(), a.isGogokoaDa(), a.getSortzaileID(), a.getFavs(), a.getKomentarioKop());
-                ArgazkiDBKud.getInstantzia().argazkiaBildumanSartu(a.getId(), b.getId());
+                ArgazkiDBKud.getInstantzia().argazkiaBildumanSartu(a.getId(), b.getIzena());
                 ArrayList<Etiketa> etiketak = a.getEtiketak();
                 for (Etiketa e: etiketak) {
                     EtiketaDBKud.getInstantzia().etiketaSartu(e.getIdEtiketa(), e.getIzena());
@@ -218,10 +218,8 @@ public class ListaBildumak {
     public void listaBeteDBrekin() {
         // ListaBildumak betetzen du DBko datu guztiekin
         this.lista =  BildumaDBKud.getInstantzia().emanListaBildumak();
-        if (BildumaDBKud.getInstantzia().bildumaHutsaDago())
-            this.lista.add(new Bilduma("NotInASet", "0000", "", FlickrAPI.getInstantzia().getNsid()));
         for (Bilduma b : lista) {
-            b.argazkiListaSartu(ArgazkiDBKud.getInstantzia().emanArgazkiakBildumarekin(b.getId()));
+            b.argazkiListaSartu(ArgazkiDBKud.getInstantzia().emanArgazkiakBildumarekin(b.getIzena()));
             for (Argazkia a : b.getArgazkiak()) {
                 a.etiketenListaSartu(EtiketaDBKud.getInstantzia().etiketakEman(a.getId()));
             }

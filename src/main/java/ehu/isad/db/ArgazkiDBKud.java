@@ -43,10 +43,10 @@ public class ArgazkiDBKud {
         dbKud.execSQL(query);
     }
 
-    public void argazkiaBildumanSartu(Integer idArgazki, String idBilduma) {
+    public void argazkiaBildumanSartu(Integer idArgazki, String izenBilduma) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "INSERT INTO BildumaArgazki(idBilduma, idArgazkia) " +
-                "VALUES('"+ idBilduma +"', '"+ idArgazki +"')";
+                "VALUES('"+ izenBilduma +"', '"+ idArgazki +"')";
         dbKud.execSQL(query);
 
     }
@@ -80,14 +80,14 @@ public class ArgazkiDBKud {
         dbKud.execSQL(query);
     }
 
-    public ArrayList<Argazkia> emanArgazkiakBildumarekin(String idBilduma) {
+    public ArrayList<Argazkia> emanArgazkiakBildumarekin(String izenBilduma) {
         ArrayList<Argazkia> emaitza = new ArrayList<>();
 
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         ResultSet rs=null;
         String query = "SELECT a.idArgazkia, a.izena, a.deskribapena, a.size, a.data, a.favs, a.komentarioKop, a.idFlickr as idFlickr, a.sortzaileId, a.gogokoaDa" +
                 " FROM BildumaArgazki ba, Argazkia a" +
-                " WHERE ba.idArgazkia=a.idArgazkia AND ba.idBilduma='"+idBilduma+"'";
+                " WHERE ba.idArgazkia=a.idArgazkia AND ba.idBilduma='"+izenBilduma+"'";
         rs = dbKud.execSQL(query);
 
 

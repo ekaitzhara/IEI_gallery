@@ -67,20 +67,6 @@ public class BildumaDBKud {
         return emaitza;
     }
 
-    public boolean bildumaHutsaDago() {
-        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        ResultSet rs=null;
-        String query = "SELECT idBilduma FROM BildumaArgazki WHERE idBilduma=0";
-        rs = dbKud.execSQL(query);
-
-
-        try {
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     public ArrayList<String> argazkiarenBildumak(String id){
         // id bat emanez argazkiaren bilduma lortzen du
