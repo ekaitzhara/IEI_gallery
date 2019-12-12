@@ -80,7 +80,8 @@ public class ListaBildumak {
 
         while (sets.hasNext()) { // bildumak dauden bitartean, zeharkatu
             Photoset set = (Photoset) sets.next(); // bilduma lortu
-            lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab)); // aqui sumamos las bildumas exisitentes, pero falta crear la bilduma de fotos sin bilduma
+            if (this.emanBildumaIzenarekin(set.getTitle()) == null)
+                lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab)); // aqui sumamos las bildumas exisitentes, pero falta crear la bilduma de fotos sin bilduma
             // set es la bilduma
             Set<String> extras = new HashSet<>(Arrays.asList("description", "views", "date_upload", "tags"));
 
@@ -232,6 +233,10 @@ public class ListaBildumak {
             return true;
         }else
             return false;
+    }
 
+    public void listaHustu() {
+        this.lista = null;
+        nireBilduma = null;
     }
 }

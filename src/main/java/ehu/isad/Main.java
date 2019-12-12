@@ -139,6 +139,10 @@ public class Main extends Application {
   public void kautoketaraEraman() {
     stage.setScene(eKautoketa);
     stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
   }
 
   public void kautotuFlickrErakutsi(String zerbitzua) {
@@ -147,6 +151,10 @@ public class Main extends Application {
       kautotuFlickrKud.gordeZerbitzua(zerbitzua);
       stage.setScene(eAccessTokenLortu);
       stage.show();
+
+      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+      stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+      stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
     } else
       setupPropertiesError();
   }

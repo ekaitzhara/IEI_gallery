@@ -134,4 +134,16 @@ public class ArgazkiDBKud {
 
         return null;
     }
+
+    public void argazkiGuztiakEzabatu() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Argazkia";
+        dbKud.execSQL(query);
+    }
+
+    public void argazkiEtiketaLoturakEzabatu() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM ArgazkiEtiketak";
+        dbKud.execSQL(query);
+    }
 }
