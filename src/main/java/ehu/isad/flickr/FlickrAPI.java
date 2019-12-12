@@ -125,8 +125,12 @@ public class FlickrAPI {
             if(albumName.equals("NotInASet")){
                 return up.upload(pathToFile, umd);
             }else{
+                //todo jada exititzen den batera igo
+                //String photosetId, String photoId
+                flickr.getPhotosetsInterface().addPhoto();
+                //albun berria sortzen
                 String id = up.upload(pathToFile, umd);
-                flickr.getPhotosetsInterface().create(albumName,"",id);  //albun berria sortzen
+                flickr.getPhotosetsInterface().create(albumName,"",id);
                 return id;
             }
         } catch (FlickrException e) {

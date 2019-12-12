@@ -106,7 +106,7 @@ public class BildumaDBKud {
 
     public void argazkiaBildumanSartu(String bildumaIzena,String idArgazkia){
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
-        String query = "INSERT INTO BildumaArgazki(idBilduma, idArgazkia) VALUES('"+ bildumaIzena +"', '"+ idArgazkia +")";
+        String query = "INSERT INTO BildumaArgazki(bildumaIzena, idArgazkia) VALUES('"+ bildumaIzena +"', '"+ idArgazkia +")";
         dbKud.execSQL(query);
     }
 

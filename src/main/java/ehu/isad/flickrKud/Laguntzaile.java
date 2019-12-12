@@ -82,10 +82,21 @@ public class Laguntzaile {
         return mapa;
     }
 
-    public static void addDataToFile(String filePath){
-
+    public static void appendStrToFile(String fileName, String str) {
+        try {
+            // Open given file in append mode.
+            BufferedWriter out = new BufferedWriter(
+                    new FileWriter(fileName, true));
+            out.write("\n"+str);
+            out.close();
+        }
+        catch (IOException e){}
     }
 
+    public static String getDateFromMetadata(String filePath){
+        String date = null;
+        return date;
+    }
 
 
 

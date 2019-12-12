@@ -42,6 +42,21 @@ public class ArgazkiDBKud {
                 "VALUES('"+ idDB +"', '"+ deskribapena +"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"', '"+favs+"', '"+komentarioak+"')";
         dbKud.execSQL(query);
     }
+    public void argazkiaSartu(Argazkia photo){
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        Integer idDB = photo.getId();
+        String izena = photo.getIzena();
+        String deskribapena = photo.getDeskribapena();
+        Date data = photo.getData();
+        String idFLickr = photo.getIdFLickr();
+        boolean gogokoaDa = photo.isGogokoaDa();
+        String sortzaileID = photo.getSortzaileID();
+        Integer favs = photo.getFavs();
+        Integer komentarioak = photo.getKomentarioKop();
+        String query = "INSERT INTO Argazkia(idArgazkia, deskribapena, izena, data, sortzaileId, idFlickr, gogokoaDa, favs, komentarioKop) " +
+                "VALUES('"+ idDB +"', '"+ deskribapena +"', '"+izena+"', '"+data+"','"+sortzaileID+"', '"+idFLickr+"', '"+gogokoaDa+"', '"+favs+"', '"+komentarioak+"')";
+        dbKud.execSQL(query);
+    }
 
     public void argazkiaBildumanSartu(Integer idArgazki, String idBilduma) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
