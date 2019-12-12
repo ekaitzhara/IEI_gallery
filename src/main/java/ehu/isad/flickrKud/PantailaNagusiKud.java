@@ -138,11 +138,11 @@ public class PantailaNagusiKud implements Initializable {
   @FXML
   public void syncEgin(ActionEvent actionEvent) throws FileNotFoundException {
       System.out.println("sync empezado");
-
       // 1. zatia
       // /tmp karpetan dagoen igo Flickr-rera eta Flickr-retik hartu sortu duen id-a sartzeko datu basean (idFlickr)
       // small size jaisten du eta resources-en guztiekin batera jartzen ditu argazki horiek
       // amaitzerakoan tmp-en dagoen ezabatzen du
+      System.out.println("1. zatia");
       try {
           tmpArgazkiakIgo();
       } catch (FileNotFoundException e) {
@@ -153,6 +153,7 @@ public class PantailaNagusiKud implements Initializable {
       // Beraz, txt horretan dauden argazkian ez daude  ez gure datu basean, ez gure datu egituran (ListaBildumak)
       // txt horretan dauden argazki guztiak Flikcr-retik ezabatu behar dira
       // txt-an dagoena ezabatu (Flickr-ren ondo ezabatuta daudenean argazki guztiak)
+      System.out.println("2. zatia");
       try {
           ezabatuakKenduFlickerren();
       } catch (FileNotFoundException e) {
@@ -164,6 +165,7 @@ public class PantailaNagusiKud implements Initializable {
       //    --> Flickr-eko argazkia datubasean badago, ArrayList-etik ezabatzen du
       // Azkenean, Flickr-ren ez dauden argazkiak geratuko dira soilik ArrayList-ean
       // Argazki horiek (sobratzen direnak) datubasetik eta datu egituratik (ListaBildumak) ezabatzen ditugu
+      System.out.println("3. zatia");
       try {
           ezabatuakKenduPrograman();
       } catch (Exception e) {
@@ -183,16 +185,19 @@ public class PantailaNagusiKud implements Initializable {
         String albumName = null;
         String idArgazkiDB = null;
         ArrayList<String> argazkiarenBildumak;
+        int n = 0;
 
         if (tmp.isDirectory()) {
             String[] argazkiak = tmp.list(); //del archivo photos ToUpload ha conseguido una lista de fotos
             //TODO probar si funciona
             for (String a : argazkiak) {
+                System.out.println("fotos vistas   " + n);n++;
                 String titulua = Laguntzaile.getFileName(a); //fitxategiaren izena lortu
                 idArgazkiDB = mapUpload.get(a); //fitxategiaren datu baseko id-a lortu
                 argazkiarenBildumak = BildumaDBKud.getInstantzia().argazkiarenBildumak(idArgazkiDB);
                 for(String bilIzena:argazkiarenBildumak){
-                    String sortuDenFlickrID = FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,bilIzena); //flick-era argazkia igo
+                    ArrayList<String> argEtaBil= FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,bilIzena); //flick-era argazkia igo
+                    String sortuDenFlickrID = argEtaBil.get(0);
                     ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
                     PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
                     try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da

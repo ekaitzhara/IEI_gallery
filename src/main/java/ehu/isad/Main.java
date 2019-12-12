@@ -167,6 +167,7 @@ public class Main extends Application {
   }
 
   public void argazkiaIgoErakutsi(){
+    argazkiaIgoKud.bildumakComboboxKargatu();
     stage.setTitle("Argazkia igo");
     stage.setScene(argazkiaIgo);
     stage.show();

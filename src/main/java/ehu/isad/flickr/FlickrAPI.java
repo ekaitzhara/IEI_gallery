@@ -117,7 +117,7 @@ public class FlickrAPI {
 
     }
 
-    public String argazkiaIgo(String photoPath,String albumName){
+    public ArrayList<String> argazkiaIgo(String photoPath,String albumName){
         String titulua = Laguntzaile.getFileName(photoPath);
         Uploader up = flickr.getUploader();
         UploadMetaData umd = new UploadMetaData();
@@ -131,9 +131,10 @@ public class FlickrAPI {
         String key = getFlickr().getApiKey();
         Auth auth =  getFlickr().getAuth();
         List<String> bildumaIzenak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
-
+        ArrayList<String> photoAndAlbum = new ArrayList<>();
         try {
             String igotakoaId = up.upload(pathToFile, umd);
+            photoAndAlbum.add(igotakoaId);
             if(bildumaIzenak.contains(albumName)){ //bilduma dago
                 if(!albumName.equals("NotInASet")){
                     String idBilduma = ListaBildumak.getNireBilduma().emanBildumaIzenarekin(albumName).getId();
@@ -142,9 +143,9 @@ public class FlickrAPI {
             } else{ //bilduma berria da
                 Photoset bildumaBerriaFLickr = flickr.getPhotosetsInterface().create(albumName,"",igotakoaId);
                 String idBildumaBerria = bildumaBerriaFLickr.getId();
-                flickr.getPhotosetsInterface().addPhoto(idBildumaBerria,igotakoaId);
+                photoAndAlbum.add(idBildumaBerria);
             }
-            return igotakoaId;
+            return photoAndAlbum;
         } catch (FlickrException e) {
             e.printStackTrace();
         }

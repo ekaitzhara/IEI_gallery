@@ -56,12 +56,9 @@ public class Laguntzaile {
     public static void clearFile(String filePath) throws FileNotFoundException {
         // fitxategia hutsik
         // txt baten barruko informazioa garbizteko
-        Formatter f = new Formatter(filePath);
-        Scanner s = new Scanner(filePath);
-        //go through and do this every time in order to delete previous crap
-        while(s.hasNext()){
-            f.format(" ");
-        }
+        PrintWriter writer = new PrintWriter(filePath);
+        writer.print("");
+        writer.close();
     }
 
     public static void deleteAllFilesFromDir(String dir){

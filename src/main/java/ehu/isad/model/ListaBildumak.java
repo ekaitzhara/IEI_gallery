@@ -37,11 +37,11 @@ public class ListaBildumak {
         lista.remove(zein);
     }
 
-    public Bilduma bildumaSartu(String bildumaIzena){
+    public Bilduma bildumaSartu(String bildumaIzena,String id){
 
-        //Bilduma berria = new Bilduma(bildumaIzena);
-        //lista.add(berria);
-        return null;
+        Bilduma berria = new Bilduma(bildumaIzena,id,null,null);
+        lista.add(berria);
+        return berria;
     }
 
     public void argazkiakSartu(ArrayList<Argazkia> argazkiLista, Bilduma non){

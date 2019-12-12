@@ -25,7 +25,7 @@
          <children>
             <Label layoutX="148.0" layoutY="20.0" text="Argazkiak hona arrastratu igotzeko-trad" />
             <Label layoutX="122.0" layoutY="51.0" text="%bilduma" />
-            <ComboBox fx:id="bildumak" layoutX="193.0" layoutY="47.0" prefWidth="150.0" />
+            <ComboBox fx:id="bildumak" editable="true" layoutX="193.0" layoutY="47.0" prefWidth="150.0" />
          </children>
       </Pane>
    </top>
