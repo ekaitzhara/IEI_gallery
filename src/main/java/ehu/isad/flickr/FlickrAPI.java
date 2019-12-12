@@ -11,6 +11,8 @@ import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
+import ehu.isad.Main;
+import ehu.isad.flickrKud.KautotuFlickrKud;
 import ehu.isad.flickrKud.Laguntzaile;
 import ehu.isad.model.*;
 import ehu.isad.flickrKud.KautotuKud;
@@ -46,13 +48,16 @@ public class FlickrAPI {
         Properties properties = null;
         InputStream in = null;
         try {
-            in = KautotuKud.class.getResourceAsStream("/data/dasiteam/flickr/setup.properties");
+            in = FlickrAPI.class.getResourceAsStream("/setup.properties");
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             IOUtilities.close(in);
+            // Setup properties hutsik dago
+            // COMO PONGO LA NUEVA ESCENA DESDE AQUI?????
+
         }
 
         File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
@@ -201,11 +206,8 @@ public class FlickrAPI {
         System.out.println(filename + " argazkia ondo jaitsi eta resources/data/dasiteam/flickr/argazkiak karpetan gorde egin da");
     }
 
-
-
-
-
     public void ezabatuFlickrInstantzia() {
         instantzia = null;
     }
+
 }

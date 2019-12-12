@@ -93,11 +93,7 @@ public class KautotuFlickrKud implements Initializable {
     }
 
 
-    //This method is called upon fxml load
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        txtKode.requestFocus();
-
+    public void gordeURL() {
         FlickrAPI api = FlickrAPI.getInstantzia();
         try {
 
@@ -108,7 +104,12 @@ public class KautotuFlickrKud implements Initializable {
         } catch (Exception e){
             api.conectionError();
         }
+    }
 
+    //This method is called upon fxml load
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        txtKode.requestFocus();
     }
 
     public void gordeZerbitzua(String pZerbitzua) {

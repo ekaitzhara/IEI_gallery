@@ -1,6 +1,8 @@
 package ehu.isad;
 
 import com.flickr4java.flickr.FlickrException;
+import ehu.isad.flickr.FlickrAPI;
+import ehu.isad.flickr.FlickrSortu;
 import ehu.isad.flickrKud.*;
 import ehu.isad.model.ListaBildumak;
 import javafx.application.Application;
@@ -23,12 +25,17 @@ public class Main extends Application {
   private Scene eKautoketa;
   private Scene eAccessTokenLortu;
   private Scene pantailaNagusia;
+  private Scene argazkiaIgo;
+  private Scene bildumaSortu;
+  private Scene uploadError;
 
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
   private Parent kautotuFlickrUI;
   private Parent argazkiaIgoUI;
   private Parent bildumaSortuUI;
+  private Parent uploadErrorUI;
+  private Parent setPropErrorUI;
 
   private Stage stage;
 
@@ -37,6 +44,8 @@ public class Main extends Application {
   private KautotuFlickrKud kautotuFlickrKud;
   private ArgazkiaIgoKud argazkiaIgoKud;
   private BildumaSortuKud bildumaSortuKud;
+  private UploadErrorKud uploadErrorKud;
+  private SetPropErrorKud setPropErrorKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -51,6 +60,9 @@ public class Main extends Application {
     eKautoketa = new Scene(kautotuUI, 500, 300);
     eAccessTokenLortu = new Scene(kautotuFlickrUI);
     pantailaNagusia = new Scene(pantailaNagusiUI);
+    argazkiaIgo = new Scene(argazkiaIgoUI, 450, 450);
+    bildumaSortu = new Scene(bildumaSortuUI, 450, 450);
+    uploadError = new Scene(uploadErrorUI, 450, 450);
 
     stage.setTitle("DASI APP Argazki Backup");
     stage.setScene(eKautoketa);
@@ -88,6 +100,17 @@ public class Main extends Application {
     bildumaSortuKud = loaderBildumaSortu.getController();
     bildumaSortuKud.setMainApp(this);
 
+    FXMLLoader loaderUploadError = new FXMLLoader(getClass().getResource("/view/error/uploadError.fxml"), bundle);
+    uploadErrorUI = (Parent) loaderUploadError.load();
+    uploadErrorKud = loaderUploadError.getController();
+    uploadErrorKud.setMainApp(this);
+
+    FXMLLoader loaderSetPropErrorKud = new FXMLLoader(getClass().getResource("/view/error/setPropError.fxml"), bundle);
+    setPropErrorUI = (Parent) loaderSetPropErrorKud.load();
+    setPropErrorKud = loaderSetPropErrorKud.getController();
+    uploadErrorKud.setMainApp(this);
+
+
   }
 
 
@@ -96,6 +119,7 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
+    stage.setTitle("DasiAPP Main Page");
     pantailaNagusiKud.jarriErabiltzaileIzena();
     ListaBildumak.getNireBilduma().listaBeteDBrekin();
     //pantailaNagusiKud.syncEgin();
@@ -116,6 +140,7 @@ public class Main extends Application {
   }
 
   public void kautotuFlickrErakutsi(String zerbitzua) {
+    kautotuFlickrKud.gordeURL();
     kautotuFlickrKud.gordeZerbitzua(zerbitzua);
     stage.setScene(eAccessTokenLortu);
     stage.show();
@@ -123,28 +148,24 @@ public class Main extends Application {
 
   public void bildumaSortuErakutsi(){
 
-    Stage stageLag = new Stage();
-    stageLag.setTitle("Bilduma sortu");
-    stageLag.setScene(new Scene(bildumaSortuUI, 450, 450));
-    stageLag.show();
+    stage.setTitle("Bilduma sortu");
+    stage.setScene(bildumaSortu);
+    stage.show();
   }
 
   public void argazkiaIgoErakutsi(){
-    Stage stageLag = new Stage();
-    stageLag.setTitle("Argazkia igo");
-    stageLag.setScene(new Scene(argazkiaIgoUI, 450, 450));
-    stageLag.show();
+    stage.setTitle("Argazkia igo");
+    stage.setScene(argazkiaIgo);
+    stage.show();
   }
 
   public void erroreaBistaratu(String erroreMota) throws IOException {
-    Stage stageLag = new Stage();
+
     if(erroreMota.equals("UploadError")) {
-      FXMLLoader uploadError = new FXMLLoader(getClass().getResource("/view/bildumaSortu.fxml"));
-      Parent uploadErrorUI = (Parent) uploadError.load();
-      stageLag.setTitle("Upload Error");
-      stageLag.setScene(new Scene(uploadErrorUI, 450, 450));
+      stage.setTitle("Upload Error");
+      stage.setScene(uploadError);
+      stage.show();
     }
-    stageLag.show();
   }
 
   public void hizkuntzaAldatu(String hizkuntzBerria, String herrialdeBerria) throws Exception {
@@ -178,5 +199,12 @@ public class Main extends Application {
     stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
   }
 
+  public void setupPropertiesError() {
+    stage.setScene(new Scene(kautotuFlickrUI, 450, 450));
+    stage.show();
+  }
 
+  public void itxi() {
+    stage.close();
+  }
 }
