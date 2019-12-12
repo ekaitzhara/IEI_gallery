@@ -55,9 +55,6 @@ public class FlickrAPI {
             e.printStackTrace();
         } finally {
             IOUtilities.close(in);
-            // Setup properties hutsik dago
-            // COMO PONGO LA NUEVA ESCENA DESDE AQUI?????
-
         }
 
         File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
@@ -65,6 +62,13 @@ public class FlickrAPI {
         this.nsid = properties.getProperty("nsid");
         this.apiKey = properties.getProperty("apiKey");
         this.secret = properties.getProperty("secret");
+
+        if (this.nsid.equals("") || this.apiKey.equals("") || this.secret.equals("")) {
+            // Setup properties hutsik dago
+            // COMO PONGO LA NUEVA ESCENA DESDE AQUI?????
+            Laguntzaile.setupPropHutsa();
+        }
+
 
         if (authsDir != null) {
             try {

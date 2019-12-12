@@ -108,7 +108,7 @@ public class Main extends Application {
     FXMLLoader loaderSetPropErrorKud = new FXMLLoader(getClass().getResource("/view/error/setPropError.fxml"), bundle);
     setPropErrorUI = (Parent) loaderSetPropErrorKud.load();
     setPropErrorKud = loaderSetPropErrorKud.getController();
-    uploadErrorKud.setMainApp(this);
+    setPropErrorKud.setMainApp(this);
 
 
   }
@@ -119,19 +119,21 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
-    stage.setTitle("DasiAPP Main Page");
-    pantailaNagusiKud.jarriErabiltzaileIzena();
-    ListaBildumak.getNireBilduma().listaBeteDBrekin();
-    //pantailaNagusiKud.syncEgin();
-    pantailaNagusiKud.sartuBildumakListan();
-    pantailaNagusiKud.sartuDatuakTaulan();
-    stage.setScene(pantailaNagusia);
-    stage.show();
+    if (!Laguntzaile.emanSetupPropStatus()) {
+      stage.setTitle("DasiAPP Main Page");
+      pantailaNagusiKud.jarriErabiltzaileIzena();
+      ListaBildumak.getNireBilduma().listaBeteDBrekin();
+      //pantailaNagusiKud.syncEgin();
+      pantailaNagusiKud.sartuBildumakListan();
+      pantailaNagusiKud.sartuDatuakTaulan();
+      stage.setScene(pantailaNagusia);
+      stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
-
+      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+      stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+      stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    } else
+      setupPropertiesError();
   }
 
   public void kautoketaraEraman() {
@@ -140,10 +142,13 @@ public class Main extends Application {
   }
 
   public void kautotuFlickrErakutsi(String zerbitzua) {
-    kautotuFlickrKud.gordeURL();
-    kautotuFlickrKud.gordeZerbitzua(zerbitzua);
-    stage.setScene(eAccessTokenLortu);
-    stage.show();
+    if (!Laguntzaile.emanSetupPropStatus()) {
+      kautotuFlickrKud.gordeURL();
+      kautotuFlickrKud.gordeZerbitzua(zerbitzua);
+      stage.setScene(eAccessTokenLortu);
+      stage.show();
+    } else
+      setupPropertiesError();
   }
 
   public void bildumaSortuErakutsi(){
@@ -200,8 +205,13 @@ public class Main extends Application {
   }
 
   public void setupPropertiesError() {
-    stage.setScene(new Scene(kautotuFlickrUI, 450, 450));
+    stage.setScene(new Scene(setPropErrorUI, 400, 210));
     stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    stage.setResizable(false);
   }
 
   public void itxi() {

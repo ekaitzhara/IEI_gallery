@@ -8,6 +8,14 @@ import java.util.Scanner;
 
 public class Laguntzaile {
 
+    public static boolean setupPropertiesHutsik = false;
+
+    public static void setupPropHutsa() {
+        setupPropertiesHutsik = true;
+    }
+    public static boolean emanSetupPropStatus() {
+        return setupPropertiesHutsik;
+    }
 
     public static void copyFileUsingStream(String pSource, String pDest) throws IOException {
         File source= new File(pSource);
