@@ -113,15 +113,15 @@ public class Utils {
         return home+newPath;
     }
 
-    private static void copyFolder(File sourceFolder, File destinationFolder) throws IOException
-    {
+    public static void copyFolder(String sourcePath, String destinationPath) throws IOException {
+        File sourceFolder = new File(sourcePath);
+        File destinationFolder = new File(destinationPath);
         //Check if sourceFolder is a directory or file
         //If sourceFolder is file; then copy the file directly to new location
         if (sourceFolder.isDirectory())
         {
             //Verify if destinationFolder is already present; If not then create it
-            if (!destinationFolder.exists())
-            {
+            if (!destinationFolder.exists()) {
                 destinationFolder.mkdir();
                 System.out.println("Directory created :: " + destinationFolder);
             }
@@ -136,7 +136,7 @@ public class Utils {
                 File destFile = new File(destinationFolder, file);
 
                 //Recursive function call
-                copyFolder(srcFile, destFile);
+                copyFolder(srcFile.getPath(), destFile.getPath());
             }
         }
         else
@@ -146,10 +146,5 @@ public class Utils {
             System.out.println("File copied :: " + destinationFolder);
         }
     }
-
-
-
-
-
 
 }

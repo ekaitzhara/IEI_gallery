@@ -57,9 +57,17 @@ public class FlickrAPI {
         }
 
         File authsDirHome = new File(Utils.home);   // .flickr karpeta sortzeko
+        if (!authsDirHome.exists())
+            authsDirHome.mkdir();
         // COPIAR TOD0 RESOURCES (PARA QUE TENGA LA ESTRUCTURA)
-        if (authsDirHome == null) {
+        File dataPath = new File(authsDirHome.getPath() + File.separatorChar + "data");
+        if (!dataPath.exists()) {
             // Llenar .flickr con lo de resources
+            try {
+                Utils.copyFolder(this.getClass().getResource("/data").getPath(), Utils.home + "/data");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         char sep = File.separatorChar;
