@@ -37,6 +37,7 @@ public class BildumaDBKud {
     }
 
     public void bildumaSartu(String izen, String idFlickr,  String erabiltzaile, String desk) {
+        //Bilduma berria sortzen da
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "INSERT INTO Bilduma(izena, idBilduma, sortzaileId, deskribapena) VALUES('"+ izen +"', '"+ idFlickr +"', '"+erabiltzaile+"', '"+desk+"')";
         dbKud.execSQL(query);

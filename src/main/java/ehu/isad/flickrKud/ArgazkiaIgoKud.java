@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 import java.io.*;
 import java.net.URL;
@@ -129,7 +128,7 @@ public class ArgazkiaIgoKud implements Initializable {
             String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
             // Atributos not null: Son obligatorios de pasar a la DB
             Integer idDB; //id con autoincrement para DB
-            String pIzena = Laguntzaile.getFileName(path); //el nombre viene del mismo archivo
+            String pIzena = Utils.getFileName(path); //el nombre viene del mismo archivo
             // Atributos que varian por conexion
             // Atributos que no estan en la base de datos: para futuros usos, pero que actualmente no utilizamos
             String size = null;
@@ -148,9 +147,7 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     private void uploadPhotosWithoutApi(ArrayList<String> photoPaths) throws IOException {
-        String uploadTXT = this.getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath();
         // Argazkiak programara igotzeko baina flickerreko konexioa ondo ez doanean
-        String dest = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
         for(String photo:photoPaths){  // foto == argazkiaren path
             // ARGAZKIEN ATRIBUTUAK
             // Atributos que no usamos
@@ -160,7 +157,7 @@ public class ArgazkiaIgoKud implements Initializable {
                 String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
             // Atributos not null: Son obligatorios de pasar a la DB
                 Integer idDB; //id con autoincrement para DB
-                String pIzena = Laguntzaile.getFileName(photo); //el nombre viene del mismo archivo
+                String pIzena = Utils.getFileName(photo); //el nombre viene del mismo archivo
             // Atributos que varian por conexion
                 String idFLickr = null;
             // Atributos que no estan en la base de datos: para futuros usos, pero que actualmente no utilizamos
@@ -176,9 +173,9 @@ public class ArgazkiaIgoKud implements Initializable {
             // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
             aDBaseanSartu(argazkiEtaBilduma.getKey(),argazkiEtaBilduma.getValue());
             //copy file to temp
-            Laguntzaile.copyFileUsingStream(photo,dest);
+            Utils.copyFileUsingStream(photo,Utils.tmpPath);
             //photos to upload txt fitxategian argazkia sartu
-            Laguntzaile.appendStrToFile(uploadTXT,pIzena+".png,"+argazkiEtaBilduma.getKey().getId().toString());
+            Utils.appendStrToFile(uploadTXT,pIzena+".png,"+argazkiEtaBilduma.getKey().getId().toString());
         }
     }
 
@@ -226,8 +223,6 @@ public class ArgazkiaIgoKud implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(this.getClass().getResource("/data/dasiteam/flickr/tmp/thumb-1920-707960.png"));
-
         izena.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo,String>("izena"));
         botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo,Button>("botoia"));
         System.out.println("igo iniciado");

@@ -12,11 +12,8 @@ import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
-import ehu.isad.Main;
-import ehu.isad.flickrKud.KautotuFlickrKud;
-import ehu.isad.flickrKud.Laguntzaile;
+import ehu.isad.flickrKud.Utils;
 import ehu.isad.model.*;
-import ehu.isad.flickrKud.KautotuKud;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -58,8 +55,8 @@ public class FlickrAPI {
         } finally {
             IOUtilities.close(in);
         }
-
-        File authsDir = new File(System.getProperty("user.home") + File.separatorChar + ".flickrAuth");
+        char sep = File.separatorChar;
+        File authsDir = new File(Utils.home+".flickrAuth");
         flickr = new com.flickr4java.flickr.Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
         this.nsid = properties.getProperty("nsid");
         this.apiKey = properties.getProperty("apiKey");
@@ -68,7 +65,7 @@ public class FlickrAPI {
         if (this.nsid.equals("") || this.apiKey.equals("") || this.secret.equals("")) {
             // Setup properties hutsik dago
             // COMO PONGO LA NUEVA ESCENA DESDE AQUI?????
-            Laguntzaile.setupPropHutsa();
+            Utils.setupPropHutsa();
         }
 
 
@@ -118,7 +115,7 @@ public class FlickrAPI {
     }
 
     public ArrayList<String> argazkiaIgo(String photoPath,String albumName){
-        String titulua = Laguntzaile.getFileName(photoPath);
+        String titulua = Utils.getFileName(photoPath);
         Uploader up = flickr.getUploader();
         UploadMetaData umd = new UploadMetaData();
         // Sartu argazkiaren izena
@@ -166,7 +163,7 @@ public class FlickrAPI {
 
             // Orain URL-tik argazkia irakurriko dugu
 
-            Laguntzaile.downloadFileWithUrl(filename, p.getOriginalUrl());
+            Utils.downloadFileWithUrl(filename, p.getOriginalUrl());
 
         } catch (FlickrException e) {
             e.printStackTrace();
@@ -202,7 +199,7 @@ public class FlickrAPI {
         // Gure ordenagailuan argazki berri bat sortuko dugu
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\anderdu\\Downloads\\a.jpg");
 
-        String path = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath();
+        String path = Utils.globalPath("/data/dasiteam/flickr/argazkiak");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(path + filename);

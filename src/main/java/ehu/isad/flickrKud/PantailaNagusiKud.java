@@ -176,11 +176,9 @@ public class PantailaNagusiKud implements Initializable {
 
   private void tmpArgazkiakIgo() throws FileNotFoundException {
         // tmp-n gordetako argazkiak flickerrera igoko dira
-        String tmpPath = this.getClass().getResource("/data/dasiteam/flickr/tmp").getPath();
-        String photosToUploadTxt = getClass().getResource("/data/dasiteam/flickr/photosToUpload.txt").getPath();
         File tmp = new File(tmpPath);
         File photosToUploadFile = new File(photosToUploadTxt);
-        HashMap<String,String> mapUpload = Laguntzaile.getHashTableFromTxt(photosToUploadTxt);
+        HashMap<String,String> mapUpload = Utils.getHashTableFromTxt(photosToUploadTxt);
 
         String albumName = null;
         String idArgazkiDB = null;
@@ -192,29 +190,28 @@ public class PantailaNagusiKud implements Initializable {
             //TODO probar si funciona
             for (String a : argazkiak) {
                 System.out.println("fotos vistas   " + n);n++;
-                String titulua = Laguntzaile.getFileName(a); //fitxategiaren izena lortu
+                String titulua = Utils.getFileName(a); //fitxategiaren izena lortu
                 idArgazkiDB = mapUpload.get(a); //fitxategiaren datu baseko id-a lortu
                 argazkiarenBildumak = BildumaDBKud.getInstantzia().argazkiarenBildumak(idArgazkiDB);
                 for(String bilIzena:argazkiarenBildumak){
-                    ArrayList<String> argEtaBil= FlickrAPI.getInstantzia().argazkiaIgo(tmpPath+"/"+a,bilIzena); //flick-era argazkia igo
+                    ArrayList<String> argEtaBil= FlickrAPI.getInstantzia().argazkiaIgo(Utils.tmpPath+File.separatorChar+a,bilIzena); //flick-era argazkia igo
                     String sortuDenFlickrID = argEtaBil.get(0);
                     ArgazkiDBKud.getInstantzia().idFlickrSartu(sortuDenFlickrID, idArgazkiDB);
                     PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
                     try {// Argazkia flick-er era igoko da eta small-size-a deskargatuko da
                         Photo p = photoInt.getPhoto(sortuDenFlickrID);
-                        Laguntzaile.downloadFileWithUrl(a, p.getSmallUrl());
+                        Utils.downloadFileWithUrl(a, p.getSmallUrl());
                     } catch (FlickrException e) { e.printStackTrace(); }
                 }
 
             }
-                Laguntzaile.deleteAllFilesFromDir(tmpPath);
-                Laguntzaile.clearFile(photosToUploadTxt);
+                Utils.deleteAllFilesFromDir(Utils.tmpPath);
+                Utils.clearFile(photosToUploadTxt);
             } else
                 System.out.println("Errorea tmp karpeta irakurtzean");
     }
 
     private void ezabatuakKenduFlickerren() throws FileNotFoundException {
-        String deletedRegister = this.getClass().getResource("/data/dasiteam/flickr/photosToDelete.txt").getPath();
         System.out.println("llamo a deleted register");
         PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
         Scanner sArg = new Scanner(deletedRegister);
@@ -226,7 +223,7 @@ public class PantailaNagusiKud implements Initializable {
             catch (FlickrException e) { e.printStackTrace(); }
         }
         sArg.close();
-        Laguntzaile.clearFile(deletedRegister);
+        Utils.clearFile(deletedRegister);
     }
 
     private void ezabatuakKenduPrograman(){

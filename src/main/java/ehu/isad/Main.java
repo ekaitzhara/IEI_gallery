@@ -1,8 +1,6 @@
 package ehu.isad;
 
 import com.flickr4java.flickr.FlickrException;
-import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.flickr.FlickrSortu;
 import ehu.isad.flickrKud.*;
 import ehu.isad.model.ListaBildumak;
 import javafx.application.Application;
@@ -119,7 +117,7 @@ public class Main extends Application {
   }
 
   public void pantailaNagusiaErakutsi() {
-    if (!Laguntzaile.emanSetupPropStatus()) {
+    if (!Utils.emanSetupPropStatus()) {
       stage.setTitle("DasiAPP Main Page");
       pantailaNagusiKud.jarriErabiltzaileIzena();
       ListaBildumak.getNireBilduma().listaBeteDBrekin();
@@ -146,7 +144,7 @@ public class Main extends Application {
   }
 
   public void kautotuFlickrErakutsi(String zerbitzua) {
-    if (!Laguntzaile.emanSetupPropStatus()) {
+    if (!Utils.emanSetupPropStatus()) {
       kautotuFlickrKud.gordeURL();
       kautotuFlickrKud.gordeZerbitzua(zerbitzua);
       stage.setScene(eAccessTokenLortu);

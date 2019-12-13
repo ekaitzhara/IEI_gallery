@@ -6,9 +6,12 @@ import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Laguntzaile {
+public class Utils {
 
-    public static boolean setupPropertiesHutsik = false;
+    private static boolean setupPropertiesHutsik = false;
+    public static String home = System.getProperty("user.home")+File.separatorChar+".flickr";
+    public static String tmpPath = Utils.globalPath("/data/dasiteam/flickr/tmp");
+    public static String argazkiakPath = Utils.globalPath("/data/dasiteam/flickr/argazkiak");
 
     public static void setupPropHutsa() {
         setupPropertiesHutsik = true;
@@ -101,6 +104,11 @@ public class Laguntzaile {
     public static String getDateFromMetadata(String filePath){
         String date = null;
         return date;
+    }
+
+    public static String globalPath(String path){
+        String newPath=path.replace('/',File.separatorChar);
+        return home+newPath;
     }
 
 

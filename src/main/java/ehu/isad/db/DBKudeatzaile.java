@@ -1,4 +1,7 @@
 package ehu.isad.db;
+import ehu.isad.flickrKud.Utils;
+
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,15 +16,16 @@ public class DBKudeatzaile {
 
 	private void conOpen() {
 		try {
-			String url = "jdbc:sqlite::resource:dasiapp.db";
-			String sqlite_path = this.getClass().getResource("/main").getPath();
-			String url1 = "jdbc:sqlite:" + sqlite_path;
-			url1=url1.replace("resources/main/main/", "dasiapp.db");
-			System.out.println(url1);
+			//String url = "jdbc:sqlite::resource:dasiapp.db";
+			char sep = File.separatorChar;
+			String sqlite_path = Utils.home+"data"+sep+"dasiapp.db";
+			String url = "jdbc:sqlite:" + sqlite_path;
+			//url1=url1.replace("resources/main/main/", "dasiapp.db");
+			System.out.println(url);
 
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
-			conn = (Connection) DriverManager.getConnection(url1);
+			conn = (Connection) DriverManager.getConnection(url);
 			conn.setAutoCommit(false);
 			System.out.println("Database connection established");
 		} catch (Exception e) {
