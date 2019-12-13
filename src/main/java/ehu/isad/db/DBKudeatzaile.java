@@ -16,12 +16,11 @@ public class DBKudeatzaile {
 
 	private void conOpen() {
 		try {
-			//String url = "jdbc:sqlite::resource:dasiapp.db";
-			char sep = File.separatorChar;
-			String sqlite_path = Utils.home+"data"+sep+"dasiapp.db";
-			String url = "jdbc:sqlite:" + sqlite_path;
-			//url1=url1.replace("resources/main/main/", "dasiapp.db");
-			System.out.println(url);
+			String url = "jdbc:sqlite::resource:dasiapp.db";
+			String sqlite_path = this.getClass().getResource("/main").getPath();
+			String url1 = "jdbc:sqlite:" + sqlite_path;
+			url1=url1.replace("resources/main/main/", "data/dasiapp.db");
+			System.out.println(url1);
 
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
