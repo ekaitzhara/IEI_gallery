@@ -120,6 +120,8 @@ public class ArgazkiaIgoKud implements Initializable {
             if(photoAndAlbumId.size()==2){
                 sortuDenAlbumID = photoAndAlbumId.get(1);
             }
+            FlickrAPI.getInstantzia().argazkiaDeskargatu(Utils.argazkiakPath,sortuDenFlickrID,"small");// non gorde, id, tamaina
+
             // ARGAZKIEN ATRIBUTUAK
             // Atributos que no usamos
             String deskribapena = null; //de primeras se suben sin descripcion

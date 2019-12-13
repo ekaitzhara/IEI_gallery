@@ -18,8 +18,6 @@ public class TaulaDatu {
 
     public TaulaDatu(Integer pArgazkiId, String argazkiapath, String izena, String etiketak, Date data, String desk, Integer favs, Integer comments) {
         this.argazkiId = pArgazkiId;
-        //this.argazkia = new Image(argazkiapath);
-        //this.argazkia = new Image(this.getClass().getResource("/data/dasiteam/flickr/argazkiak").toString() + izena + ".jpg", true);
         this.argazkia = new Image(argazkiapath, true);
         this.izena = izena;
         this.etiketak = etiketak;

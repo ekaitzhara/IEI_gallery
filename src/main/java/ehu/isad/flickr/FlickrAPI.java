@@ -149,21 +149,25 @@ public class FlickrAPI {
         return null;
     }
 
-    public void argazkiaDeskargatu(String filename){
 
-        String argazkiID = null; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
+    public void argazkiaDeskargatu(String nonGorde,String photoId,String tamaina){
+
+        String argazkiID = photoId; // Hemen erabiltzaileak nonbait sartuko du argazkiaren URL-a edo izena, eta guk bilatu beharko dugu eta ID-a lortu
 
         //PhotosetsInterface pi = flickr.getPhotosetsInterface(); // lortu bildumak kudeatzeko interfazea
         PhotosInterface photoInt = flickr.getPhotosInterface(); // lortu argazkiak kudeatzeko interfazea
         URL url = null;
         try {
             Photo p = photoInt.getInfo(argazkiID, FlickrAPI.getInstantzia().getSecret());
-
             // Argazkia edukita, p.getOriginalUrl() -rekin argazkiaren helbidea lortuko dugu
 
             // Orain URL-tik argazkia irakurriko dugu
+            if(tamaina.equals("original")){
+                Utils.downloadFileWithUrl(p.getOriginalUrl(),nonGorde);
+            }else if(tamaina.equals("small")){
+                Utils.downloadFileWithUrl(p.getSmallUrl(),nonGorde);
+            }
 
-            Utils.downloadFileWithUrl(filename, p.getOriginalUrl());
 
         } catch (FlickrException e) {
             e.printStackTrace();
