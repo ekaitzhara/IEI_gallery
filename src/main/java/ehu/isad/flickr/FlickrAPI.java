@@ -55,6 +55,13 @@ public class FlickrAPI {
         } finally {
             IOUtilities.close(in);
         }
+
+        File authsDirHome = new File(Utils.home);   // .flickr karpeta sortzeko
+        // COPIAR TOD0 RESOURCES (PARA QUE TENGA LA ESTRUCTURA)
+        if (authsDirHome == null) {
+            // Llenar .flickr con lo de resources
+        }
+
         char sep = File.separatorChar;
         File authsDir = new File(Utils.home+File.separatorChar+".flickrAuth");
         flickr = new com.flickr4java.flickr.Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
