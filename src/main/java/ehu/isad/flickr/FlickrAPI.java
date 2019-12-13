@@ -56,7 +56,7 @@ public class FlickrAPI {
             IOUtilities.close(in);
         }
         char sep = File.separatorChar;
-        File authsDir = new File(Utils.home+".flickrAuth");
+        File authsDir = new File(Utils.home+File.separatorChar+".flickrAuth");
         flickr = new com.flickr4java.flickr.Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
         this.nsid = properties.getProperty("nsid");
         this.apiKey = properties.getProperty("apiKey");

@@ -10,7 +10,7 @@ public class Utils {
 
     private static boolean setupPropertiesHutsik = false;
     public static String home = System.getProperty("user.home")+File.separatorChar+".flickr";
-    public static String tmpPath = Utils.globalPath("/data/dasiteam/flickr/tmp");
+    public static String tmpPath = Utils.globalPath("/data/dasiteam/flickr/tmp");//GLOBAL PATH TIENE HOME
     public static String argazkiakPath = Utils.globalPath("/data/dasiteam/flickr/argazkiak");
 
     public static void setupPropHutsa() {

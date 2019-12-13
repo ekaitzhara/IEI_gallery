@@ -178,8 +178,6 @@ public class ArgazkiaIgoKud implements Initializable {
             Utils.copyFileUsingStream(photo,Utils.tmpPath);
             //photos to upload txt fitxategian argazkia sartu
             ArgazkiDBKud.getInstantzia().addPhotoToUpload(pIzena+".png",argazkiEtaBilduma.getKey().getId().toString(),argazkiEtaBilduma.getValue().getIzena().toString());
-
-            Utils.appendStrToFile(uploadTXT,pIzena+".png,"+argazkiEtaBilduma.getKey().getId().toString());
         }
     }
 
@@ -204,9 +202,7 @@ public class ArgazkiaIgoKud implements Initializable {
     private void aDBaseanSartu(Argazkia photo,Bilduma album) {
         // metodo hau argazkiak eta bildumak datu basean sortzeko balio du
         // konexio gabe eta konezioarekin lan egingo du, baina era ezberdinetan
-
         ArgazkiDBKud.getInstantzia().argazkiaSartu(photo);
-
         //Argazkia zein bilduman dagoen adierazi
         String bilIzena = bildumak.getValue().toString();
         String photoId = photo.getId().toString();

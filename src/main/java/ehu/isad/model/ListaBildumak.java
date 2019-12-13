@@ -122,8 +122,9 @@ public class ListaBildumak {
                 String pUrl = p.getSmallUrl();
 
 
-                //Date pDate = p.getDateAdded();
-                Date pDate = p.getDatePosted();
+                Date pDate = p.getDateAdded();
+                Date pDatePosted = p.getDatePosted();
+                System.out.println(pDatePosted);
                 String pId = p.getId();
                 Boolean pFavourite = p.isFavorite();
                 Integer favs = photoInt.getFavorites(pId, 50,1).size();
@@ -138,8 +139,9 @@ public class ListaBildumak {
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
+                java.sql.Date dataSQL = (java.sql.Date) pDate;
 
-                bildumaIzenarekin.argazkiaGehitu(pTitle, pDescription , (java.sql.Date) pDate, pId, pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
+                bildumaIzenarekin.argazkiaGehitu(pTitle, pDescription , dataSQL, pId, pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
 
