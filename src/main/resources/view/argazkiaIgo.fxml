@@ -15,8 +15,8 @@
    <center>
       <TableView fx:id="igotakoakTabla" prefHeight="308.0" prefWidth="536.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="izena" prefWidth="75.0" text="Izena" />
-          <TableColumn fx:id="botoia" prefWidth="75.0" text="boton" />
+          <TableColumn fx:id="izena" prefWidth="259.9999877810478" text="Izena" />
+          <TableColumn fx:id="botoia" prefWidth="275.20001220703125" text="boton" />
         </columns>
       </TableView>
    </center>

@@ -11,48 +11,68 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.PantailaNagusiKud">
    <top>
-      <MenuBar prefHeight="29.0" prefWidth="939.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="%file">
-            <items>
-                  <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="%update" />
-              <MenuItem fx:id="itxi" mnemonicParsing="false" onAction="#programaItxi" text="%close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="%edit">
-            <items>
-                  <Menu mnemonicParsing="false" text="%new...">
-                    <items>
-                      <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" onAction="#argazkiBerriaSortu" text="%new Photo" />
-                        <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" onAction="#bildumaBerriaSortu" text="%new PhotoSet" />
-                    </items>
+      <VBox prefHeight="56.0" prefWidth="998.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar prefHeight="29.0" prefWidth="939.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="%file">
+                     <items>
+                        <MenuItem fx:id="eguneratu" mnemonicParsing="false" text="%update" />
+                        <MenuItem fx:id="itxi" mnemonicParsing="false" onAction="#programaItxi" text="%close" />
+                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="%delete...">
-                    <items>
-                      <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="%delete Photo" />
-                        <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="%delete PhotoSet" />
-                    </items>
+                  <Menu mnemonicParsing="false" text="%edit">
+                     <items>
+                        <Menu mnemonicParsing="false" text="%new...">
+                           <items>
+                              <MenuItem fx:id="argazkiBerria" mnemonicParsing="false" onAction="#argazkiBerriaSortu" text="%new Photo" />
+                              <MenuItem fx:id="bildumaBerria" mnemonicParsing="false" onAction="#bildumaBerriaSortu" text="%new PhotoSet" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="%delete...">
+                           <items>
+                              <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="%delete Photo" />
+                              <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="%delete PhotoSet" />
+                           </items>
+                        </Menu>
+                     </items>
                   </Menu>
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="%account">
-              <items>
-                <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#onClickLogOut" text="%log out" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="%help">
-            <items>
-              <MenuItem fx:id="laguntza" mnemonicParsing="false" text="%about" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+                  <Menu mnemonicParsing="false" text="%account">
+                     <items>
+                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#onClickLogOut" text="%log out" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="%help">
+                     <items>
+                        <MenuItem fx:id="laguntza" mnemonicParsing="false" text="%about" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <FlowPane fx:id="flowPane" prefHeight="25.0" prefWidth="998.0">
+               <children>
+                  <Button fx:id="syncBotoia" mnemonicParsing="false" onAction="#syncEgin" text="Sync" />
+                  <Label text="%kaixo">
+                     <padding>
+                        <Insets left="700.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="erabiltzaileIzena" text="erabiltzailea">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </FlowPane>
+         </children>
+      </VBox>
    </top>
-   <bottom>
-      <BorderPane prefHeight="504.0" prefWidth="908.0" BorderPane.alignment="CENTER">
+   <center>
+      <BorderPane prefHeight="494.0" prefWidth="998.0" BorderPane.alignment="CENTER">
          <left>
             <ListView fx:id="bildumenLista" onMouseClicked="#bildumanKlikatu" prefHeight="371.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </left>
@@ -70,22 +90,5 @@
             </TableView>
          </center>
       </BorderPane>
-   </bottom>
-   <center>
-      <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
-         <children>
-            <Button fx:id="syncBotoia" mnemonicParsing="false" onAction="#syncEgin" text="Sync" />
-            <Label text="%kaixo">
-               <padding>
-                  <Insets left="700.0" />
-               </padding>
-            </Label>
-            <Label fx:id="erabiltzaileIzena" text="erabiltzailea">
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Label>
-         </children>
-      </FlowPane>
    </center>
 </BorderPane>

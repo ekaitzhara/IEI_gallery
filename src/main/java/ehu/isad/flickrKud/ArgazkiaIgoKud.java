@@ -9,13 +9,18 @@ import ehu.isad.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 import java.io.*;
 import java.net.URL;
@@ -30,7 +35,7 @@ public class ArgazkiaIgoKud implements Initializable {
     // Reference to the main application.
     private Main mainApp;
     private List<ObsArgazkiIgo> obsDatuak = new ArrayList<>();
-    private ObservableList<ObsArgazkiIgo> igoModel = FXCollections.observableArrayList(new ObsArgazkiIgo("nombre",new File("")));
+    private ObservableList<ObsArgazkiIgo> igoModel = FXCollections.observableArrayList(new ObsArgazkiIgo("nombre", new File("")));
 
     @FXML
     private TableView<ObsArgazkiIgo> igotakoakTabla;
@@ -58,13 +63,14 @@ public class ArgazkiaIgoKud implements Initializable {
         System.out.println("cleanList");
         this.obsDatuak.clear();
     }
+
     @FXML
     private void uploadFiles(ActionEvent actionEvent) throws Exception {
         System.out.println("uploadFiles");
         FlickrAPI api = FlickrAPI.getInstantzia();
         ArrayList<String> photoPaths = new ArrayList<>();
-        if(bildumak!=null){
-            for(ObsArgazkiIgo data:obsDatuak){
+        if (bildumak != null) {
+            for (ObsArgazkiIgo data : obsDatuak) {
                 photoPaths.add(data.getPath());
             }
             try {
@@ -75,7 +81,7 @@ public class ArgazkiaIgoKud implements Initializable {
                     uploadPhotosWithoutApi(photoPaths);
                     this.obsDatuak.clear();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
                 // errore bat egon dela abisatu erabiltzaileari
                 mainApp.erroreaBistaratu("uploadError");
@@ -87,8 +93,8 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     @FXML
-    private void handleDragOver(DragEvent event){
-        if(event.getDragboard().hasFiles()){
+    private void handleDragOver(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.ANY);
         }
     }
@@ -100,27 +106,27 @@ public class ArgazkiaIgoKud implements Initializable {
         // La funcion con tem las pasaria a la carpeta temporal y de ahí las pasa a flickr, base de datos o donde toque
         List<File> files = event.getDragboard().getFiles();
 
-        for(File fitxategi : files){
-            obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(),fitxategi));
+        for (File fitxategi : files) {
+            obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(), fitxategi));
         }
         igoModel = FXCollections.observableArrayList(obsDatuak);
         igotakoakTabla.setItems(igoModel);
-        igotakoakTabla.refresh();
+        //igotakoakTabla.refresh();
     }
 
     private void uploadPhotosToApi(ArrayList<String> photoPaths) throws IOException {
         //this.igotakoFitxategiak
         //Argazkiak flickr-era igoko dira
-        for(String path:photoPaths) {
+        for (String path : photoPaths) {
             // ARGAZKIA FLIKR-ERA IGO
             String bilIzena = bildumak.getValue().toString();
             ArrayList<String> photoAndAlbumId = FlickrAPI.getInstantzia().argazkiaIgo(path, bilIzena);
             String sortuDenFlickrID = photoAndAlbumId.get(0);
             String sortuDenAlbumID = null;
-            if(photoAndAlbumId.size()==2){
+            if (photoAndAlbumId.size() == 2) {
                 sortuDenAlbumID = photoAndAlbumId.get(1);
             }
-            FlickrAPI.getInstantzia().argazkiaDeskargatu(Utils.argazkiakPath,sortuDenFlickrID,"small");// non gorde, id, tamaina
+            FlickrAPI.getInstantzia().argazkiaDeskargatu(Utils.argazkiakPath, sortuDenFlickrID, "small");// non gorde, id, tamaina
 
             // ARGAZKIEN ATRIBUTUAK
             // Atributos que no usamos
@@ -143,54 +149,54 @@ public class ArgazkiaIgoKud implements Initializable {
             // DATU EGITURA: Argazkia sortu eta bilduman sartu
             AbstractMap.SimpleEntry<Argazkia, Bilduma> argazkiEtaBilduma = aDEgituranSartu(pIzena, deskribapena, date, sortuDenFlickrID, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews, sortuDenAlbumID);
             // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
-            aDBaseanSartu(argazkiEtaBilduma.getKey(),argazkiEtaBilduma.getValue());
+            aDBaseanSartu(argazkiEtaBilduma.getKey(), argazkiEtaBilduma.getValue());
         }
 
     }
 
     private void uploadPhotosWithoutApi(ArrayList<String> photoPaths) throws IOException {
         // Argazkiak programara igotzeko baina flickerreko konexioa ondo ez doanean
-        for(String photo:photoPaths){  // foto == argazkiaren path
+        for (String photo : photoPaths) {  // foto == argazkiaren path
             // ARGAZKIEN ATRIBUTUAK
             // Atributos que no usamos
-                String deskribapena = null; //de primeras se suben sin descripcion
-                Date date = null; //TODO poner fecha de creacion de imagen extraida de metadatos
-                boolean gogokoaDa = false; //de primeras siempre false
-                String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
+            String deskribapena = null; //de primeras se suben sin descripcion
+            Date date = null; //TODO poner fecha de creacion de imagen extraida de metadatos
+            boolean gogokoaDa = false; //de primeras siempre false
+            String sortzaileID = null; //TODO esta me tienen con dudas de cuando la tengo que usar
             // Atributos not null: Son obligatorios de pasar a la DB
-                Integer idDB; //id con autoincrement para DB
-                String pIzena = Utils.getFileName(photo); //el nombre viene del mismo archivo
+            Integer idDB; //id con autoincrement para DB
+            String pIzena = Utils.getFileName(photo); //el nombre viene del mismo archivo
             // Atributos que varian por conexion
-                String idFLickr = null;
+            String idFLickr = null;
             // Atributos que no estan en la base de datos: para futuros usos, pero que actualmente no utilizamos
-                String size = null;
-                Integer pFavs = null;
-                Integer pKomentario = null;
-                String pUrl = null;
+            String size = null;
+            Integer pFavs = null;
+            Integer pKomentario = null;
+            String pUrl = null;
             ArrayList<Etiketa> etiketaLista = null;
             Integer pViews = null;
 
             // DATU EGITURA: Argazkia sortu eta bilduman sartu
-            AbstractMap.SimpleEntry<Argazkia, Bilduma> argazkiEtaBilduma = aDEgituranSartu(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews,null);
+            AbstractMap.SimpleEntry<Argazkia, Bilduma> argazkiEtaBilduma = aDEgituranSartu(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews, null);
             // DATU BASEA: Argazkia eta bilduma igo, kontuan izanik ez dugula konexiorik
-            aDBaseanSartu(argazkiEtaBilduma.getKey(),argazkiEtaBilduma.getValue());
+            aDBaseanSartu(argazkiEtaBilduma.getKey(), argazkiEtaBilduma.getValue());
             //copy file to temp
-            Utils.copyFileUsingStream(photo,Utils.tmpPath);
+            Utils.copyFileUsingStream(photo, Utils.tmpPath);
             //photos to upload txt fitxategian argazkia sartu
-            ArgazkiDBKud.getInstantzia().addPhotoToUpload(pIzena+".png",argazkiEtaBilduma.getKey().getId().toString(),argazkiEtaBilduma.getValue().getIzena().toString());
+            ArgazkiDBKud.getInstantzia().addPhotoToUpload(pIzena + ".png", argazkiEtaBilduma.getKey().getId().toString(), argazkiEtaBilduma.getValue().getIzena().toString());
         }
     }
 
-    private AbstractMap.SimpleEntry<Argazkia, Bilduma> aDEgituranSartu(String pIzena, String deskribapena, Date date, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews, String bilID){
+    private AbstractMap.SimpleEntry<Argazkia, Bilduma> aDEgituranSartu(String pIzena, String deskribapena, Date date, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews, String bilID) {
         Argazkia foto = new Argazkia(pIzena, deskribapena, date, idFLickr, gogokoaDa, sortzaileID, pUrl, pFavs, pKomentario, etiketaLista, pViews);
         String albumName = bildumak.getValue().toString();
         Bilduma uploadAlbum = ListaBildumak.getNireBilduma().emanBildumaIzenarekin(albumName);
-        if(uploadAlbum!=null){ // albuma dago
+        if (uploadAlbum != null) { // albuma dago
             uploadAlbum.argazkiaGehitu(foto);
             AbstractMap.SimpleEntry<Argazkia, Bilduma> entry = new AbstractMap.SimpleEntry<>(foto, uploadAlbum);
             return entry;
-        }else{ //albuma ez dago, berria sortu
-            Bilduma newAlbum = ListaBildumak.getNireBilduma().bildumaSartu(albumName,bilID);
+        } else { //albuma ez dago, berria sortu
+            Bilduma newAlbum = ListaBildumak.getNireBilduma().bildumaSartu(albumName, bilID);
             newAlbum.argazkiaGehitu(foto);
             AbstractMap.SimpleEntry<Argazkia, Bilduma> entry = new AbstractMap.SimpleEntry<>(foto, newAlbum);
             return entry;
@@ -199,7 +205,7 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
 
-    private void aDBaseanSartu(Argazkia photo,Bilduma album) {
+    private void aDBaseanSartu(Argazkia photo, Bilduma album) {
         // metodo hau argazkiak eta bildumak datu basean sortzeko balio du
         // konexio gabe eta konezioarekin lan egingo du, baina era ezberdinetan
         ArgazkiDBKud.getInstantzia().argazkiaSartu(photo);
@@ -207,33 +213,50 @@ public class ArgazkiaIgoKud implements Initializable {
         String bilIzena = bildumak.getValue().toString();
         String photoId = photo.getId().toString();
         List<String> bildumak = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
-        if(bildumak.contains(bilIzena)){
+        if (bildumak.contains(bilIzena)) {
             // Bilduma hori jada sortuta dago, beraz zuzenean editatu BildumaArgazkia
-            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
-        }else{
+            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena, photoId);
+        } else {
             // Bilduma berria sortu eta argazkia sartu
-            BildumaDBKud.getInstantzia().bildumaSartu(bilIzena,album.getId(),mainApp.username,"");
-            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena,photoId);
+            BildumaDBKud.getInstantzia().bildumaSartu(bilIzena, album.getId(), mainApp.username, "");
+            BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena, photoId);
         }
     }
-    public void bildumakComboboxKargatu(){
+
+    public void bildumakComboboxKargatu() {
         List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
         this.bildumak.getItems().addAll(bil);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        izena.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo,String>("izena"));
-        botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo,Button>("botoia"));
+        izena.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo, String>("izena"));
+
+        botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo, Button>("botoia"));
+
+
+        botoia.setCellFactory(p -> new TableCell<>() {
+            public void updateItem(Button botoi, boolean empty) {
+                if (botoi != null && !empty) {
+                    final Button button = new Button();
+                    button.setText("Delete");
+                    setGraphic(button);
+                    setAlignment(Pos.CENTER);
+                    // tbData.refresh();
+                } else {
+                    setGraphic(null);
+                    setText(null);
+                }
+            }
+
+            ;
+        });
+
+
+
         System.out.println("igo iniciado");
         //igotakoakTabla.getColumns();
 
-        List<String> str = new ArrayList<>();
-        str.add("bil1");
-        str.add("bil2");
-
-
-        System.out.println("str añadidos");
     }
 
 }

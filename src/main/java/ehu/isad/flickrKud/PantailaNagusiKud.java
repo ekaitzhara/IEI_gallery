@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 
 import java.io.*;
 import java.net.URL;
@@ -41,6 +42,9 @@ public class PantailaNagusiKud implements Initializable {
   private static String erabiltzaileID = ErabiltzaileDBKud.getIdErab();
 
     //FXML-ko elementuak
+    @FXML
+    private FlowPane flowPane;
+
     @FXML
     private TableView<TaulaDatu> tbData;
 
@@ -257,7 +261,6 @@ public class PantailaNagusiKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
       izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
       etiketak.setCellValueFactory(new PropertyValueFactory<>("etiketak"));
       data.setCellValueFactory(new PropertyValueFactory<>("data"));
