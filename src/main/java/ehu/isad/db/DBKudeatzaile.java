@@ -1,4 +1,7 @@
 package ehu.isad.db;
+import ehu.isad.flickrKud.Utils;
+
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +24,7 @@ public class DBKudeatzaile {
 
 			Class.forName("org.sqlite.JDBC").getConstructor().newInstance();
 
-			conn = (Connection) DriverManager.getConnection(url1);
+			conn = (Connection) DriverManager.getConnection(url);
 			conn.setAutoCommit(false);
 			System.out.println("Database connection established");
 		} catch (Exception e) {

@@ -12,8 +12,9 @@ import ehu.isad.db.BildumaDBKud;
 import ehu.isad.db.ErabiltzaileDBKud;
 import ehu.isad.db.EtiketaDBKud;
 import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.flickrKud.Laguntzaile;
+import ehu.isad.flickrKud.Utils;
 
+import java.io.File;
 import java.util.*;
 
 public class ListaBildumak {
@@ -144,8 +145,8 @@ public class ListaBildumak {
 
                 //FlickrAPI.getInstantzia().argazkiaJaitsiEtaGorde(pId, p.getSmallUrl());
 
-                String fitxategiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").getPath() + pId + ".jpg";
-                Laguntzaile.downloadFileWithUrl(p.getSmallUrl(), fitxategiPath);
+                String fitxategiPath = Utils.globalPath("/data/dasiteam/flickr/argazkiak/") + pId + ".jpg";
+                Utils.downloadFileWithUrl(p.getSmallUrl(), fitxategiPath);
 
                 String title = p.getTitle();
                 System.out.println("\t"+title);
@@ -183,7 +184,7 @@ public class ListaBildumak {
         // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
         ArrayList<Argazkia> argazkiak = emanArgazkiakBildumaIzenarekin(bilduma);
         for (Argazkia a : argazkiak) {
-            String argazkiPath = this.getClass().getResource("/data/dasiteam/flickr/argazkiak").toString() + a.getIdFLickr() + ".jpg";
+            String argazkiPath = Utils.argazkiakPath + File.separatorChar+ a.getIdFLickr() + ".jpg";
             String etiketak = a.emanStringEtiketak();
             TaulaDatu t = new TaulaDatu(a.getId(), argazkiPath, a.getIzena(), etiketak, a.getData(), a.getDeskribapena(), a.getFavs(), a.getKomentarioKop());
             emaitza.add(t);
