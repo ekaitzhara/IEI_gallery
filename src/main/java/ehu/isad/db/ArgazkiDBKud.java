@@ -211,9 +211,17 @@ public class ArgazkiDBKud {
     }
 
 
-    public void addPhotoToUpload(String s, String toString, String toString1) {
+    public void addPhotoToUpload(String argazkiIzena, String idArgazki, String izenBilduma) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "INSERT INTO PhotosToUpload(idArgazkia, bildumaIzena, argazkiIzen) " +
+                "VALUES('"+ idArgazki +"', '"+ izenBilduma +"', '"+argazkiIzena+"')";
+        dbKud.execSQL(query);
     }
 
     public void addPhotoToDelete(String id) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "INSERT INTO PhotosToDelete(idFlickr) " +
+                "VALUES('"+ id +"')";
+        dbKud.execSQL(query);
     }
 }
