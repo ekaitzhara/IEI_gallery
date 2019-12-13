@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArgazkiDBKud {
 
@@ -80,8 +81,8 @@ public class ArgazkiDBKud {
 
         try {
             while (rs.next()) {
-                Integer idFlickr = rs.getInt("idFlickr");
-                emaitza.add(idFlickr.toString());
+                String idFlickr = rs.getString("idFlickr");
+                emaitza.add(idFlickr);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,4 +162,41 @@ public class ArgazkiDBKud {
         String query = "DELETE FROM ArgazkiEtiketak";
         dbKud.execSQL(query);
     }
+
+    public HashMap emanPhotosToUpload() {
+        HashMap emaitza = new HashMap<String,String>();
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "SELECT * FROM PhotosToUpload";
+        ResultSet rs = dbKud.execSQL(query);
+
+        try {
+            while (rs.next()) {
+                Integer idArgazkiaDB = rs.getInt("idArgazkia");
+                String bildumaIzena = rs.getString("bildumaIzena");
+                String argazkiIzena = rs.getString("argazkiIzen");
+                emaitza.put(argazkiIzena,idArgazkiaDB);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emaitza;
+    }
+
+    public ArrayList<String> emanPhotosToDelete() {
+        ArrayList<String> emaitza = new ArrayList<>();
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "SELECT * FROM PhotosToDelete";
+        ResultSet rs = dbKud.execSQL(query);
+
+        try {
+            while (rs.next()) {
+                String idFlickr = rs.getString("idFlickr");
+                emaitza.add(idFlickr);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emaitza;
+    }
+
 }
