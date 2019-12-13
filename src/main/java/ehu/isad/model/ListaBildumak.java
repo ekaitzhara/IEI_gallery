@@ -15,6 +15,7 @@ import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.flickrKud.Utils;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.*;
 
 public class ListaBildumak {
@@ -124,7 +125,6 @@ public class ListaBildumak {
 
                 Date pDate = p.getDateAdded();
                 Date pDatePosted = p.getDatePosted();
-                System.out.println(pDatePosted);
                 String pId = p.getId();
                 Boolean pFavourite = p.isFavorite();
                 Integer favs = photoInt.getFavorites(pId, 50,1).size();
@@ -181,7 +181,7 @@ public class ListaBildumak {
         }
     }
 
-    public List<TaulaDatu> emanTaularakoDatuak(String bilduma) {
+    public List<TaulaDatu> emanTaularakoDatuak(String bilduma){
         List<TaulaDatu> emaitza = new ArrayList<>();
         // Sartu taularako behar diren datuak aukeratu duen bildumaren arabera
         ArrayList<Argazkia> argazkiak = emanArgazkiakBildumaIzenarekin(bilduma);
@@ -192,7 +192,6 @@ public class ListaBildumak {
             emaitza.add(t);
         }
         return emaitza;
-
     }
 
     private ArrayList<Argazkia> emanArgazkiakBildumaIzenarekin(String bilduma) {
