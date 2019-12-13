@@ -199,4 +199,21 @@ public class ArgazkiDBKud {
         return emaitza;
     }
 
+    public void clearPhotosToDelete() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM PhotosToDelete";
+        dbKud.execSQL(query);
+    }
+    public void clearPhotosToUpload() {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM PhotosToUpload";
+        dbKud.execSQL(query);
+    }
+
+
+    public void addPhotoToUpload(String s, String toString, String toString1) {
+    }
+
+    public void addPhotoToDelete(String id) {
+    }
 }

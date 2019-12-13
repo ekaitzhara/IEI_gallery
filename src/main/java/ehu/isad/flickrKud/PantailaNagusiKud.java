@@ -9,6 +9,7 @@ import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.*;
 import ehu.isad.flickr.FlickrAPI;
+import ehu.isad.model.Argazkia;
 import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
 import ehu.isad.model.TaulaDatu;
@@ -176,9 +177,8 @@ public class PantailaNagusiKud implements Initializable {
 
   private void tmpArgazkiakIgo() throws FileNotFoundException {
         // tmp-n gordetako argazkiak flickerrera igoko dira
-        File tmp = new File(tmpPath);
-        File photosToUploadFile = new File(photosToUploadTxt);
-        HashMap<String,String> mapUpload = Utils.getHashTableFromTxt(photosToUploadTxt);
+        File tmp = new File(Utils.tmpPath);
+        HashMap<String,String> mapUpload = ArgazkiDBKud.getInstantzia().emanPhotosToUpload();
 
         String albumName = null;
         String idArgazkiDB = null;
@@ -206,24 +206,20 @@ public class PantailaNagusiKud implements Initializable {
 
             }
                 Utils.deleteAllFilesFromDir(Utils.tmpPath);
-                Utils.clearFile(photosToUploadTxt);
+            ArgazkiDBKud.getInstantzia().clearPhotosToUpload();
             } else
                 System.out.println("Errorea tmp karpeta irakurtzean");
     }
 
     private void ezabatuakKenduFlickerren() throws FileNotFoundException {
-        System.out.println("llamo a deleted register");
-        PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
-        Scanner sArg = new Scanner(deletedRegister);
-        while(sArg.hasNextLine()) {
-            String argazkiarenID = sArg.nextLine();
-            try {
-                photoInt.delete(argazkiarenID);
+        try {
+            PhotosInterface photoInt = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+            ArrayList<String> deletedIDs = ArgazkiDBKud.getInstantzia().emanPhotosToDelete();
+            for(String id:deletedIDs){
+                photoInt.delete(id);
             }
-            catch (FlickrException e) { e.printStackTrace(); }
-        }
-        sArg.close();
-        Utils.clearFile(deletedRegister);
+            ArgazkiDBKud.getInstantzia().clearPhotosToDelete();
+        }catch (FlickrException e) { e.printStackTrace(); }
     }
 
     private void ezabatuakKenduPrograman(){

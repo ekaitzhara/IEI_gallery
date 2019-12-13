@@ -177,6 +177,8 @@ public class ArgazkiaIgoKud implements Initializable {
             //copy file to temp
             Utils.copyFileUsingStream(photo,Utils.tmpPath);
             //photos to upload txt fitxategian argazkia sartu
+            ArgazkiDBKud.getInstantzia().addPhotoToUpload(pIzena+".png",argazkiEtaBilduma.getKey().getId().toString(),argazkiEtaBilduma.getValue().getIzena().toString());
+
             Utils.appendStrToFile(uploadTXT,pIzena+".png,"+argazkiEtaBilduma.getKey().getId().toString());
         }
     }
