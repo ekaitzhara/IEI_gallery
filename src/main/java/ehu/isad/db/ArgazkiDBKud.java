@@ -161,4 +161,7 @@ public class ArgazkiDBKud {
         String query = "DELETE FROM ArgazkiEtiketak";
         dbKud.execSQL(query);
     }
+
+
+
 }

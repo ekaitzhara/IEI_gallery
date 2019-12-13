@@ -121,7 +121,8 @@ public class ListaBildumak {
                 String pUrl = p.getSmallUrl();
 
 
-                Date pDate = p.getDateAdded();
+                //Date pDate = p.getDateAdded();
+                Date pDate = p.getDatePosted();
                 String pId = p.getId();
                 Boolean pFavourite = p.isFavorite();
                 Integer favs = photoInt.getFavorites(pId, 50,1).size();
