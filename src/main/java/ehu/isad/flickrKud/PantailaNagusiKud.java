@@ -9,7 +9,6 @@ import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.*;
 import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.model.Argazkia;
 import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
 import ehu.isad.model.TaulaDatu;
@@ -28,14 +27,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
-import javafx.util.converter.DateStringConverter;
-import javafx.util.converter.DateTimeStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.*;
 import java.net.URL;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PantailaNagusiKud implements Initializable {
@@ -256,7 +251,7 @@ public class PantailaNagusiKud implements Initializable {
         // Puntu honetan DBan bai eta Flickerren ez dauden argazkiak daude
         for (String ezabatzekoID: flickrIdDB) {
             // DBtik ezabatu
-            ArgazkiDBKud.getInstantzia().argazkiaEzabatu(ezabatzekoID);
+            ArgazkiDBKud.getInstantzia().argazkiaEzabatuIdFlickrrekin(ezabatzekoID);
             // ListaBildumatik ezabatu
             ListaBildumak.getNireBilduma().argazkiaEzabatu(ezabatzekoID);
         }
@@ -580,6 +575,8 @@ public class PantailaNagusiKud implements Initializable {
 
     @FXML
     public void gordeBotoia(ActionEvent actionEvent) {
+        // Editatu dituenak gorde
+        //this.editatutakoak erabili
         Iterator it = tbData.getItems().iterator();
         while (it.hasNext()) {
             TaulaDatu t = (TaulaDatu) it.next();
@@ -589,8 +586,36 @@ public class PantailaNagusiKud implements Initializable {
         }
     }
 
+    @FXML
     public void deuseztatuAldaketak(ActionEvent actionEvent) {
         this.editatutakoak.clear();
         this.sartuDatuakTaulan();
+    }
+
+    @FXML
+    public void ezabatuArgazkiak(ActionEvent actionEvent) {
+        Iterator it = tbData.getItems().iterator();
+        while (it.hasNext()) {
+            TaulaDatu t = (TaulaDatu) it.next();
+            if (t.getCheckBox().isSelected()) {
+                PhotosInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+                String idFlickr = ArgazkiDBKud.getInstantzia().emanIdFlickr(t.getArgazkiId());
+                try {
+                    pi.delete(idFlickr);
+                } catch (FlickrException e) {
+                    ArgazkiDBKud.getInstantzia().addPhotoToDelete(idFlickr);
+                }
+                ArgazkiDBKud.getInstantzia().argazkiaEzabatuIdFlickrrekin(idFlickr);
+                BildumaDBKud.getInstantzia().kenduArgazkiaBildumatik(t.getArgazkiId());
+                if (t.getEtiketak() != null)
+                    EtiketaDBKud.getInstantzia().kenduArgazkiaEtiketatik(t.getArgazkiId());
+                ListaBildumak.getNireBilduma().argazkiaEzabatu(idFlickr);
+            }
+        }
+    }
+
+    @FXML
+    public void ezabatuBilduma(ActionEvent actionEvent) {
+
     }
 }

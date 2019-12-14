@@ -90,7 +90,7 @@ public class ArgazkiDBKud {
         return emaitza;
     }
 
-    public void argazkiaEzabatu(String ezabatzekoID) {
+    public void argazkiaEzabatuIdFlickrrekin(String ezabatzekoID) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "DELETE FROM Argazkia WHERE idFlickr=" +ezabatzekoID;
         dbKud.execSQL(query);

@@ -34,8 +34,8 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="%delete...">
                            <items>
-                              <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" text="%delete Photo" />
-                              <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="%delete PhotoSet" />
+                              <MenuItem fx:id="ezabatuArgazkia" mnemonicParsing="false" onAction="#ezabatuArgazkiak" text="%delete Photo" />
+                              <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" onAction="#ezabatuBilduma" text="%delete PhotoSet" />
                            </items>
                         </Menu>
                         <MenuItem fx:id="gordeDena" mnemonicParsing="false" onAction="#gordeBotoia" text="%save" />

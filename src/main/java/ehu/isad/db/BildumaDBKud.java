@@ -109,4 +109,10 @@ public class BildumaDBKud {
         String query = "DELETE FROM BildumaArgazki";
         dbKud.execSQL(query);
     }
+
+    public void kenduArgazkiaBildumatik(Integer argazkiId) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM BildumaArgazki WHERE idArgazkia='"+argazkiId+"'";
+        dbKud.execSQL(query);
+    }
 }
