@@ -19,15 +19,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Callback;
 
 import java.io.*;
 import java.net.URL;
@@ -68,6 +67,9 @@ public class PantailaNagusiKud implements Initializable {
 
     @FXML
     private TableColumn<TaulaDatu, Integer> comments;
+
+    @FXML
+    private TableColumn<TaulaDatu, Button> checkBox;
 
     @FXML
     private ListView bildumenLista = new ListView();
@@ -261,12 +263,17 @@ public class PantailaNagusiKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+      tbData.setEditable(true);
+
       izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
       etiketak.setCellValueFactory(new PropertyValueFactory<>("etiketak"));
       data.setCellValueFactory(new PropertyValueFactory<>("data"));
       deskribapena.setCellValueFactory(new PropertyValueFactory<>("deskribapena"));
       favs.setCellValueFactory(new PropertyValueFactory<>("favs"));
       comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
+
+      checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
       argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
 
@@ -286,6 +293,7 @@ public class PantailaNagusiKud implements Initializable {
               }
           };
       });
+
 
   }
 
@@ -331,7 +339,18 @@ public class PantailaNagusiKud implements Initializable {
 
     @FXML
     public void bildumanKlikatu(MouseEvent mouseEvent) {
-      sartuDatuakTaulan();
+
+        boolean zerbaitKlikaturik = false;
+        Iterator itr = tbData.getItems().iterator();
+        while (itr.hasNext()) {
+            TaulaDatu t = (TaulaDatu) itr.next();
+            if (t.getCheckBox().isSelected())
+                zerbaitKlikaturik = true;
+        }
+        if (zerbaitKlikaturik == true) {
+            this.mainApp.zerbaitKlikaturikPantaila();
+        } else
+            sartuDatuakTaulan();
     }
 
     public void sartuDatuakTaulan() {
@@ -354,4 +373,14 @@ public class PantailaNagusiKud implements Initializable {
       tbData.refresh();
     }
 
+    @FXML
+    public void gordeBotoia(ActionEvent actionEvent) {
+        Iterator it = tbData.getItems().iterator();
+        while (it.hasNext()) {
+            TaulaDatu t = (TaulaDatu) it.next();
+            if (t.getCheckBox().isSelected())
+                System.out.println(t.getIzena());
+            System.out.println("CLICKADOO " + t.getCheckBox().isSelected());
+        }
+    }
 }

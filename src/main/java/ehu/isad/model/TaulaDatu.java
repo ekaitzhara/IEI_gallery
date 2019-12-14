@@ -1,13 +1,12 @@
 package ehu.isad.model;
 
-import ehu.isad.flickrKud.Utils;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.sql.Date;
 
 
@@ -21,6 +20,7 @@ public class TaulaDatu {
     private String deskribapena;
     private Integer favs;
     private Integer comments;
+    private CheckBox checkBox;
 
     public TaulaDatu(Integer pArgazkiId, String argazkiapath, String izena, String etiketak, Date data, String desk, Integer favs, Integer comments) {
         InputStream targetStream = null;
@@ -37,6 +37,7 @@ public class TaulaDatu {
         this.deskribapena = desk;
         this.favs = favs;
         this.comments = comments;
+        this.checkBox = new CheckBox();
     }
 
     public Integer getArgazkiId() {
@@ -69,5 +70,13 @@ public class TaulaDatu {
 
     public Integer getComments() {
         return comments;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 }

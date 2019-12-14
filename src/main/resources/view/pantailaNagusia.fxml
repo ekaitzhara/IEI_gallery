@@ -39,6 +39,7 @@
                               <MenuItem fx:id="ezabatuBilduma" mnemonicParsing="false" text="%delete PhotoSet" />
                            </items>
                         </Menu>
+                        <MenuItem fx:id="gordeDena" mnemonicParsing="false" onAction="#gordeBotoia" text="%save" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%account">
@@ -80,12 +81,13 @@
             <TableView fx:id="tbData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="argazkia" prefWidth="155.0" text="%argazkia" />
-                <TableColumn fx:id="izena" prefWidth="133.0" text="%izena" />
-                  <TableColumn fx:id="etiketak" prefWidth="248.0" text="%etiketak" />
-                  <TableColumn fx:id="data" prefWidth="103.0" text="%data" />
-                  <TableColumn fx:id="deskribapena" prefWidth="61.0" text="%description" />
-                  <TableColumn fx:id="favs" prefWidth="74.0" text="%favs" />
-                  <TableColumn fx:id="comments" prefWidth="104.0" text="%comments" />
+                <TableColumn fx:id="izena" prefWidth="93.0" text="%izena" />
+                  <TableColumn fx:id="etiketak" prefWidth="161.0" text="%etiketak" />
+                  <TableColumn fx:id="data" prefWidth="142.0" text="%data" />
+                  <TableColumn fx:id="deskribapena" prefWidth="110.0" text="%description" />
+                  <TableColumn fx:id="favs" prefWidth="53.0" text="%favs" />
+                  <TableColumn fx:id="comments" prefWidth="113.0" text="%comments" />
+                  <TableColumn fx:id="checkBox" prefWidth="126.0" />
               </columns>
             </TableView>
          </center>

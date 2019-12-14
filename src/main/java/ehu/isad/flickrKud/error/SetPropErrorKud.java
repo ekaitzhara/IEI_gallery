@@ -1,4 +1,4 @@
-package ehu.isad.flickrKud;
+package ehu.isad.flickrKud.error;
 
 import ehu.isad.Main;
 import javafx.fxml.FXML;

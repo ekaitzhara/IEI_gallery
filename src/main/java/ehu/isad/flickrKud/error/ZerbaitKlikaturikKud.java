@@ -1,4 +1,4 @@
-package ehu.isad.flickrKud;
+package ehu.isad.flickrKud.error;
 
 import ehu.isad.Main;
 import javafx.fxml.Initializable;
@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UploadErrorKud implements Initializable {
+public class ZerbaitKlikaturikKud implements Initializable {
 
     private Main mainApp;
 

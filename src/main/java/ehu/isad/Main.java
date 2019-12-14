@@ -2,6 +2,9 @@ package ehu.isad;
 
 import com.flickr4java.flickr.FlickrException;
 import ehu.isad.flickrKud.*;
+import ehu.isad.flickrKud.error.SetPropErrorKud;
+import ehu.isad.flickrKud.error.UploadErrorKud;
+import ehu.isad.flickrKud.error.ZerbaitKlikaturikKud;
 import ehu.isad.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +29,7 @@ public class Main extends Application {
   private Scene argazkiaIgo;
   private Scene bildumaSortu;
   private Scene uploadError;
+  private Scene zerbaitKlikaturik;
 
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
@@ -34,6 +38,7 @@ public class Main extends Application {
   private Parent bildumaSortuUI;
   private Parent uploadErrorUI;
   private Parent setPropErrorUI;
+  private Parent zerbaitKlikaturikUI;
 
   private Stage stage;
 
@@ -44,6 +49,7 @@ public class Main extends Application {
   private BildumaSortuKud bildumaSortuKud;
   private UploadErrorKud uploadErrorKud;
   private SetPropErrorKud setPropErrorKud;
+  private ZerbaitKlikaturikKud zerbaitKlikaturikKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -61,6 +67,7 @@ public class Main extends Application {
     argazkiaIgo = new Scene(argazkiaIgoUI, 450, 450);
     bildumaSortu = new Scene(bildumaSortuUI, 450, 450);
     uploadError = new Scene(uploadErrorUI, 450, 450);
+    zerbaitKlikaturik = new Scene(zerbaitKlikaturikUI, 400, 200);
 
     stage.setTitle("DASI APP Argazki Backup");
     stage.setScene(eKautoketa);
@@ -108,6 +115,10 @@ public class Main extends Application {
     setPropErrorKud = loaderSetPropErrorKud.getController();
     setPropErrorKud.setMainApp(this);
 
+    FXMLLoader loaderZerbaitKlikaturikKud = new FXMLLoader(getClass().getResource("/view/error/zerbaitKlikaturik.fxml"), bundle);
+    zerbaitKlikaturikUI = (Parent) loaderZerbaitKlikaturikKud.load();
+    zerbaitKlikaturikKud = loaderZerbaitKlikaturikKud.getController();
+    zerbaitKlikaturikKud.setMainApp(this);
 
   }
 
@@ -223,5 +234,14 @@ public class Main extends Application {
 
   public void itxi() {
     stage.close();
+  }
+
+  public void zerbaitKlikaturikPantaila(){
+    Stage secondStage = new Stage();
+    secondStage.setTitle("DasiAPP Argazki Backup");
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
   }
 }
