@@ -66,7 +66,7 @@ public class PantailaNagusiKud implements Initializable {
     private TableColumn<TaulaDatu, Integer> favs;
 
     @FXML
-    private TableColumn<TaulaDatu, Integer> comments;
+    private TableColumn<TaulaDatu, String> comments;
 
     @FXML
     private TableColumn<TaulaDatu, Button> checkBox;
@@ -275,8 +275,17 @@ public class PantailaNagusiKud implements Initializable {
 
       checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
-      argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
+      // IZENA
 
+      // ETIKETAK
+
+      // KOMENTATU
+
+      // DESKRIBAPENA
+
+
+      // ARGAZKIA
+      argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
       argazkia.setCellFactory(p -> new TableCell<>() {
           public void updateItem(Image image, boolean empty) {
               if (image != null && !empty){
@@ -360,7 +369,6 @@ public class PantailaNagusiKud implements Initializable {
       ListaBildumak datuEgitura = ListaBildumak.getNireBilduma();
       if(!datuEgitura.utsik()){
           String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
-          //String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
           this.taulaModels = FXCollections.observableArrayList(
                   ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
           );

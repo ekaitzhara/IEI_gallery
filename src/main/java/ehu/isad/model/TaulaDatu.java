@@ -19,7 +19,7 @@ public class TaulaDatu {
     private Date data;
     private String deskribapena;
     private Integer favs;
-    private Integer comments;
+    private String comments;
     private CheckBox checkBox;
 
     public TaulaDatu(Integer pArgazkiId, String argazkiapath, String izena, String etiketak, Date data, String desk, Integer favs, Integer comments) {
@@ -36,7 +36,7 @@ public class TaulaDatu {
         this.data = data;
         this.deskribapena = desk;
         this.favs = favs;
-        this.comments = comments;
+        this.comments = "Comment here";
         this.checkBox = new CheckBox();
     }
 
@@ -68,7 +68,7 @@ public class TaulaDatu {
         return favs;
     }
 
-    public Integer getComments() {
+    public String getComments() {
         return comments;
     }
 
