@@ -244,4 +244,14 @@ public class Main extends Application {
     secondStage.setAlwaysOnTop(true);
     secondStage.setResizable(false);
   }
+
+  public void zerbaitEditaturikPantaila() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle("DasiAPP Argazki Backup");
+    zerbaitKlikaturikKud.jarriEditaturikTestua();
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
 }

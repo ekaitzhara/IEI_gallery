@@ -76,6 +76,26 @@ public class TaulaDatu {
         return checkBox;
     }
 
+    public void setIzena(String izena) {
+        this.izena = izena;
+    }
+
+    public void setEtiketak(String etiketak) {
+        this.etiketak = etiketak;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public void setDeskribapena(String deskribapena) {
+        this.deskribapena = deskribapena;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public void setCheckBox(CheckBox checkBox) {
         this.checkBox = checkBox;
     }

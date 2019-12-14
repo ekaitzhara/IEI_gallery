@@ -117,9 +117,8 @@ public class ArgazkiDBKud {
                 String size = rs.getString("size");
                 String d = rs.getString("data");
                 Date data = null;
-                if (!d.equals("null") {
+                if (!d.equals("null"))
                     data = Date.valueOf(d);
-                }
                 String idFlickr = rs.getString("idFlickr");
                 Integer favs = rs.getInt("favs");
                 Integer komentarioKop = rs.getInt("komentarioKop");

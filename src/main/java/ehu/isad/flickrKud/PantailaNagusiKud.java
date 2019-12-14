@@ -78,6 +78,8 @@ public class PantailaNagusiKud implements Initializable {
     private ObservableList<TaulaDatu> taulaModels = FXCollections.observableArrayList();
     private ObservableList bildumaModel = FXCollections.observableArrayList();
 
+    private ArrayList<TaulaDatu> editatutakoak = new ArrayList<>();
+
 
   @FXML
   private javafx.scene.control.Label erabiltzaileIzena = new javafx.scene.control.Label();
@@ -276,6 +278,34 @@ public class PantailaNagusiKud implements Initializable {
       checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
       // IZENA
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryIzena
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      izena.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryIzena.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      izena.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setIzena(t.getNewValue());
+              }
+      );
 
       // ETIKETAK
 
@@ -360,6 +390,8 @@ public class PantailaNagusiKud implements Initializable {
         }
         if (zerbaitKlikaturik == true) {
             this.mainApp.zerbaitKlikaturikPantaila();
+        } else if (!this.editatutakoak.isEmpty()) {
+            this.mainApp.zerbaitEditaturikPantaila();
         } else
             sartuDatuakTaulan();
     }
@@ -392,5 +424,10 @@ public class PantailaNagusiKud implements Initializable {
                 System.out.println(t.getIzena());
             System.out.println("CLICKADOO " + t.getCheckBox().isSelected());
         }
+    }
+
+    public void deuseztatuAldaketak(ActionEvent actionEvent) {
+        this.editatutakoak.clear();
+        this.sartuDatuakTaulan();
     }
 }
