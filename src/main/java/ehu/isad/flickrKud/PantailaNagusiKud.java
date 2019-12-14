@@ -279,6 +279,8 @@ public class PantailaNagusiKud implements Initializable {
 
       // ETIKETAK
 
+      // DATA
+
       // KOMENTATU
 
       // DESKRIBAPENA

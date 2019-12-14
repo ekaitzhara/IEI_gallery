@@ -115,7 +115,11 @@ public class ArgazkiDBKud {
                 String deskribapena = rs.getString("deskribapena");
                 String sortzaileId = rs.getString("sortzaileId");
                 String size = rs.getString("size");
-                //Date data = rs.getDate("data");
+                String d = rs.getString("data");
+                Date data = null;
+                if (!d.equals("null") {
+                    data = Date.valueOf(d);
+                }
                 String idFlickr = rs.getString("idFlickr");
                 Integer favs = rs.getInt("favs");
                 Integer komentarioKop = rs.getInt("komentarioKop");
@@ -123,7 +127,7 @@ public class ArgazkiDBKud {
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
                 //emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
-                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr, gogokoaDa, sortzaileId, favs, komentarioKop));
+                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr, gogokoaDa, sortzaileId, favs, komentarioKop));
 
             }
         } catch (SQLException e) {
