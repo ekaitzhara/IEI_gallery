@@ -614,6 +614,8 @@ public class PantailaNagusiKud implements Initializable {
                 if (t.getEtiketak() != null)
                     EtiketaDBKud.getInstantzia().kenduArgazkiaEtiketatik(t.getArgazkiId());
                 ListaBildumak.getNireBilduma().argazkiaEzabatu(idFlickr);
+
+                // EZABATU ARGAZKIAK/ KARPETATIK .jpg ARTXIBOA!!!!!!!!!!!!!!!
             }
         }
         this.sartuDatuakTaulan();
