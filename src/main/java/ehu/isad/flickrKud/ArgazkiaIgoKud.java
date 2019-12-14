@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -220,6 +222,21 @@ public class ArgazkiaIgoKud implements Initializable {
             // Bilduma berria sortu eta argazkia sartu
             BildumaDBKud.getInstantzia().bildumaSartu(bilIzena, album.getId(), mainApp.username, "");
             BildumaDBKud.getInstantzia().argazkiaBildumanSartu(bilIzena, photoId);
+        }
+    }
+
+    public void argazkiaKendu(int index){
+        obsDatuak.remove(index);
+        igoModel = FXCollections.observableArrayList(obsDatuak);
+        igotakoakTabla.setItems(igoModel);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        System.out.println("key pressed");
+
+        if(e.getCode()==KeyCode.DELETE){
+            System.out.println("delete");
+            argazkiaKendu(igotakoakTabla.getSelectionModel().getFocusedIndex());
         }
     }
 

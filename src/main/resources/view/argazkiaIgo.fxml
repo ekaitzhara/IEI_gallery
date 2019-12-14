@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="bordes" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="489.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.ArgazkiaIgoKud">
    <center>
-      <TableView fx:id="igotakoakTabla" prefHeight="308.0" prefWidth="536.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="igotakoakTabla" onKeyPressed="#keyPressed" prefHeight="308.0" prefWidth="536.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="izena" prefWidth="259.9999877810478" text="Izena" />
           <TableColumn fx:id="botoia" prefWidth="275.20001220703125" text="boton" />
