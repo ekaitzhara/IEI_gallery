@@ -7,11 +7,14 @@ import javafx.scene.control.Label;
 
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ZerbaitKlikaturikKud implements Initializable {
 
     private Main mainApp;
+
+    private static ResourceBundle bundle;
 
     @FXML
     private Label zerbaitKlikatuta1 = new Label();
@@ -32,8 +35,31 @@ public class ZerbaitKlikaturikKud implements Initializable {
 
     }
 
-    public void jarriEditaturikTestua() {
-        this.zerbaitKlikatuta1.setText("Zerbait editatu egin duzu eta ez duzu gorde,");
-        this.zerbaitKlikatuta2.setText("mesedez, gorde edo deuseztatu egin dituzun aldaketak");
+    public void jarriEditaturikTestua(String hizkuntza, String hizkuntzHerrialdea) {
+
+        String z1 = (String) bundle.getObject("zerbaitEditatuta1");
+        String z2 = (String) bundle.getObject("zerbaitEditatuta2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
+    public void jarriBildumaErrorTestua(String hizkuntza, String hizkuntzHerrialdea) {
+
+        String z1 = (String) bundle.getObject("bildumaEzabatuError1");
+        String z2 = (String) bundle.getObject("bildumaEzabatuError2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
+    public void syncEginTestua(String hizkuntza, String hizkuntzHerrialdea) {
+
+        String z1 = (String) bundle.getObject("syncEginTestu1");
+        String z2 = (String) bundle.getObject("syncEginTestu2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
+    public void jarriBundle(ResourceBundle pBundle) {
+        bundle = pBundle;
     }
 }

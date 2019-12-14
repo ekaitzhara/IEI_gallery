@@ -120,6 +120,8 @@ public class Main extends Application {
     zerbaitKlikaturikKud = loaderZerbaitKlikaturikKud.getController();
     zerbaitKlikaturikKud.setMainApp(this);
 
+    zerbaitKlikaturikKud.jarriBundle(bundle);
+
   }
 
 
@@ -248,7 +250,27 @@ public class Main extends Application {
   public void zerbaitEditaturikPantaila() {
     Stage secondStage = new Stage();
     secondStage.setTitle("DasiAPP Argazki Backup");
-    zerbaitKlikaturikKud.jarriEditaturikTestua();
+    zerbaitKlikaturikKud.jarriEditaturikTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
+
+  public void bildumaEzabatuError() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle("DasiAPP Argazki Backup");
+    zerbaitKlikaturikKud.jarriBildumaErrorTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
+
+  public void syncEginMezua() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle("DasiAPP Argazki Backup");
+    zerbaitKlikaturikKud.syncEginTestua(hizkuntza, hizkuntzHerrialdea);
     secondStage.setScene(zerbaitKlikaturik);
     secondStage.show();
     secondStage.setAlwaysOnTop(true);

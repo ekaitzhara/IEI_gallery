@@ -189,6 +189,8 @@ public class ListaBildumak {
             Argazkia a = b.bilatuArgazkiaIdFLickrrekin(ezabatzekoID);
             if (a != null)
                 b.ezabatuArgazkia(a);
+            if (b.getArgazkiak().isEmpty())
+                    this.lista.remove(b);
         }
     }
 

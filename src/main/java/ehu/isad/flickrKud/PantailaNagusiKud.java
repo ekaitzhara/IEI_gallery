@@ -1,6 +1,7 @@
 package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.FlickrRuntimeException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
@@ -29,7 +30,9 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.*;
 
@@ -602,8 +605,9 @@ public class PantailaNagusiKud implements Initializable {
                 String idFlickr = ArgazkiDBKud.getInstantzia().emanIdFlickr(t.getArgazkiId());
                 try {
                     pi.delete(idFlickr);
-                } catch (FlickrException e) {
+                } catch (FlickrException | FlickrRuntimeException e) {
                     ArgazkiDBKud.getInstantzia().addPhotoToDelete(idFlickr);
+                    this.mainApp.syncEginMezua();
                 }
                 ArgazkiDBKud.getInstantzia().argazkiaEzabatuIdFlickrrekin(idFlickr);
                 BildumaDBKud.getInstantzia().kenduArgazkiaBildumatik(t.getArgazkiId());
@@ -627,8 +631,8 @@ public class PantailaNagusiKud implements Initializable {
                 BildumaDBKud.getInstantzia().ezabatuBilduma(bilduma);
                 ArgazkiDBKud.getInstantzia().kenduBildumaArgazkiatik(bilduma);
                 ListaBildumak.getNireBilduma().bildumaEzabatu(bilduma);
-            } catch (FlickrException e) {
-                return;
+            } catch (FlickrException | FlickrRuntimeException e) {
+                this.mainApp.bildumaEzabatuError();
             }
         }
         this.sartuBildumakListan();
