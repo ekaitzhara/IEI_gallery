@@ -109,7 +109,8 @@ public class ArgazkiaIgoKud implements Initializable {
         List<File> files = event.getDragboard().getFiles();
 
         for (File fitxategi : files) {
-            obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(), fitxategi));
+            ObsArgazkiIgo obs = new ObsArgazkiIgo(fitxategi.getName(), fitxategi);
+            obsDatuak.add(obs);
         }
         igoModel = FXCollections.observableArrayList(obsDatuak);
         igotakoakTabla.setItems(igoModel);
@@ -231,6 +232,21 @@ public class ArgazkiaIgoKud implements Initializable {
         igotakoakTabla.setItems(igoModel);
     }
 
+    public void argazkiaKendu(Button boton){
+        boton.setText("presionado");
+        for (int i = 0; i <obsDatuak.size() ; i++) {
+            ObsArgazkiIgo ai =  obsDatuak.get(i);
+            Button bot = ai.getBotoia();
+            bot.setText("todos");
+            if(false){
+                System.out.println("llego");
+                argazkiaKendu(i);
+            }
+        }
+        igoModel = FXCollections.observableArrayList(obsDatuak);
+        igotakoakTabla.setItems(igoModel);
+    }
+
     public void keyPressed(KeyEvent e) {
         System.out.println("key pressed");
 
@@ -251,12 +267,19 @@ public class ArgazkiaIgoKud implements Initializable {
 
         botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo, Button>("botoia"));
 
+        EventHandler<ActionEvent> buttonHandler = event -> {
+            Button selected = (Button) event.getSource();
+            System.out.println(selected.getId());
+            argazkiaKendu(selected);
+            event.consume();
+        };
 
         botoia.setCellFactory(p -> new TableCell<>() {
             public void updateItem(Button botoi, boolean empty) {
                 if (botoi != null && !empty) {
                     final Button button = new Button();
                     button.setText("Delete");
+                    button.setOnAction(buttonHandler);
                     setGraphic(button);
                     setAlignment(Pos.CENTER);
                     // tbData.refresh();

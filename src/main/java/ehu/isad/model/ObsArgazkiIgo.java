@@ -1,5 +1,9 @@
 package ehu.isad.model;
 
+import ehu.isad.Main;
+import ehu.isad.flickrKud.ArgazkiaIgoKud;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import java.io.File;
@@ -28,7 +32,15 @@ public class ObsArgazkiIgo {
         return botoia;
     }
 
+    public String idBotoi(){
+        return botoia.getId();
+    }
+
     public File getArchivo() {
         return archivo;
     }
+
+
+
+
 }
