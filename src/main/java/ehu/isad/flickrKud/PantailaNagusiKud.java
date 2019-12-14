@@ -35,6 +35,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.io.*;
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PantailaNagusiKud implements Initializable {
@@ -357,9 +358,28 @@ public class PantailaNagusiKud implements Initializable {
               if (!string.contains("-"))
                   return null;
               String[] aux = string.split("-");
+              int cont=1;
+              int urteaDatan = 0;
+              int hilabeteDatan = 0;
               for (String s : aux) {
                   try {
-                      Integer.parseInt(s);
+                      Integer i = Integer.parseInt(s);
+                      if (cont == 1) {
+                          urteaDatan = i;
+                          if ((s.length() != 4) || (i > Calendar.getInstance().get(Calendar.YEAR)))
+                              return null;
+                      }
+                      if (cont == 2) {
+                          hilabeteDatan = i;
+                          if ((i>12) || ((urteaDatan == Calendar.getInstance().get(Calendar.YEAR)) && (i > Calendar.getInstance().get(Calendar.MONTH)+1)))
+                              return null;
+                      }
+                      if (cont == 3) {
+                          if ((i > 31) || ((urteaDatan == Calendar.getInstance().get(Calendar.YEAR)) && (hilabeteDatan == Calendar.getInstance().get(Calendar.MONTH)+1) && (i > Calendar.getInstance().get(Calendar.DAY_OF_MONTH))))
+                              return null;
+                      }
+                      cont += 1;
+
                   } catch (NumberFormatException excepcion) {
                       return null;
                   }
