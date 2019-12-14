@@ -115,4 +115,25 @@ public class BildumaDBKud {
         String query = "DELETE FROM BildumaArgazki WHERE idArgazkia='"+argazkiId+"'";
         dbKud.execSQL(query);
     }
+
+    public String emanBildumaIzenarekin(String bilduma) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT idBilduma FROM Bilduma WHERE izena='" + bilduma + "'";
+        rs = dbKud.execSQL(query);
+
+        try {
+            if (rs.next())
+                return rs.getString("idBilduma");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void ezabatuBilduma(String bilduma) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM Bilduma WHERE izena='"+bilduma+"'";
+        dbKud.execSQL(query);
+    }
 }

@@ -35,8 +35,16 @@ public class ListaBildumak {
         return nireBilduma;
     }
 
-    public void bildumaEzabatu(Bilduma zein){
-        lista.remove(zein);
+    public void bildumaEzabatu(String bildumaIzen){
+        Bilduma ezabatzekoB = this.emanBildumaIzenarekin(bildumaIzen);
+        Bilduma notInASet = this.emanBildumaIzenarekin("NotInASet");
+        for (Argazkia a : ezabatzekoB.getArgazkiak()) {
+            notInASet.argazkiaGehitu(a);
+        }
+        this.lista.remove(ezabatzekoB);
+        this.lista.remove(notInASet);
+        this.lista.add(notInASet);
+
     }
 
     public Bilduma bildumaSartu(String bildumaIzena,String id){

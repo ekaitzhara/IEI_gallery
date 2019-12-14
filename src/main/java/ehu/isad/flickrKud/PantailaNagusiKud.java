@@ -612,10 +612,27 @@ public class PantailaNagusiKud implements Initializable {
                 ListaBildumak.getNireBilduma().argazkiaEzabatu(idFlickr);
             }
         }
+        this.sartuDatuakTaulan();
     }
 
     @FXML
     public void ezabatuBilduma(ActionEvent actionEvent) {
+
+        String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
+        PhotosetsInterface bInterface = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface();
+        String idBilduma = BildumaDBKud.getInstantzia().emanBildumaIzenarekin(bilduma);
+        if (idBilduma != "0000") {
+            try {
+                bInterface.delete(idBilduma);
+                BildumaDBKud.getInstantzia().ezabatuBilduma(bilduma);
+                ArgazkiDBKud.getInstantzia().kenduBildumaArgazkiatik(bilduma);
+                ListaBildumak.getNireBilduma().bildumaEzabatu(bilduma);
+            } catch (FlickrException e) {
+                return;
+            }
+        }
+        this.sartuBildumakListan();
+        this.sartuDatuakTaulan();
 
     }
 }

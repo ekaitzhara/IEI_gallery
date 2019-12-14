@@ -227,4 +227,10 @@ public class ArgazkiDBKud {
                 "VALUES('"+ id +"')";
         dbKud.execSQL(query);
     }
+
+    public void kenduBildumaArgazkiatik(String bilduma) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE BildumaArgazki SET idBilduma='NotInASet' WHERE idBilduma='"+bilduma+"'";
+        dbKud.execSQL(query);
+    }
 }
