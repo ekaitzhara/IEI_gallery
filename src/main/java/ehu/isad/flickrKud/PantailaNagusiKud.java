@@ -27,6 +27,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.DateStringConverter;
+import javafx.util.converter.DateTimeStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.*;
 import java.net.URL;
@@ -308,12 +312,151 @@ public class PantailaNagusiKud implements Initializable {
       );
 
       // ETIKETAK
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryEtiketa
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      etiketak.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryEtiketa.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      etiketak.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setEtiketak(t.getNewValue());
+              }
+      );
+
 
       // DATA
+      Callback<TableColumn<TaulaDatu, Date>, TableCell<TaulaDatu, Date>> defaultTextFieldCellFactoryDate
+              = TextFieldTableCell.<TaulaDatu, Date>forTableColumn(new StringConverter<Date>() {
+          @Override
+          public String toString(Date object) {
+              if (object == null)
+                  return "Hori ez da data bat";
+              return object.toString();
+          }
+
+          @Override
+          public Date fromString(String string) {
+              if (!string.contains("-"))
+                  return null;
+              String[] aux = string.split("-");
+              for (String s : aux) {
+                  try {
+                      Integer.parseInt(s);
+                  } catch (NumberFormatException excepcion) {
+                      return null;
+                  }
+              }
+              Date pDate = Date.valueOf(string);
+              if (pDate != null)
+                  return pDate;
+              return null;
+          }
+      });
+
+      data.setCellFactory(col -> {
+          TableCell<TaulaDatu, Date> cell = defaultTextFieldCellFactoryDate.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+
+      data.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setData(t.getNewValue());
+              }
+      );
 
       // KOMENTATU
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryComment
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      comments.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryComment.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      comments.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setComments(t.getNewValue());
+              }
+      );
 
       // DESKRIBAPENA
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryDesk
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      deskribapena.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryDesk.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      deskribapena.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setDeskribapena(t.getNewValue());
+              }
+      );
 
 
       // ARGAZKIA
