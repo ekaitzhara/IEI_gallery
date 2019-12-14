@@ -90,7 +90,7 @@ public class ArgazkiDBKud {
         return emaitza;
     }
 
-    public void argazkiaEzabatu(String ezabatzekoID) {
+    public void argazkiaEzabatuIdFlickrrekin(String ezabatzekoID) {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "DELETE FROM Argazkia WHERE idFlickr=" +ezabatzekoID;
         dbKud.execSQL(query);
@@ -115,7 +115,10 @@ public class ArgazkiDBKud {
                 String deskribapena = rs.getString("deskribapena");
                 String sortzaileId = rs.getString("sortzaileId");
                 String size = rs.getString("size");
-                //Date data = rs.getDate("data");
+                String d = rs.getString("data");
+                Date data = null;
+                if (!d.equals("null"))
+                    data = Date.valueOf(d);
                 String idFlickr = rs.getString("idFlickr");
                 Integer favs = rs.getInt("favs");
                 Integer komentarioKop = rs.getInt("komentarioKop");
@@ -123,7 +126,7 @@ public class ArgazkiDBKud {
                 Boolean gogokoaDa = s_gogokoaDa.equals("bai");
 
                 //emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr.toString(), gogokoaDa, sortzaileId, favs, komentarioKop));
-                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, null, idFlickr, gogokoaDa, sortzaileId, favs, komentarioKop));
+                emaitza.add(new Argazkia(izena, deskribapena, idArgazkia, data, idFlickr, gogokoaDa, sortzaileId, favs, komentarioKop));
 
             }
         } catch (SQLException e) {
@@ -222,6 +225,12 @@ public class ArgazkiDBKud {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "INSERT INTO PhotosToDelete(idFlickr) " +
                 "VALUES('"+ id +"')";
+        dbKud.execSQL(query);
+    }
+
+    public void kenduBildumaArgazkiatik(String bilduma) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE BildumaArgazki SET idBilduma='NotInASet' WHERE idBilduma='"+bilduma+"'";
         dbKud.execSQL(query);
     }
 }

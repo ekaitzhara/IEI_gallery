@@ -65,4 +65,10 @@ public class EtiketaDBKud {
         String query = "DELETE FROM Etiketa";
         dbKud.execSQL(query);
     }
+
+    public void kenduArgazkiaEtiketatik(Integer argazkiId) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "DELETE FROM ArgazkiEtiketak WHERE Argazkia_idArgazkia='"+argazkiId+"'";
+        dbKud.execSQL(query);
+    }
 }

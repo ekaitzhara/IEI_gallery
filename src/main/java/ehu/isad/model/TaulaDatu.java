@@ -1,13 +1,12 @@
 package ehu.isad.model;
 
-import ehu.isad.flickrKud.Utils;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.sql.Date;
 
 
@@ -20,7 +19,8 @@ public class TaulaDatu {
     private Date data;
     private String deskribapena;
     private Integer favs;
-    private Integer comments;
+    private String comments;
+    private CheckBox checkBox;
 
     public TaulaDatu(Integer pArgazkiId, String argazkiapath, String izena, String etiketak, Date data, String desk, Integer favs, Integer comments) {
         InputStream targetStream = null;
@@ -36,7 +36,8 @@ public class TaulaDatu {
         this.data = data;
         this.deskribapena = desk;
         this.favs = favs;
-        this.comments = comments;
+        this.comments = "Comment here";
+        this.checkBox = new CheckBox();
     }
 
     public Integer getArgazkiId() {
@@ -67,7 +68,35 @@ public class TaulaDatu {
         return favs;
     }
 
-    public Integer getComments() {
+    public String getComments() {
         return comments;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setIzena(String izena) {
+        this.izena = izena;
+    }
+
+    public void setEtiketak(String etiketak) {
+        this.etiketak = etiketak;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public void setDeskribapena(String deskribapena) {
+        this.deskribapena = deskribapena;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 }

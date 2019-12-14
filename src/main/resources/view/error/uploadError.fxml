@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="124.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.UploadErrorKud">
+<AnchorPane prefHeight="124.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.error.UploadErrorKud">
    <children>
       <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="23.0" layoutY="21.0" lineSpacing="1.0" prefHeight="76.0" prefWidth="280.0" text="%UploadErrorDialog" wrapText="true" />
    </children>

@@ -103,12 +103,10 @@ public class Argazkia {
     public String emanStringEtiketak() {
         String emaitza = "";
         if (!etiketak.isEmpty()) {
-            int n = 0;
-            for (int i = 0; i < etiketak.size() - 1; i++) {
-                emaitza += etiketak.get(i).getIzena() + ", ";
-                n = i;
+            for (Etiketa e : etiketak) {
+                emaitza += e.getIzena() + ", ";
             }
-            emaitza += etiketak.get(n).getIzena();
+            return emaitza.substring(0, emaitza.length()-2);
         }
         return emaitza;
     }

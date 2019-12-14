@@ -35,8 +35,16 @@ public class ListaBildumak {
         return nireBilduma;
     }
 
-    public void bildumaEzabatu(Bilduma zein){
-        lista.remove(zein);
+    public void bildumaEzabatu(String bildumaIzen){
+        Bilduma ezabatzekoB = this.emanBildumaIzenarekin(bildumaIzen);
+        Bilduma notInASet = this.emanBildumaIzenarekin("NotInASet");
+        for (Argazkia a : ezabatzekoB.getArgazkiak()) {
+            notInASet.argazkiaGehitu(a);
+        }
+        this.lista.remove(ezabatzekoB);
+        this.lista.remove(notInASet);
+        this.lista.add(notInASet);
+
     }
 
     public Bilduma bildumaSartu(String bildumaIzena,String id){
@@ -122,9 +130,13 @@ public class ListaBildumak {
                 String pDescription = p.getDescription();
                 String pUrl = p.getSmallUrl();
 
-
-                Date pDate = p.getDateAdded();
                 Date pDatePosted = p.getDatePosted();
+                java.sql.Date dateSQL = null;
+                if (pDatePosted!=null) {
+                    Long l = pDatePosted.getTime();
+                    dateSQL = new java.sql.Date(l);
+                }
+
                 String pId = p.getId();
                 Boolean pFavourite = p.isFavorite();
                 Integer favs = photoInt.getFavorites(pId, 50,1).size();
@@ -139,9 +151,8 @@ public class ListaBildumak {
                 for (Tag t : etiketak)
                     etiketenLista.add(new Etiketa(t.getValue()));
 
-                java.sql.Date dataSQL = (java.sql.Date) pDate;
 
-                bildumaIzenarekin.argazkiaGehitu(pTitle, pDescription , dataSQL, pId, pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
+                bildumaIzenarekin.argazkiaGehitu(pTitle, pDescription , dateSQL, pId, pFavourite, erab, pUrl, favs, comments, etiketenLista, views);
                 //aux.argazkiaGehitu(p.getTitle(), p.getDescription(), p.getMediumSize().toString(), (java.sql.Date) p.getDateAdded(), p.getId(), p.isFavorite(), erab);
 
 
@@ -178,6 +189,8 @@ public class ListaBildumak {
             Argazkia a = b.bilatuArgazkiaIdFLickrrekin(ezabatzekoID);
             if (a != null)
                 b.ezabatuArgazkia(a);
+            if (b.getArgazkiak().isEmpty())
+                    this.lista.remove(b);
         }
     }
 

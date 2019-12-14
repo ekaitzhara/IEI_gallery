@@ -1,6 +1,7 @@
 package ehu.isad.flickrKud;
 
 import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.FlickrRuntimeException;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
@@ -9,7 +10,6 @@ import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import ehu.isad.Main;
 import ehu.isad.db.*;
 import ehu.isad.flickr.FlickrAPI;
-import ehu.isad.model.Argazkia;
 import ehu.isad.model.Bilduma;
 import ehu.isad.model.ListaBildumak;
 import ehu.isad.model.TaulaDatu;
@@ -19,18 +19,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.*;
 
@@ -67,7 +69,10 @@ public class PantailaNagusiKud implements Initializable {
     private TableColumn<TaulaDatu, Integer> favs;
 
     @FXML
-    private TableColumn<TaulaDatu, Integer> comments;
+    private TableColumn<TaulaDatu, String> comments;
+
+    @FXML
+    private TableColumn<TaulaDatu, Button> checkBox;
 
     @FXML
     private ListView bildumenLista = new ListView();
@@ -75,6 +80,8 @@ public class PantailaNagusiKud implements Initializable {
     // add your data here from any source
     private ObservableList<TaulaDatu> taulaModels = FXCollections.observableArrayList();
     private ObservableList bildumaModel = FXCollections.observableArrayList();
+
+    private ArrayList<TaulaDatu> editatutakoak = new ArrayList<>();
 
 
   @FXML
@@ -247,7 +254,7 @@ public class PantailaNagusiKud implements Initializable {
         // Puntu honetan DBan bai eta Flickerren ez dauden argazkiak daude
         for (String ezabatzekoID: flickrIdDB) {
             // DBtik ezabatu
-            ArgazkiDBKud.getInstantzia().argazkiaEzabatu(ezabatzekoID);
+            ArgazkiDBKud.getInstantzia().argazkiaEzabatuIdFlickrrekin(ezabatzekoID);
             // ListaBildumatik ezabatu
             ListaBildumak.getNireBilduma().argazkiaEzabatu(ezabatzekoID);
         }
@@ -261,6 +268,9 @@ public class PantailaNagusiKud implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+      tbData.setEditable(true);
+
       izena.setCellValueFactory(new PropertyValueFactory<>("izena"));
       etiketak.setCellValueFactory(new PropertyValueFactory<>("etiketak"));
       data.setCellValueFactory(new PropertyValueFactory<>("data"));
@@ -268,8 +278,207 @@ public class PantailaNagusiKud implements Initializable {
       favs.setCellValueFactory(new PropertyValueFactory<>("favs"));
       comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
 
-      argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
+      checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
+      // IZENA
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryIzena
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      izena.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryIzena.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      izena.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setIzena(t.getNewValue());
+              }
+      );
+
+      // ETIKETAK
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryEtiketa
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      etiketak.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryEtiketa.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      etiketak.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setEtiketak(t.getNewValue());
+              }
+      );
+
+
+      // DATA
+      Callback<TableColumn<TaulaDatu, Date>, TableCell<TaulaDatu, Date>> defaultTextFieldCellFactoryDate
+              = TextFieldTableCell.<TaulaDatu, Date>forTableColumn(new StringConverter<Date>() {
+          @Override
+          public String toString(Date object) {
+              if (object == null)
+                  return "Hori ez da data bat";
+              return object.toString();
+          }
+
+          @Override
+          public Date fromString(String string) {
+              if (!string.contains("-"))
+                  return null;
+              String[] aux = string.split("-");
+              int cont=1;
+              int urteaDatan = 0;
+              int hilabeteDatan = 0;
+              for (String s : aux) {
+                  try {
+                      Integer i = Integer.parseInt(s);
+                      if (cont == 1) {
+                          urteaDatan = i;
+                          if ((s.length() != 4) || (i > Calendar.getInstance().get(Calendar.YEAR)))
+                              return null;
+                      }
+                      if (cont == 2) {
+                          hilabeteDatan = i;
+                          if ((i>12) || ((urteaDatan == Calendar.getInstance().get(Calendar.YEAR)) && (i > Calendar.getInstance().get(Calendar.MONTH)+1)))
+                              return null;
+                      }
+                      if (cont == 3) {
+                          if ((i > 31) || ((urteaDatan == Calendar.getInstance().get(Calendar.YEAR)) && (hilabeteDatan == Calendar.getInstance().get(Calendar.MONTH)+1) && (i > Calendar.getInstance().get(Calendar.DAY_OF_MONTH))))
+                              return null;
+                      }
+                      cont += 1;
+
+                  } catch (NumberFormatException excepcion) {
+                      return null;
+                  }
+              }
+              Date pDate = Date.valueOf(string);
+              if (pDate != null)
+                  return pDate;
+              return null;
+          }
+      });
+
+      data.setCellFactory(col -> {
+          TableCell<TaulaDatu, Date> cell = defaultTextFieldCellFactoryDate.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+
+      data.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setData(t.getNewValue());
+              }
+      );
+
+      // KOMENTATU
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryComment
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      comments.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryComment.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      comments.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setComments(t.getNewValue());
+              }
+      );
+
+      // DESKRIBAPENA
+      Callback<TableColumn<TaulaDatu, String>, TableCell<TaulaDatu, String>> defaultTextFieldCellFactoryDesk
+              = TextFieldTableCell.<TaulaDatu>forTableColumn();
+
+      deskribapena.setCellFactory(col -> {
+          TableCell<TaulaDatu, String> cell = defaultTextFieldCellFactoryDesk.call(col);
+          cell.itemProperty().addListener((obs, oldValue, newValue) -> {
+              TableRow row = cell.getTableRow();
+              if (row == null) {
+                  cell.setEditable(false);
+              } else {
+                  TaulaDatu item = (TaulaDatu) cell.getTableRow().getItem();
+                  if (item == null) {
+                      cell.setEditable(false);
+                  } else {
+                      cell.setEditable(true);
+                  }
+              }
+          });
+          return cell ;
+      });
+
+      deskribapena.setOnEditCommit(
+              t -> {
+                  this.editatutakoak.add(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                  t.getTableView().getItems().get(t.getTablePosition().getRow())
+                          .setDeskribapena(t.getNewValue());
+              }
+      );
+
+
+      // ARGAZKIA
+      argazkia.setCellValueFactory(new PropertyValueFactory<TaulaDatu, Image>("argazkia"));
       argazkia.setCellFactory(p -> new TableCell<>() {
           public void updateItem(Image image, boolean empty) {
               if (image != null && !empty){
@@ -286,6 +495,7 @@ public class PantailaNagusiKud implements Initializable {
               }
           };
       });
+
 
   }
 
@@ -331,7 +541,20 @@ public class PantailaNagusiKud implements Initializable {
 
     @FXML
     public void bildumanKlikatu(MouseEvent mouseEvent) {
-      sartuDatuakTaulan();
+
+        boolean zerbaitKlikaturik = false;
+        Iterator itr = tbData.getItems().iterator();
+        while (itr.hasNext()) {
+            TaulaDatu t = (TaulaDatu) itr.next();
+            if (t.getCheckBox().isSelected())
+                zerbaitKlikaturik = true;
+        }
+        if (zerbaitKlikaturik == true) {
+            this.mainApp.zerbaitKlikaturikPantaila();
+        } else if (!this.editatutakoak.isEmpty()) {
+            this.mainApp.zerbaitEditaturikPantaila();
+        } else
+            sartuDatuakTaulan();
     }
 
     public void sartuDatuakTaulan() {
@@ -341,7 +564,6 @@ public class PantailaNagusiKud implements Initializable {
       ListaBildumak datuEgitura = ListaBildumak.getNireBilduma();
       if(!datuEgitura.utsik()){
           String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
-          //String bilduma = null; // bilduma = bildumenZerrendanAukeratua.getValue()
           this.taulaModels = FXCollections.observableArrayList(
                   ListaBildumak.getNireBilduma().emanTaularakoDatuak(bilduma)
           );
@@ -354,4 +576,67 @@ public class PantailaNagusiKud implements Initializable {
       tbData.refresh();
     }
 
+    @FXML
+    public void gordeBotoia(ActionEvent actionEvent) {
+        // Editatu dituenak gorde
+        //this.editatutakoak erabili
+        Iterator it = tbData.getItems().iterator();
+        while (it.hasNext()) {
+            TaulaDatu t = (TaulaDatu) it.next();
+            if (t.getCheckBox().isSelected())
+                System.out.println(t.getIzena());
+            System.out.println("CLICKADOO " + t.getCheckBox().isSelected());
+        }
+    }
+
+    @FXML
+    public void deuseztatuAldaketak(ActionEvent actionEvent) {
+        this.editatutakoak.clear();
+        this.sartuDatuakTaulan();
+    }
+
+    @FXML
+    public void ezabatuArgazkiak(ActionEvent actionEvent) {
+        Iterator it = tbData.getItems().iterator();
+        while (it.hasNext()) {
+            TaulaDatu t = (TaulaDatu) it.next();
+            if (t.getCheckBox().isSelected()) {
+                PhotosInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
+                String idFlickr = ArgazkiDBKud.getInstantzia().emanIdFlickr(t.getArgazkiId());
+                try {
+                    pi.delete(idFlickr);
+                } catch (FlickrException | FlickrRuntimeException e) {
+                    ArgazkiDBKud.getInstantzia().addPhotoToDelete(idFlickr);
+                    this.mainApp.syncEginMezua();
+                }
+                ArgazkiDBKud.getInstantzia().argazkiaEzabatuIdFlickrrekin(idFlickr);
+                BildumaDBKud.getInstantzia().kenduArgazkiaBildumatik(t.getArgazkiId());
+                if (t.getEtiketak() != null)
+                    EtiketaDBKud.getInstantzia().kenduArgazkiaEtiketatik(t.getArgazkiId());
+                ListaBildumak.getNireBilduma().argazkiaEzabatu(idFlickr);
+            }
+        }
+        this.sartuDatuakTaulan();
+    }
+
+    @FXML
+    public void ezabatuBilduma(ActionEvent actionEvent) {
+
+        String bilduma = (String) bildumenLista.getSelectionModel().getSelectedItem();
+        PhotosetsInterface bInterface = FlickrAPI.getInstantzia().getFlickr().getPhotosetsInterface();
+        String idBilduma = BildumaDBKud.getInstantzia().emanBildumaIzenarekin(bilduma);
+        if (idBilduma != "0000") {
+            try {
+                bInterface.delete(idBilduma);
+                BildumaDBKud.getInstantzia().ezabatuBilduma(bilduma);
+                ArgazkiDBKud.getInstantzia().kenduBildumaArgazkiatik(bilduma);
+                ListaBildumak.getNireBilduma().bildumaEzabatu(bilduma);
+            } catch (FlickrException | FlickrRuntimeException e) {
+                this.mainApp.bildumaEzabatuError();
+            }
+        }
+        this.sartuBildumakListan();
+        this.sartuDatuakTaulan();
+
+    }
 }
