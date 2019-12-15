@@ -5,6 +5,7 @@ import ehu.isad.flickrKud.*;
 import ehu.isad.flickrKud.error.SetPropErrorKud;
 import ehu.isad.flickrKud.error.UploadErrorKud;
 import ehu.isad.flickrKud.error.ZerbaitKlikaturikKud;
+import ehu.isad.flickrKud.error.ZerbitzurikEzKud;
 import ehu.isad.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,7 @@ public class Main extends Application {
   private Scene bildumaSortu;
   private Scene uploadError;
   private Scene zerbaitKlikaturik;
+  private Scene zerbitzurikEz;
 
   private Parent kautotuUI;
   private Parent pantailaNagusiUI;
@@ -39,6 +41,7 @@ public class Main extends Application {
   private Parent uploadErrorUI;
   private Parent setPropErrorUI;
   private Parent zerbaitKlikaturikUI;
+  private Parent zerbitzurikEzUI;
 
   private Stage stage;
 
@@ -50,6 +53,7 @@ public class Main extends Application {
   private UploadErrorKud uploadErrorKud;
   private SetPropErrorKud setPropErrorKud;
   private ZerbaitKlikaturikKud zerbaitKlikaturikKud;
+  private ZerbitzurikEzKud zerbitzurikEzKud;
 
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
@@ -68,10 +72,15 @@ public class Main extends Application {
     bildumaSortu = new Scene(bildumaSortuUI, 450, 450);
     uploadError = new Scene(uploadErrorUI, 450, 450);
     zerbaitKlikaturik = new Scene(zerbaitKlikaturikUI, 400, 200);
+    zerbitzurikEz = new Scene(zerbitzurikEzUI, 400, 250);
 
     stage.setTitle("DASI APP Argazki Backup");
     stage.setScene(eKautoketa);
     stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
   }
 
   private void pantailakKargatu() throws IOException {
@@ -121,6 +130,11 @@ public class Main extends Application {
     zerbaitKlikaturikKud.setMainApp(this);
 
     zerbaitKlikaturikKud.jarriBundle(bundle);
+
+    FXMLLoader loaderZerbitzurikEzKud = new FXMLLoader(getClass().getResource("/view/error/zerbitzurikEz.fxml"), bundle);
+    zerbitzurikEzUI = (Parent) loaderZerbitzurikEzKud.load();
+    zerbitzurikEzKud = loaderZerbitzurikEzKud.getController();
+    zerbitzurikEzKud.setMainApp(this);
 
   }
 
@@ -275,5 +289,15 @@ public class Main extends Application {
     secondStage.show();
     secondStage.setAlwaysOnTop(true);
     secondStage.setResizable(false);
+  }
+
+  public void zerbitzurikEz() {
+    stage.setScene(zerbitzurikEz);
+    stage.show();
+
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    stage.setResizable(false);
   }
 }

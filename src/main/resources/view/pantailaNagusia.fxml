@@ -21,6 +21,7 @@
                   <Menu mnemonicParsing="false" text="%file">
                      <items>
                         <MenuItem fx:id="syncBotoia" mnemonicParsing="false" onAction="#syncEgin" text="%update" />
+                        <MenuItem mnemonicParsing="false" onAction="#ateraBotoiariEman" text="%exit" />
                         <MenuItem fx:id="itxi" mnemonicParsing="false" onAction="#programaItxi" text="%close" />
                      </items>
                   </Menu>

@@ -603,6 +603,7 @@ public class PantailaNagusiKud implements Initializable {
             if (t.getCheckBox().isSelected()) {
                 PhotosInterface pi = FlickrAPI.getInstantzia().getFlickr().getPhotosInterface();
                 String idFlickr = ArgazkiDBKud.getInstantzia().emanIdFlickr(t.getArgazkiId());
+
                 try {
                     pi.delete(idFlickr);
                 } catch (FlickrException | FlickrRuntimeException e) {
@@ -613,7 +614,11 @@ public class PantailaNagusiKud implements Initializable {
                 BildumaDBKud.getInstantzia().kenduArgazkiaBildumatik(t.getArgazkiId());
                 if (t.getEtiketak() != null)
                     EtiketaDBKud.getInstantzia().kenduArgazkiaEtiketatik(t.getArgazkiId());
+
                 ListaBildumak.getNireBilduma().argazkiaEzabatu(idFlickr);
+
+                File argazkiJPG = new File(Utils.argazkiakPath + File.separatorChar + idFlickr + ".jpg");
+                argazkiJPG.delete();
             }
         }
         this.sartuDatuakTaulan();
@@ -638,5 +643,9 @@ public class PantailaNagusiKud implements Initializable {
         this.sartuBildumakListan();
         this.sartuDatuakTaulan();
 
+    }
+
+    public void ateraBotoiariEman(ActionEvent actionEvent) {
+        this.mainApp.kautoketaraEraman();
     }
 }
