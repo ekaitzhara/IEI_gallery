@@ -87,7 +87,7 @@ public class ArgazkiaIgoKud implements Initializable {
                 //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
                 // errore bat egon dela abisatu erabiltzaileari
                 mainApp.erroreaBistaratu("uploadError");
-                uploadPhotosWithoutApi(photoPaths);
+                //uploadPhotosWithoutApi(photoPaths);
             }
         } else {
             System.out.println("bildumaren bat aukeratu behar duzu");
@@ -248,8 +248,6 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     public void keyPressed(KeyEvent e) {
-        System.out.println("key pressed");
-
         if(e.getCode()==KeyCode.DELETE){
             System.out.println("delete");
             argazkiaKendu(igotakoakTabla.getSelectionModel().getFocusedIndex());

@@ -171,16 +171,17 @@ public class ArgazkiDBKud {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "SELECT * FROM PhotosToUpload";
         ResultSet rs = dbKud.execSQL(query);
-
-        try {
-            while (rs.next()) {
-                Integer idArgazkiaDB = rs.getInt("idArgazkia");
-                String bildumaIzena = rs.getString("bildumaIzena");
-                String argazkiIzena = rs.getString("argazkiIzen");
-                emaitza.put(argazkiIzena,idArgazkiaDB);
+        if(rs!=null){
+            try {
+                while (rs.next()) {
+                    Integer idArgazkiaDB = rs.getInt("idArgazkia");
+                    String bildumaIzena = rs.getString("bildumaIzena");
+                    String argazkiIzena = rs.getString("argazkiIzen");
+                    emaitza.put(argazkiIzena,idArgazkiaDB);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return emaitza;
     }
@@ -190,14 +191,15 @@ public class ArgazkiDBKud {
         DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
         String query = "SELECT * FROM PhotosToDelete";
         ResultSet rs = dbKud.execSQL(query);
-
-        try {
-            while (rs.next()) {
-                String idFlickr = rs.getString("idFlickr");
-                emaitza.add(idFlickr);
+        if(rs!=null){
+            try {
+                while (rs.next()) {
+                    String idFlickr = rs.getString("idFlickr");
+                    emaitza.add(idFlickr);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return emaitza;
     }
