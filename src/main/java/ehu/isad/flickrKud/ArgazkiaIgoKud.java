@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -107,7 +109,8 @@ public class ArgazkiaIgoKud implements Initializable {
         List<File> files = event.getDragboard().getFiles();
 
         for (File fitxategi : files) {
-            obsDatuak.add(new ObsArgazkiIgo(fitxategi.getName(), fitxategi));
+            ObsArgazkiIgo obs = new ObsArgazkiIgo(fitxategi.getName(), fitxategi);
+            obsDatuak.add(obs);
         }
         igoModel = FXCollections.observableArrayList(obsDatuak);
         igotakoakTabla.setItems(igoModel);
@@ -223,6 +226,36 @@ public class ArgazkiaIgoKud implements Initializable {
         }
     }
 
+    public void argazkiaKendu(int index){
+        obsDatuak.remove(index);
+        igoModel = FXCollections.observableArrayList(obsDatuak);
+        igotakoakTabla.setItems(igoModel);
+    }
+
+    public void argazkiaKendu(Button boton){
+        boton.setText("presionado");
+        for (int i = 0; i <obsDatuak.size() ; i++) {
+            ObsArgazkiIgo ai =  obsDatuak.get(i);
+            Button bot = ai.getBotoia();
+            bot.setText("todos");
+            if(false){
+                System.out.println("llego");
+                argazkiaKendu(i);
+            }
+        }
+        igoModel = FXCollections.observableArrayList(obsDatuak);
+        igotakoakTabla.setItems(igoModel);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        System.out.println("key pressed");
+
+        if(e.getCode()==KeyCode.DELETE){
+            System.out.println("delete");
+            argazkiaKendu(igotakoakTabla.getSelectionModel().getFocusedIndex());
+        }
+    }
+
     public void bildumakComboboxKargatu() {
         List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
         this.bildumak.getItems().addAll(bil);
@@ -234,12 +267,19 @@ public class ArgazkiaIgoKud implements Initializable {
 
         botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo, Button>("botoia"));
 
+        EventHandler<ActionEvent> buttonHandler = event -> {
+            Button selected = (Button) event.getSource();
+            System.out.println(selected.getId());
+            argazkiaKendu(selected);
+            event.consume();
+        };
 
         botoia.setCellFactory(p -> new TableCell<>() {
             public void updateItem(Button botoi, boolean empty) {
                 if (botoi != null && !empty) {
                     final Button button = new Button();
                     button.setText("Delete");
+                    button.setOnAction(buttonHandler);
                     setGraphic(button);
                     setAlignment(Pos.CENTER);
                     // tbData.refresh();
