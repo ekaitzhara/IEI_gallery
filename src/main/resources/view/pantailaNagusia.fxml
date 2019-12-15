@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -57,7 +58,7 @@
             </MenuBar>
             <FlowPane fx:id="flowPane" prefHeight="25.0" prefWidth="998.0">
                <children>
-                  <Label text="%kaixo">
+                  <Label fx:id="kaixo" text="%kaixo">
                      <padding>
                         <Insets left="700.0" />
                      </padding>
@@ -93,4 +94,8 @@
          </center>
       </BorderPane>
    </center>
+   <stylesheets>
+      <URL value="@css/tableview2.css" />
+      <URL value="@css/listview1.css" />
+   </stylesheets>
 </BorderPane>
