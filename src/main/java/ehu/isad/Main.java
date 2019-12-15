@@ -68,7 +68,7 @@ public class Main extends Application {
     eKautoketa = new Scene(kautotuUI, 500, 300);
     eAccessTokenLortu = new Scene(kautotuFlickrUI);
     pantailaNagusia = new Scene(pantailaNagusiUI);
-    argazkiaIgo = new Scene(argazkiaIgoUI, 450, 450);
+    argazkiaIgo = new Scene(argazkiaIgoUI, 550, 500);
     bildumaSortu = new Scene(bildumaSortuUI, 450, 450);
     uploadError = new Scene(uploadErrorUI, 450, 450);
     zerbaitKlikaturik = new Scene(zerbaitKlikaturikUI, 400, 200);
@@ -78,9 +78,7 @@ public class Main extends Application {
     stage.setScene(eKautoketa);
     stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    pantailanZentralizatu();
   }
 
   private void pantailakKargatu() throws IOException {
@@ -155,9 +153,7 @@ public class Main extends Application {
       stage.show();
       stage.setResizable(true);
 
-      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-      stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-      stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+      pantailanZentralizatu();
     } else
       setupPropertiesError();
   }
@@ -166,9 +162,7 @@ public class Main extends Application {
     stage.setScene(eKautoketa);
     stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    pantailanZentralizatu();
   }
 
   public void kautotuFlickrErakutsi(String zerbitzua) {
@@ -178,9 +172,7 @@ public class Main extends Application {
       stage.setScene(eAccessTokenLortu);
       stage.show();
 
-      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-      stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-      stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+      pantailanZentralizatu();
     } else
       setupPropertiesError();
   }
@@ -197,10 +189,17 @@ public class Main extends Application {
     stage.setTitle("Argazkia igo");
     stage.setScene(argazkiaIgo);
     stage.show();
+
+    pantailanZentralizatu();
   }
 
-  public void erroreaBistaratu(String erroreMota) throws IOException {
+  private void pantailanZentralizatu() {
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+  }
 
+  public void erroreaBistaratu(String erroreMota){
     if(erroreMota.equals("UploadError")) {
       stage.setTitle("Upload Error");
       stage.setScene(uploadError);
@@ -234,18 +233,14 @@ public class Main extends Application {
     stage.setScene(pantailaNagusia);
     stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    pantailanZentralizatu();
   }
 
   public void setupPropertiesError() {
     stage.setScene(new Scene(setPropErrorUI, 400, 210));
     stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    pantailanZentralizatu();
     stage.setResizable(false);
   }
 
@@ -296,9 +291,7 @@ public class Main extends Application {
     stage.setScene(zerbitzurikEz);
     stage.show();
 
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
+    pantailanZentralizatu();
     stage.setResizable(false);
   }
 

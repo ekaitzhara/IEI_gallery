@@ -297,4 +297,7 @@ public class ArgazkiaIgoKud implements Initializable {
 
     }
 
+    public void atzeraBotoiaKlik(ActionEvent actionEvent) {
+        this.mainApp.pantailaNagusiaErakutsi();
+    }
 }

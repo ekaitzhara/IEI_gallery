@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="bordes" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="489.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.ArgazkiaIgoKud">
    <center>
@@ -48,11 +47,7 @@
             </HBox>
             <Pane prefHeight="36.0" prefWidth="536.0">
                <children>
-                  <Label fx:id="textoEstado" layoutX="49.0" layoutY="10.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <Button layoutX="460.0" layoutY="1.0" mnemonicParsing="false" onAction="#atzeraBotoiaKlik" text="%back" />
                </children>
             </Pane>
          </children>
