@@ -17,10 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
@@ -232,21 +229,6 @@ public class ArgazkiaIgoKud implements Initializable {
         igotakoakTabla.setItems(igoModel);
     }
 
-    public void argazkiaKendu(Button boton){
-        boton.setText("presionado");
-        for (int i = 0; i <obsDatuak.size() ; i++) {
-            ObsArgazkiIgo ai =  obsDatuak.get(i);
-            Button bot = ai.getBotoia();
-            bot.setText("todos");
-            if(false){
-                System.out.println("llego");
-                argazkiaKendu(i);
-            }
-        }
-        igoModel = FXCollections.observableArrayList(obsDatuak);
-        igotakoakTabla.setItems(igoModel);
-    }
-
     public void keyPressed(KeyEvent e) {
         if(e.getCode()==KeyCode.DELETE){
             System.out.println("delete");
@@ -266,10 +248,7 @@ public class ArgazkiaIgoKud implements Initializable {
         botoia.setCellValueFactory(new PropertyValueFactory<ObsArgazkiIgo, Button>("botoia"));
 
         EventHandler<ActionEvent> buttonHandler = event -> {
-            Button selected = (Button) event.getSource();
-            System.out.println(selected.getId());
-            argazkiaKendu(selected);
-            event.consume();
+            igoModel.remove(igotakoakTabla.getSelectionModel().getFocusedIndex());
         };
 
         botoia.setCellFactory(p -> new TableCell<>() {
@@ -290,7 +269,7 @@ public class ArgazkiaIgoKud implements Initializable {
             ;
         });
 
-
+        botoia.addEventHandler(ActionEvent.ACTION, buttonHandler);
 
         System.out.println("igo iniciado");
         //igotakoakTabla.getColumns();
