@@ -233,4 +233,11 @@ public class ArgazkiDBKud {
         String query = "UPDATE BildumaArgazki SET idBilduma='NotInASet' WHERE idBilduma='"+bilduma+"'";
         dbKud.execSQL(query);
     }
+
+    public void editatuDatuak(Integer argazkiId, Date data, String izena, String deskribapena) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE Argazkia SET izena='"+izena+"', data='"+data+"', deskribapena='"+deskribapena+"'" +
+                ", komentarioKop=komentarioKop+1 WHERE idArgazkia='"+argazkiId+"'";
+        dbKud.execSQL(query);
+    }
 }

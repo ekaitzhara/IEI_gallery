@@ -89,4 +89,5 @@ public class Bilduma {
     public void ezabatuArgazkia(Argazkia a) {
         this.argazkiak.remove(a);
     }
+
 }

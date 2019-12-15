@@ -15,7 +15,6 @@ import ehu.isad.flickr.FlickrAPI;
 import ehu.isad.flickrKud.Utils;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.*;
 
 public class ListaBildumak {
@@ -83,7 +82,7 @@ public class ListaBildumak {
 
         Map<String, Collection> allPhotos = new HashMap<String, Collection>(); // sortu datu-egitura bat bildumak gordetzeko
 
-        Iterator sets = pi.getList(FlickrAPI.getInstantzia().getNsid(), "description, views, date_upload, tags").getPhotosets().iterator(); // nsid erabiltzailearen bildumak zeharkatzeko iteratzailea lortu
+        Iterator sets = pi.getList(FlickrAPI.getInstantzia().getNsid(), "description, views, date_upload, date_taken, tags").getPhotosets().iterator(); // nsid erabiltzailearen bildumak zeharkatzeko iteratzailea lortu
 
         Bilduma bildumaIzenarekin = null;
         String erab = ErabiltzaileDBKud.getIdErab();
@@ -93,7 +92,7 @@ public class ListaBildumak {
             if (this.emanBildumaIzenarekin(set.getTitle()) == null)
                 lista.add(new Bilduma(set.getTitle(), set.getId(), set.getDescription(), erab)); // aqui sumamos las bildumas exisitentes, pero falta crear la bilduma de fotos sin bilduma
             // set es la bilduma
-            Set<String> extras = new HashSet<>(Arrays.asList("description", "views", "date_upload", "tags"));
+            Set<String> extras = new HashSet<>(Arrays.asList("description", "views", "date_upload", "date_taken", "tags"));
 
             PhotoList photos = pi.getPhotos(set.getId(), extras, 0, 500, 1);  // bildumaren lehenengo 500 argazki lortu
             allPhotos.put(set.getTitle(), photos);  // txertatu (bilduma --> bere argazkiak)
@@ -131,8 +130,12 @@ public class ListaBildumak {
                 String pUrl = p.getSmallUrl();
 
                 Date pDatePosted = p.getDatePosted();
+                Date pDateTaken = p.getDateTaken();
                 java.sql.Date dateSQL = null;
-                if (pDatePosted!=null) {
+                if (pDateTaken != null) {
+                    Long l = pDateTaken.getTime();
+                    dateSQL = new java.sql.Date(l);
+                } else if (pDatePosted!=null) {
                     Long l = pDatePosted.getTime();
                     dateSQL = new java.sql.Date(l);
                 }
@@ -252,5 +255,15 @@ public class ListaBildumak {
     public void listaHustu() {
         this.lista = null;
         nireBilduma = null;
+    }
+
+    public void argazkiaEditatu(String idFlickr, java.sql.Date data, String izena, String deskribapena, String[] etiketak) {
+        for (Bilduma b : lista) {
+            Argazkia a = b.bilatuArgazkiaIdFLickrrekin(idFlickr);
+            if (a != null) {
+                a.editatuArgazkia(data, izena, deskribapena, etiketak);
+            }
+
+        }
     }
 }

@@ -153,6 +153,7 @@ public class Main extends Application {
       pantailaNagusiKud.sartuDatuakTaulan();
       stage.setScene(pantailaNagusia);
       stage.show();
+      stage.setResizable(true);
 
       Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
       stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);

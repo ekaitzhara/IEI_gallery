@@ -71,4 +71,24 @@ public class EtiketaDBKud {
         String query = "DELETE FROM ArgazkiEtiketak WHERE Argazkia_idArgazkia='"+argazkiId+"'";
         dbKud.execSQL(query);
     }
+
+    public String etiketaEmanIzenarekin(String eIzena) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT idEtiketa FROM Etiketa WHERE izena='"+eIzena+"'";
+        rs = dbKud.execSQL(query);
+        try {
+            if (rs.next())
+                return rs.getString("idEtiketa");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void editatuArgazkiarenEtiketak(Integer argazkiId, String etikId) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE ArgazkiEtiketak SET Etiketa_idEtiketa='"+etikId+"' WHERE Argazkia_idArgazkia='"+argazkiId+"'";
+        dbKud.execSQL(query);
+    }
 }

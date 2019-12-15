@@ -1,5 +1,7 @@
 package ehu.isad.model;
 
+import ehu.isad.flickrKud.Utils;
+
 public class Etiketa {
 
     private Integer idEtiketa;
@@ -23,5 +25,9 @@ public class Etiketa {
 
     public String getIzena() {
         return izena;
+    }
+
+    public static Integer getAutoInc() {
+        return autoInc;
     }
 }

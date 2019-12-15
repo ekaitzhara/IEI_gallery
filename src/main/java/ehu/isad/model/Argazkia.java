@@ -1,5 +1,7 @@
 package ehu.isad.model;
 
+import ehu.isad.db.EtiketaDBKud;
+
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -113,5 +115,16 @@ public class Argazkia {
 
     public void etiketenListaSartu(ArrayList<Etiketa> etiketenLista) {
         etiketak = etiketenLista;
+    }
+
+    public void editatuArgazkia(Date data, String izena, String deskribapena, String[] etiketak) {
+        this.data = data;
+        this.izena = izena;
+        this.deskribapena = deskribapena;
+        this.etiketak.clear();
+        for (String e : etiketak) {
+            Etiketa etik = new Etiketa(e);
+            this.etiketak.add(etik);
+        }
     }
 }
