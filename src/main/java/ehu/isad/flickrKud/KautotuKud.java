@@ -31,9 +31,6 @@ public class KautotuKud implements Initializable {
   @FXML
   private ComboBox zerbitzua;
 
-  @FXML
-  private Label zerbitzuaEzDago = new Label();
-
 
 
   private AuthStore authStore;
@@ -53,7 +50,6 @@ public class KautotuKud implements Initializable {
     this.authStore = fs.getAuthStore();
 
     if ("Flickr".equals(zerbitzua.getValue())) {
-          zerbitzuaEzDago.setText("");
           if (this.authStore != null) {
               Auth auth = this.authStore.retrieve(fs.getNsid());
               if (auth == null || logout == true) {
@@ -65,9 +61,8 @@ public class KautotuKud implements Initializable {
               }
           }
       } else {
-          System.out.println("Zerbitzu hau ez dago eskuragarri!!!");
-          zerbitzuaEzDago.setText("Zerbitzu hau ez dago eskuragarri!!!");
-          // EGIN PANTAILA ESATEN DUENA EZ DAGOELA ESKURAGARRI
+          this.mainApp.zerbitzurikEz();
+
       }
   }
 

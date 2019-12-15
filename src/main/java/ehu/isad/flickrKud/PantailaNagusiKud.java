@@ -644,4 +644,8 @@ public class PantailaNagusiKud implements Initializable {
         this.sartuDatuakTaulan();
 
     }
+
+    public void ateraBotoiariEman(ActionEvent actionEvent) {
+        this.mainApp.kautoketaraEraman();
+    }
 }
