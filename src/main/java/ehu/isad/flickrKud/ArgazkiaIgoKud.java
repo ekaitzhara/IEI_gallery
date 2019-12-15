@@ -87,7 +87,7 @@ public class ArgazkiaIgoKud implements Initializable {
                 //errorerenbat gertatu da, segurazki konexioa joan dela apia irekita zegoelarik
                 // errore bat egon dela abisatu erabiltzaileari
                 mainApp.erroreaBistaratu("uploadError");
-                uploadPhotosWithoutApi(photoPaths);
+                //uploadPhotosWithoutApi(photoPaths);
             }
         } else {
             System.out.println("bildumaren bat aukeratu behar duzu");
