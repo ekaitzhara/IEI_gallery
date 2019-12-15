@@ -248,8 +248,6 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     public void keyPressed(KeyEvent e) {
-        System.out.println("key pressed");
-
         if(e.getCode()==KeyCode.DELETE){
             System.out.println("delete");
             argazkiaKendu(igotakoakTabla.getSelectionModel().getFocusedIndex());
