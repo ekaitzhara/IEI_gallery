@@ -582,12 +582,11 @@ public class PantailaNagusiKud implements Initializable {
             CommentsInterface komentarioInterface = FlickrAPI.getInstantzia().getFlickr().getCommentsInterface();
             String idFlickr = ArgazkiDBKud.getInstantzia().emanIdFlickr(t.getArgazkiId());
             try {
-                /*
                 argazkiInterface.setDates(idFlickr, null, igotzekoData, null);
                 argazkiInterface.setMeta(idFlickr, t.getIzena(), t.getDeskribapena());
                 argazkiInterface.addTags(idFlickr, tags);
 
-                 */
+
                 komentarioInterface.addComment(idFlickr, t.getComments());
 
                 ArgazkiDBKud.getInstantzia().editatuDatuak(t.getArgazkiId(), t.getData(), t.getIzena(), t.getDeskribapena());
@@ -606,10 +605,10 @@ public class PantailaNagusiKud implements Initializable {
 
             } catch (FlickrException | FlickrRuntimeException e) {
                 e.printStackTrace();
-                this.mainApp.syncEginMezua();
+                this.mainApp.argazkiaEditatuError();
             }
         }
-
+        this.editatutakoak.clear();
         this.sartuDatuakTaulan();
     }
 

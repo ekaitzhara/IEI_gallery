@@ -301,4 +301,15 @@ public class Main extends Application {
     stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
     stage.setResizable(false);
   }
+
+  public void argazkiaEditatuError() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle("DasiAPP Argazki Backup");
+    zerbaitKlikaturikKud.jarriArgazkiEditatuErrorTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.setWidth(500);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
 }

@@ -59,7 +59,15 @@ public class ZerbaitKlikaturikKud implements Initializable {
         this.zerbaitKlikatuta2.setText(z2);
     }
 
+    public void jarriArgazkiEditatuErrorTestua(String hizkuntza, String hizkuntzHerrialdea) {
+        String z1 = (String) bundle.getObject("argazkiaEditatuError1");
+        String z2 = (String) bundle.getObject("argazkiaEditatuError2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
     public void jarriBundle(ResourceBundle pBundle) {
         bundle = pBundle;
     }
+
 }
