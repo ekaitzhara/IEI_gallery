@@ -10,21 +10,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bordes" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="489.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.ArgazkiaIgoKud">
+<BorderPane fx:id="bordes" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="500.0" prefWidth="550.0" stylesheets="@css/tableview2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.ArgazkiaIgoKud">
    <center>
       <TableView fx:id="igotakoakTabla" onKeyPressed="#keyPressed" prefHeight="308.0" prefWidth="536.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="izena" prefWidth="259.9999877810478" text="Izena" />
-          <TableColumn fx:id="botoia" prefWidth="275.20001220703125" text="boton" />
+          <TableColumn fx:id="izena" prefWidth="271.0" text="Izena" />
+          <TableColumn fx:id="botoia" prefWidth="278.0" text="boton" />
         </columns>
       </TableView>
    </center>
    <top>
       <Pane prefHeight="78.0" prefWidth="536.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="148.0" layoutY="20.0" text="Argazkiak hona arrastratu igotzeko-trad" />
-            <Label layoutX="122.0" layoutY="51.0" text="%bilduma" />
-            <ComboBox fx:id="bildumak" editable="true" layoutX="193.0" layoutY="47.0" prefWidth="150.0" />
+            <Label fx:id="argazkiIgo1label" layoutX="180.0" layoutY="23.0" text="%ArgazkiakHonaArrastratu" />
+            <Label fx:id="bildumaLabel" layoutX="129.0" layoutY="51.0" text="%bilduma" />
+            <ComboBox fx:id="bildumak" editable="true" layoutX="200.0" layoutY="46.0" prefWidth="150.0" />
          </children>
       </Pane>
    </top>
@@ -35,12 +35,12 @@
                <children>
                   <Pane prefHeight="77.0" prefWidth="278.0">
                      <children>
-                        <Button layoutX="97.0" layoutY="8.0" mnemonicParsing="false" onAction="#cleanList" text="Ezabatu-trad" />
+                        <Button layoutX="97.0" layoutY="8.0" mnemonicParsing="false" onAction="#cleanList" text="%Ezabatu" />
                      </children>
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="258.0">
                      <children>
-                        <Button layoutX="92.0" layoutY="8.0" mnemonicParsing="false" onAction="#uploadFiles" text="Gorde-trad" />
+                        <Button layoutX="92.0" layoutY="8.0" mnemonicParsing="false" onAction="#uploadFiles" text="%gorde" />
                      </children>
                   </Pane>
                </children>

@@ -73,3 +73,23 @@
 .table-view > .virtual-flow > .scroll-bar > .decrement-button {
     -fx-opacity: 0;
 }
+
+#kaixo{
+    -fx-text-fill: white;
+}
+
+#erabiltzaileIzena{
+    -fx-text-fill: white;
+}
+
+#bildumaLabel{
+    -fx-text-fill: white;
+}
+
+#argazkiIgo1label{
+    -fx-text-fill: white;
+}
+
+#igotakoakTabla{
+    -fx-background-color: #454545;
+}

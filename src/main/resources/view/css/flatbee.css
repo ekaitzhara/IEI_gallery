@@ -158,6 +158,32 @@
     -fx-background-color : -gray;
 }
 
+/*//////////////////////////////////////////////////////////////// */
+.button.success,.split-menu-button.success,.toggle-button.success,.menu-button.success,
+.split-menu-button.success > .label, .split-menu-button.success > .arrow-button {
+    -fx-background-color: #5cb85c;
+}
+
+.button.success,.menu-button.success,.toggle-button.success,
+.split-menu-button.success > .label,.split-menu-button.success > .arrow-button {
+    -fx-border-color: #4cae4c;
+    -fx-text-fill: white;
+}
+/*hover state*/
+.button.success:hover,.menu-button.success:hover,.toggle-button.success:hover,
+.split-menu-button.success > .label:hover, .split-menu-button.success > .arrow-button:hover {
+    -fx-border-color: #398439;
+    -fx-background-color: #449d44;
+}
+/*pressed selected*/
+.button.success:pressed, .button.success:selected,
+.menu-button.success:pressed,.menu-button.success:selected
+,.toggle-button.success:pressed,.toggle-button.success:selected,
+.split-menu-button.success:pressed > .label, .split-menu-button.success > .arrow-button:pressed {
+    -fx-background-color: #449d44;
+    -fx-border-color: #398439;
+    -fx-effect: innershadow(gaussian, #398439, 10, 0, 0, 3);
+}
 
 /*
  * **********

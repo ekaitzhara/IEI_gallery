@@ -66,6 +66,27 @@ public class ZerbaitKlikaturikKud implements Initializable {
         this.zerbaitKlikatuta2.setText(z2);
     }
 
+    public void jarriEguneraketakBegiratuTestua(String hizkuntza, String hizkuntzHerrialdea) {
+        String z1 = (String) bundle.getObject("checkUpdates1");
+        String z2 = (String) bundle.getObject("checkUpdates2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
+    public void jarriAboutTestua(String hizkuntza, String hizkuntzHerrialdea) {
+        String z1 = (String) bundle.getObject("about1");
+        String z2 = (String) bundle.getObject("about2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
+    public void jarriBildumaSortuErrorTestua(String hizkuntza, String hizkuntzHerrialdea) {
+        String z1 = (String) bundle.getObject("bildumaError1");
+        String z2 = (String) bundle.getObject("bildumaError2");
+        this.zerbaitKlikatuta1.setText(z1);
+        this.zerbaitKlikatuta2.setText(z2);
+    }
+
     public void jarriBundle(ResourceBundle pBundle) {
         bundle = pBundle;
     }

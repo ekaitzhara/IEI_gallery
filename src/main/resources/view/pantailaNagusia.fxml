@@ -51,7 +51,8 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="%help">
                      <items>
-                        <MenuItem fx:id="laguntza" mnemonicParsing="false" text="%about" />
+                        <MenuItem mnemonicParsing="false" onAction="#checkForUpdates" text="%checkUpdates" />
+                        <MenuItem fx:id="laguntza" mnemonicParsing="false" onAction="#aboutKlik" text="%about" />
                      </items>
                   </Menu>
                </menus>

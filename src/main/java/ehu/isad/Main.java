@@ -58,6 +58,8 @@ public class Main extends Application {
   private static String hizkuntza = "eu";
   private static String hizkuntzHerrialdea = "ES";
 
+  private ResourceBundle bundle;
+
   @Override
   public void start(Stage primaryStage) throws Exception {
 
@@ -69,12 +71,12 @@ public class Main extends Application {
     eAccessTokenLortu = new Scene(kautotuFlickrUI);
     pantailaNagusia = new Scene(pantailaNagusiUI);
     argazkiaIgo = new Scene(argazkiaIgoUI, 550, 500);
-    bildumaSortu = new Scene(bildumaSortuUI, 450, 450);
+    bildumaSortu = new Scene(bildumaSortuUI, 450, 180);
     uploadError = new Scene(uploadErrorUI, 450, 450);
     zerbaitKlikaturik = new Scene(zerbaitKlikaturikUI, 400, 200);
     zerbitzurikEz = new Scene(zerbitzurikEzUI, 400, 250);
 
-    stage.setTitle("DASI APP Argazki Backup");
+    stage.setTitle("DASI APP Photo Backup");
     stage.setScene(eKautoketa);
     stage.show();
 
@@ -85,7 +87,7 @@ public class Main extends Application {
 
     // Hemen aldatu ahal da hizkuntza
     Locale locale = new Locale(hizkuntza,hizkuntzHerrialdea);
-    ResourceBundle bundle = ResourceBundle.getBundle("UIResources", locale);
+    bundle = ResourceBundle.getBundle("UIResources", locale);
 
     FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/view/kautotu.fxml"), bundle);
     kautotuUI = (Parent) loaderKautotu.load();
@@ -143,7 +145,7 @@ public class Main extends Application {
 
   public void pantailaNagusiaErakutsi() {
     if (!Utils.emanSetupPropStatus()) {
-      stage.setTitle("DasiAPP Main Page");
+      stage.setTitle(bundle.getString("DasiAPP Main Page"));
       pantailaNagusiKud.jarriErabiltzaileIzena();
       ListaBildumak.getNireBilduma().listaBeteDBrekin();
       //pantailaNagusiKud.syncEgin();
@@ -159,6 +161,7 @@ public class Main extends Application {
   }
 
   public void kautoketaraEraman() {
+    stage.setTitle(bundle.getString("kautoketa"));
     stage.setScene(eKautoketa);
     stage.show();
 
@@ -179,29 +182,26 @@ public class Main extends Application {
 
   public void bildumaSortuErakutsi(){
 
-    stage.setTitle("Bilduma sortu");
+    stage.setTitle(bundle.getString("Bilduma sortu"));
     stage.setScene(bildumaSortu);
     stage.show();
+    stage.setResizable(false);
+
+    pantailanZentralizatu();
   }
 
   public void argazkiaIgoErakutsi(){
     argazkiaIgoKud.bildumakComboboxKargatu();
-    stage.setTitle("Argazkia igo");
+    stage.setTitle(bundle.getString("Argazkia igo"));
     stage.setScene(argazkiaIgo);
     stage.show();
 
     pantailanZentralizatu();
   }
 
-  private void pantailanZentralizatu() {
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
-    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
-  }
-
   public void erroreaBistaratu(String erroreMota){
     if(erroreMota.equals("UploadError")) {
-      stage.setTitle("Upload Error");
+      stage.setTitle(bundle.getString("Upload Error"));
       stage.setScene(uploadError);
       stage.show();
     }
@@ -250,7 +250,7 @@ public class Main extends Application {
 
   public void zerbaitKlikaturikPantaila(){
     Stage secondStage = new Stage();
-    secondStage.setTitle("DasiAPP Argazki Backup");
+    secondStage.setTitle("DasiAPP Photo Backup");
     secondStage.setScene(zerbaitKlikaturik);
     secondStage.show();
     secondStage.setAlwaysOnTop(true);
@@ -259,7 +259,7 @@ public class Main extends Application {
 
   public void zerbaitEditaturikPantaila() {
     Stage secondStage = new Stage();
-    secondStage.setTitle("DasiAPP Argazki Backup");
+    secondStage.setTitle("DasiAPP Photo Backup");
     zerbaitKlikaturikKud.jarriEditaturikTestua(hizkuntza, hizkuntzHerrialdea);
     secondStage.setScene(zerbaitKlikaturik);
     secondStage.show();
@@ -269,7 +269,7 @@ public class Main extends Application {
 
   public void bildumaEzabatuError() {
     Stage secondStage = new Stage();
-    secondStage.setTitle("DasiAPP Argazki Backup");
+    secondStage.setTitle(bundle.getString("bildumaerror"));
     zerbaitKlikaturikKud.jarriBildumaErrorTestua(hizkuntza, hizkuntzHerrialdea);
     secondStage.setScene(zerbaitKlikaturik);
     secondStage.show();
@@ -279,7 +279,7 @@ public class Main extends Application {
 
   public void syncEginMezua() {
     Stage secondStage = new Stage();
-    secondStage.setTitle("DasiAPP Argazki Backup");
+    secondStage.setTitle(bundle.getString("checkUpdates"));
     zerbaitKlikaturikKud.syncEginTestua(hizkuntza, hizkuntzHerrialdea);
     secondStage.setScene(zerbaitKlikaturik);
     secondStage.show();
@@ -304,5 +304,46 @@ public class Main extends Application {
     secondStage.show();
     secondStage.setAlwaysOnTop(true);
     secondStage.setResizable(false);
+  }
+
+  public void checkUpdates() {
+    Stage secondStage = new Stage();
+    String aux = bundle.getString("checkUpdates");
+    aux = aux.replace("...", "");
+    secondStage.setTitle(aux);
+    zerbaitKlikaturikKud.jarriEguneraketakBegiratuTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.setWidth(500);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
+
+  public void aboutPantaila() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle(bundle.getString("about"));
+    zerbaitKlikaturikKud.jarriAboutTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.setWidth(550);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
+
+  public void bildumaSortuError() {
+    Stage secondStage = new Stage();
+    secondStage.setTitle(bundle.getString("error"));
+    zerbaitKlikaturikKud.jarriBildumaSortuErrorTestua(hizkuntza, hizkuntzHerrialdea);
+    secondStage.setScene(zerbaitKlikaturik);
+    secondStage.setWidth(550);
+    secondStage.show();
+    secondStage.setAlwaysOnTop(true);
+    secondStage.setResizable(false);
+  }
+
+  private void pantailanZentralizatu() {
+    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    stage.setX((screenBounds.getWidth() - stage.getWidth()) / 2);
+    stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
   }
 }

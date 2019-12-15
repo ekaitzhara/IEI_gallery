@@ -671,4 +671,12 @@ public class PantailaNagusiKud implements Initializable {
     public void ateraBotoiariEman(ActionEvent actionEvent) {
         this.mainApp.kautoketaraEraman();
     }
+
+    public void checkForUpdates(ActionEvent actionEvent) {
+      this.mainApp.checkUpdates();
+    }
+
+    public void aboutKlik(ActionEvent actionEvent) {
+      this.mainApp.aboutPantaila();
+    }
 }

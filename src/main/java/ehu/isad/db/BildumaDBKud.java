@@ -136,4 +136,10 @@ public class BildumaDBKud {
         String query = "DELETE FROM Bilduma WHERE izena='"+bilduma+"'";
         dbKud.execSQL(query);
     }
+
+    public void argazkiaBildumazAldatu(String izenBilduma, String idArgazki) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        String query = "UPDATE BildumaArgazki SET idBilduma='"+izenBilduma+"' WHERE idArgazkia='"+idArgazki+"'";
+        dbKud.execSQL(query);
+    }
 }

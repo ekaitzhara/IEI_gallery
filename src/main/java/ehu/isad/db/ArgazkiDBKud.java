@@ -242,4 +242,20 @@ public class ArgazkiDBKud {
                 ", komentarioKop=komentarioKop+1 WHERE idArgazkia='"+argazkiId+"'";
         dbKud.execSQL(query);
     }
+
+    public String emanIdDB(String idFlickr) {
+        DBKudeatzaile dbKud = DBKudeatzaile.getInstantzia();
+        ResultSet rs=null;
+        String query = "SELECT idArgazkia FROM Argazkia" +
+                " WHERE idFlickr='"+idFlickr+"'";
+        rs = dbKud.execSQL(query);
+        try {
+            if (rs.next()) {
+                return rs.getString("idArgazkia");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

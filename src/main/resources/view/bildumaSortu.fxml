@@ -5,11 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="148.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.BildumaSortuKud">
+<Pane prefHeight="180.0" prefWidth="450.0" stylesheets="@../css/flatbee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.BildumaSortuKud">
    <children>
-      <Label contentDisplay="RIGHT" layoutX="24.0" layoutY="42.0" prefHeight="25.0" prefWidth="220.0" text="%bildumaBerriasortu" />
-      <Button layoutX="56.0" layoutY="109.0" mnemonicParsing="false" text="%gorde" />
-      <Button layoutX="257.0" layoutY="109.0" mnemonicParsing="false" text="%atzera" />
-      <TextField fx:id="bildumaIzena" layoutX="24.0" layoutY="67.0" prefHeight="25.0" prefWidth="329.0" />
+      <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="14.0" prefHeight="25.0" prefWidth="360.0" text="%bildumaBerriasortu" />
+      <Label layoutX="20.0" layoutY="82.0" prefHeight="16.0" prefWidth="360.0" text="%idFlickrArgazki" />
+      <TextField fx:id="idArgazkia" layoutX="20.0" layoutY="99.0" prefHeight="26.0" prefWidth="384.0" />
+      <Button layoutX="89.0" layoutY="135.0" mnemonicParsing="false" onAction="#gordebotoia" text="%gorde" />
+      <Button layoutX="288.0" layoutY="135.0" mnemonicParsing="false" onAction="#atzerabotoia" text="%atzera" />
+      <TextField fx:id="bildumaIzena" layoutX="20.0" layoutY="46.0" prefHeight="26.0" prefWidth="384.0" />
    </children>
 </Pane>

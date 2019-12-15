@@ -266,4 +266,14 @@ public class ListaBildumak {
 
         }
     }
+
+    public Argazkia argazkiaBilatu(String idFLickrArgazki) {
+        for (Bilduma b: this.lista) {
+            Argazkia a = b.bilatuArgazkiaIdFLickrrekin(idFLickrArgazki);
+            if (a != null) {
+                return a;
+            }
+        }
+        return null;
+    }
 }
