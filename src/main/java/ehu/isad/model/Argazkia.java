@@ -1,6 +1,7 @@
 package ehu.isad.model;
 
 import ehu.isad.db.EtiketaDBKud;
+import ehu.isad.flickrKud.Utils;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Argazkia {
     public Argazkia(String izena, String deskribapena, Date data, String idFLickr, boolean gogokoaDa, String sortzaileID, String pUrl, Integer pFavs, Integer pKomentario, ArrayList<Etiketa> etiketaLista, Integer pViews) {
         this.izena = izena;
         this.deskribapena = deskribapena;
-        this.id = autoinc++;
+        this.id = Utils.argazkiInc--;
         this.data = data;
         this.idFLickr = idFLickr;
         this.gogokoaDa = gogokoaDa;

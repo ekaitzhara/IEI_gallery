@@ -237,8 +237,9 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     public void bildumakComboboxKargatu() {
-        List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
-        this.bildumak.getItems().addAll(bil);
+        List<String> bil = ListaBildumak.getNireBgitilduma().lortuBildumenIzenak();
+        if(this.bildumak.getItems().isEmpty())
+            this.bildumak.getItems().addAll(bil);
     }
 
     @Override
@@ -277,6 +278,8 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     public void atzeraBotoiaKlik(ActionEvent actionEvent) {
+        this.obsDatuak.clear();
+        this.igoModel.clear();
         this.mainApp.pantailaNagusiaErakutsi();
     }
 }

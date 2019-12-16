@@ -15,6 +15,8 @@ public class Utils {
     public static String tmpPath = Utils.globalPath("/data/dasiteam/flickr/tmp");//GLOBAL PATH TIENE HOME
     public static String argazkiakPath = Utils.globalPath("/data/dasiteam/flickr/argazkiak");
     public static Integer etiketenIncGlobala = 1000;
+    public static Integer bildumaInc = 1500;
+    public static Integer argazkiInc = 2000;
 
     public static void setupPropHutsa() {
         setupPropertiesHutsik = true;
