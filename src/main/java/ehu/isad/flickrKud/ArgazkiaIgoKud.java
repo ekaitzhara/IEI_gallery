@@ -237,7 +237,7 @@ public class ArgazkiaIgoKud implements Initializable {
     }
 
     public void bildumakComboboxKargatu() {
-        List<String> bil = ListaBildumak.getNireBgitilduma().lortuBildumenIzenak();
+        List<String> bil = ListaBildumak.getNireBilduma().lortuBildumenIzenak();
         if(this.bildumak.getItems().isEmpty())
             this.bildumak.getItems().addAll(bil);
     }
