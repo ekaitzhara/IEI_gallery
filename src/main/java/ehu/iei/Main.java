@@ -6,7 +6,7 @@ import ehu.isad.flickrKud.error.SetPropErrorKud;
 import ehu.isad.flickrKud.error.UploadErrorKud;
 import ehu.isad.flickrKud.error.ZerbaitKlikaturikKud;
 import ehu.isad.flickrKud.error.ZerbitzurikEzKud;
-import ehu.isad.model.ListaBildumak;
+import ehu.iei.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
