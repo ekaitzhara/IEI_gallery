@@ -1,4 +1,4 @@
-package ehu.isad.flickr;
+package ehu.iei.flickr;
 
 import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
@@ -12,7 +12,7 @@ import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.AuthStore;
 import com.flickr4java.flickr.util.FileAuthStore;
 import com.flickr4java.flickr.util.IOUtilities;
-import ehu.isad.flickrKud.Utils;
+import ehu.iei.flickrKud.Utils;
 
 import java.io.*;
 import java.net.MalformedURLException;

@@ -1,6 +1,6 @@
 package ehu.iei.db;
 
-import ehu.isad.flickrKud.Utils;
+import ehu.iei.flickrKud.Utils;
 
 import java.sql.*;
 
