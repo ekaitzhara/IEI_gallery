@@ -1,12 +1,12 @@
-package ehu.isad;
+package ehu.iei;
 
 import com.flickr4java.flickr.FlickrException;
-import ehu.isad.flickrKud.*;
-import ehu.isad.flickrKud.error.SetPropErrorKud;
-import ehu.isad.flickrKud.error.UploadErrorKud;
-import ehu.isad.flickrKud.error.ZerbaitKlikaturikKud;
-import ehu.isad.flickrKud.error.ZerbitzurikEzKud;
-import ehu.isad.model.ListaBildumak;
+import ehu.iei.flickrKud.*;
+import ehu.iei.flickrKud.error.SetPropErrorKud;
+import ehu.iei.flickrKud.error.UploadErrorKud;
+import ehu.iei.flickrKud.error.ZerbaitKlikaturikKud;
+import ehu.iei.flickrKud.error.ZerbitzurikEzKud;
+import ehu.iei.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
