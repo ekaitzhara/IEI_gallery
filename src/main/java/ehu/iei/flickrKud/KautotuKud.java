@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,6 +68,7 @@ public class KautotuKud implements Initializable {
 
     private void authorize() throws IOException, FlickrException {
         String zerbitzuIzen = null;
+        System.out.println(zerbitzuIzen);
         if ("Flickr".equals(zerbitzua.getValue()))
             zerbitzuIzen = "Flickr";
         else if ("Google Fotos".equals(zerbitzua.getValue()))
