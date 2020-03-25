@@ -68,18 +68,28 @@ public class KautotuKud implements Initializable {
 
     private void authorize() throws IOException, FlickrException {
         String zerbitzuIzen = null;
+
         System.out.println(zerbitzuIzen);
+
         if ("Flickr".equals(zerbitzua.getValue()))
+
             zerbitzuIzen = "Flickr";
+
         else if ("Google Fotos".equals(zerbitzua.getValue()))
+
             zerbitzuIzen = "Google Fotos";
+
         else if ("Instagram".equals(zerbitzua.getValue()))
+
             zerbitzuIzen = "Instagram";
+
         mainApp.kautotuFlickrErakutsi(zerbitzuIzen);
+
     }
 
     @FXML
     public void onClickHizkuntza(ActionEvent actionEvent) throws Exception {
+
         String laburdura = null;
         String herrialdea = null;
         if ("Euskara".equals(hizkuntzAldaketa.getValue())) {
