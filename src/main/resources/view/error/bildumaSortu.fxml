@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="180.0" prefWidth="450.0" stylesheets="@../css/flatbee.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.flickrKud.BildumaSortuKud">
+   <children>
+      <Label contentDisplay="RIGHT" layoutX="20.0" layoutY="14.0" prefHeight="25.0" prefWidth="360.0" text="%bildumaBerriasortu" />
+      <Label layoutX="20.0" layoutY="82.0" prefHeight="16.0" prefWidth="360.0" text="%idFlickrArgazki" />
+      <TextField fx:id="idArgazkia" layoutX="20.0" layoutY="99.0" prefHeight="26.0" prefWidth="384.0" />
+      <Button layoutX="89.0" layoutY="135.0" mnemonicParsing="false" onAction="#gordebotoia" text="%gorde" />
+      <Button layoutX="288.0" layoutY="135.0" mnemonicParsing="false" onAction="#atzerabotoia" text="%atzera" />
+      <TextField fx:id="bildumaIzena" layoutX="20.0" layoutY="46.0" prefHeight="26.0" prefWidth="384.0" />
+   </children>
+</Pane>
