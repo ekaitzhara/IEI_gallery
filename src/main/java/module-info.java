@@ -6,5 +6,5 @@ open module DASI {
     requires scribejava.core;
     requires java.desktop;
     requires java.sql;
-    exports ehu.isad;
+    exports ehu.iei;
 }
