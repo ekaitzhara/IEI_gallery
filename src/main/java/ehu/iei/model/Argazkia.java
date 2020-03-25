@@ -1,6 +1,6 @@
 package ehu.iei.model;
 
-import ehu.isad.flickrKud.Utils;
+import ehu.iei.flickrKud.Utils;
 
 import java.sql.Date;
 import java.util.ArrayList;

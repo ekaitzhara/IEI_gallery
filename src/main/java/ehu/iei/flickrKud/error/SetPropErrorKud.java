@@ -1,6 +1,6 @@
 package ehu.iei.flickrKud.error;
 
-import ehu.isad.Main;
+import ehu.iei.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
