@@ -1,6 +1,6 @@
 package ehu.iei.db;
 
-import ehu.isad.model.Argazkia;
+import ehu.iei.model.Argazkia;
 
 import java.sql.Date;
 import java.sql.ResultSet;

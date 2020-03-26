@@ -2,10 +2,7 @@ package ehu.iei;
 
 import com.flickr4java.flickr.FlickrException;
 import ehu.iei.flickrKud.*;
-import ehu.iei.flickrKud.error.SetPropErrorKud;
-import ehu.iei.flickrKud.error.UploadErrorKud;
-import ehu.iei.flickrKud.error.ZerbaitKlikaturikKud;
-import ehu.iei.flickrKud.error.ZerbitzurikEzKud;
+import ehu.iei.flickrKud.error.*;
 import ehu.iei.model.ListaBildumak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
